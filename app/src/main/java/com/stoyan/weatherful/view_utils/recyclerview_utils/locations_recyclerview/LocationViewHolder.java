@@ -54,18 +54,37 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
 
         WeatherfulAPIImpl weatherfulAPI = new WeatherfulAPIImpl();
         weatherfulAPI.getLocationImageUrl(this, location);
+        weatherfulAPI.getForecastSummary(this, location);
 
     }
 
     public void setLocationPicture(String url) {
 
         if((itemView != null) && url != null) {
-            Log.d("SII", "setLocationPicture: " + url);
 
             Glide.with(locationPicture.getContext())
                     .load(url)
                     .centerCrop()
                     .into(locationPicture);
+        } else {
+            throw new NullPointerException("Provide valid image url");
         }
+    }
+
+    public void setForecastSummary(String summary) {
+        if(summary != null) {
+            forecastSummary.setText(summary);
+        } else {
+            throw new NullPointerException("Provide valid summary!");
+        }
+    }
+
+    public void setTemperature(String temp) {
+        if(temp != null) {
+            temperature.setText(temp);
+        } else {
+            throw new NullPointerException("Provide valid temperature");
+        }
+
     }
 }

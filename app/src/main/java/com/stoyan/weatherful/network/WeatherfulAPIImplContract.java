@@ -10,4 +10,6 @@ import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclervie
 
 public interface WeatherfulAPIImplContract {
     void getLocationImageUrl(LocationViewHolder viewHolder, Location locaton);
+
+    void getForecastSummary(LocationViewHolder viewHolder, Location locaton);
 }

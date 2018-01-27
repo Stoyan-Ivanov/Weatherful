@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.stoyan.weatherful.models.Location;
+import com.stoyan.weatherful.network.network_models.forecast_summary_models.ForecastSummaryResponse;
 import com.stoyan.weatherful.network.network_models.image_response_models.ImageResponse;
 import com.stoyan.weatherful.network.network_models.image_response_models.Picture;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationViewHolder;
@@ -65,6 +66,34 @@ public class WeatherfulAPIImpl extends Application implements WeatherfulAPIImplC
                 Log.d("SII", "onFailure: getImage()");
             }
         });
+    }
+
+    @Override
+    public void getForecastSummary(final LocationViewHolder viewHolder, Location locaton) {
+        createRetrofitInstance(NetworkConstants.FORECAST_SUMMARY_API_URL);
+
+        Call<ForecastSummaryResponse> call = api.getForecastSummaryResponse(locaton.getLatitude(),
+                                                                            locaton.getLongitude());
+
+        call.enqueue(new Callback<ForecastSummaryResponse>() {
+            @Override
+            public void onResponse(Call<ForecastSummaryResponse> call, Response<ForecastSummaryResponse> response) {
+                if(response.isSuccessful()) {
+                    ForecastSummaryResponse summaryResponse = response.body();
+
+                    viewHolder.setForecastSummary(summaryResponse.getHourly().getSummary());
+
+                    viewHolder.setTemperature(summaryResponse.getHourly()
+                            .getData().get(0).getTemperature() + "\u2103");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ForecastSummaryResponse> call, Throwable t) {
+                Log.d("SII", "onFailure: getForecastSummary()");
+            }
+        });
+
     }
 
     public static Context getStaticContext() {

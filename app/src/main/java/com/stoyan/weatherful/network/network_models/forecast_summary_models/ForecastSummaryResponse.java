@@ -1,49 +1,57 @@
 package com.stoyan.weatherful.network.network_models.forecast_summary_models;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 /**
  * Created by Stoyan on 27.1.2018 г..
  */
 
 public class ForecastSummaryResponse {
-    private String summary;
+    private String timezone;
 
-    private String icon;
+    private String longitude;
 
-    private Data[] data;
+    private String latitude;
 
-    public String getSummary ()
-    {
-        return summary;
+    private Hourly hourly;
+
+    public Hourly getHourly() {
+        return hourly;
     }
 
-    public void setSummary (String summary)
-    {
-        this.summary = summary;
+    public void setHourly(Hourly hourly) {
+        this.hourly = hourly;
     }
 
-    public String getIcon ()
+    public String getTimezone ()
     {
-        return icon;
+        return timezone;
     }
 
-    public void setIcon (String icon)
+    public void setTimezone (String timezone)
     {
-        this.icon = icon;
+        this.timezone = timezone;
     }
 
-    public Data[] getData ()
+    public String getLongitude ()
     {
-        return data;
+        return longitude;
     }
 
-    public void setData (Data[] data)
+    public void setLongitude (String longitude)
     {
-        this.data = data;
+        this.longitude = longitude;
     }
 
-    @Override
-    public String toString()
+    public String getLatitude ()
     {
-        return "ClassPojo [summary = "+summary+", icon = "+icon+", data = "+data+"]";
+        return latitude;
     }
+
+    public void setLatitude (String latitude)
+    {
+        this.latitude = latitude;
+    }
+
 }
