@@ -2,6 +2,7 @@ package com.stoyan.weatherful.location_activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
@@ -18,7 +19,12 @@ public class LocationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base_recyclerview);
 
+        LocationActivityProvider locationActivityProvider = new LocationActivityProvider();
+
         headerBar.setText(R.string.location_activity_header);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(locationActivityProvider.getAdapter());
 
     }
 }
