@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Weatherful</string>
+    <string name="location_activity_header">Locations</string>
 </resources>

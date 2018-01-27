@@ -18,6 +18,7 @@ public class LocationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base_recyclerview);
 
-        
+        headerBar.setText(R.string.location_activity_header);
+
     }
 }
