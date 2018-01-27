@@ -11,6 +11,6 @@ import retrofit2.http.Query;
  */
 
 public interface WeatherfulAPI {
-    @GET("images?offset=1")
+    @GET("images?")
     Call<ImageResponse> getLocationImage(@Query("q") String searchedLocation);
 }

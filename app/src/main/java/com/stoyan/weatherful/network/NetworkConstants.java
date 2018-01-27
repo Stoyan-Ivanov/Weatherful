@@ -5,5 +5,5 @@ package com.stoyan.weatherful.network;
  */
 
 public final class NetworkConstants {
-    public static final String IMAGES_URL = "https://api.qwant.com/api/search/";
+    public static final String IMAGES_API_URL = "https://api.qwant.com/api/search/";
 }
