@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.stoyan.weatherful.R;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class LocationActivity extends AppCompatActivity {
 
@@ -22,6 +23,8 @@ public class LocationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base_recyclerview);
+
+        ButterKnife.bind(this);
 
         LocationActivityProvider locationActivityProvider = new LocationActivityProvider();
 
