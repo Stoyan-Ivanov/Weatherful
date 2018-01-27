@@ -22,14 +22,6 @@ public class ForecastActivity extends AppCompatActivity {
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
 
-    public static Intent newInstance(Location location) {
-
-       Intent intent = new Intent();
-       intent.putExtra(Constants.EXTRA_LOCATION, location);
-
-       return intent;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,11 +29,11 @@ public class ForecastActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        ForecastActivityProvider provider = new ForecastActivityProvider(getIntent());
+        ForecastActivityPresenter provider = new ForecastActivityPresenter(getIntent());
 
         headerBar.setText(provider.getHeader());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.setAdapter(provider.getAdapter());
+        recyclerView.setAdapter(provider.getAdapter());
     }
 }

@@ -1,5 +1,6 @@
 package com.stoyan.weatherful.network;
 
+import com.stoyan.weatherful.network.network_models.forecast_full_models.ForecastFullResponse;
 import com.stoyan.weatherful.network.network_models.forecast_summary_models.ForecastSummaryResponse;
 import com.stoyan.weatherful.network.network_models.image_response_models.ImageResponse;
 
@@ -19,4 +20,8 @@ public interface WeatherfulAPI {
     @GET("{latitude},{longitude}?exclude=currently,minutely,daily,alerts&&units=si")
     Call<ForecastSummaryResponse> getForecastSummaryResponse(@Path("latitude") double latitude,
                                                             @Path("longitude") double longitude);
+
+    @GET("{latitude},{longitude}?exclude=currently,minutely,hourly,alerts&&units=si")
+    Call<ForecastFullResponse> getFullForecastResponse(@Path("latitude") double latitude,
+                                                       @Path("longitude") double longitude);
 }
