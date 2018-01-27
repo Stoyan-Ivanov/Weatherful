@@ -11,8 +11,12 @@ import com.stoyan.weatherful.R;
 import butterknife.BindView;
 
 public class LocationActivity extends AppCompatActivity {
-    @BindView(R.id.ctv_header) TextView headerBar;
-    @BindView(R.id.recyclerview) RecyclerView recyclerView;
+
+    @BindView(R.id.ctv_header)
+    TextView headerBar;
+
+    @BindView(R.id.recyclerview)
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +29,5 @@ public class LocationActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(locationActivityProvider.getAdapter());
-
     }
 }
