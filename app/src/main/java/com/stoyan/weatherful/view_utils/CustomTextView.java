@@ -12,13 +12,14 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.SparseIntArray;
 import android.util.TypedValue;
+import android.widget.TextView;
 
 /**
- * Created by Stoya on 27.1.2018 г..
+ * Created by Stoyan on 27.1.2018 г..
  */
 
-public class CustomTextView extends AppCompatTextView {
-    
+public class CustomTextView extends android.support.v7.widget.AppCompatTextView {
+
     interface SizeTester {
         /**
          * @param suggestedSize  Size of text to be tested
@@ -65,10 +66,6 @@ public class CustomTextView extends AppCompatTextView {
 
     public CustomTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
-//        int typefaceAsset = R.styleable.CustomTextView_typefaceAsset;
-//        int[] elements = R.styleable.CustomTextView;
-//        applyCustomFont(elements, typefaceAsset, attrs, this);
 
         initialize();
     }
