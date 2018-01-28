@@ -8,4 +8,5 @@ public class Constants {
     public static final String EXTRA_LOCATION = "extraLocation";
     public static final String EXTRA_DATA = "extraData";
     public static final String EXTRA_POSITION = "extraPosition";
+    public static String INVALID_INPUT_TOAST = "Please provide a valid input!";
 }
