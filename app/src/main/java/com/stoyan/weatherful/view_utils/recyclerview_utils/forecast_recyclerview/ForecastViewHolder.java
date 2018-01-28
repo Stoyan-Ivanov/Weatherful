@@ -3,8 +3,8 @@ package com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclervie
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,11 +12,7 @@ import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.network.WeatherfulAPIImpl;
 import com.stoyan.weatherful.network.network_models.forecast_full_models.Data;
 
-import org.w3c.dom.Text;
-
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import butterknife.BindView;
@@ -46,37 +42,49 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public void bind(Data data) {
-        setDate(data);
-        setWeatherImage(data);
-        setTemperature(data);
-        setRainChance(data);
+    public void bind(final ArrayList<Data> data, final int position, final OnItemClickListener onItemClickListener) {
+        Data currData = data.get(position);
+
+        setDate(currData);
+        setWeatherImage(currData);
+        setTemperature(currData);
+        setRainChance(currData);
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClickListener.OnItemClick(data, position);
+            }
+        });
+
     }
 
-    private void setDate(Data data) {
-        Calendar date = Calendar.getInstance();
-        date.setTimeInMillis(Long.valueOf(data.getTime()) *1000);
-
-        String displayDate = date.get(Calendar.DAY_OF_MONTH) + "." + date.get(Calendar.MONTH)
-                                + "." + date.get(Calendar.YEAR);
-
-        dateHolder.setText(displayDate);
+    private void setDate(final Data data) {
+        dateHolder.setText(getDateFromTimestamp(data));
     }
 
-    private void setWeatherImage(Data data) {
+    private void setWeatherImage(final Data data) {
         weatherImage.setImageDrawable(getDrawableByName(data.getIcon()));
     }
 
-    private void setTemperature(Data data) {
+    private void setTemperature(final Data data) {
         String temp = "Temperature: " + data.getTemperatureLow()+ "\u2103" +
                 " - " + data.getTemperatureHigh() + "\u2103";
         temperature.setText(temp);
     }
 
-    private void setRainChance(Data data) {
+    private void setRainChance(final Data data) {
         double probability = Double.parseDouble(data.getPrecipProbability()) * 100;
         String displayRainChance = "Chance of raining: " + probability + "%";
         rainChance.setText(displayRainChance);
+    }
+
+    private String getDateFromTimestamp(final Data data) {
+        Calendar date = Calendar.getInstance();
+        date.setTimeInMillis(Long.valueOf(data.getTime()) * 1000);
+
+        return date.get(Calendar.DAY_OF_MONTH) + "." + date.get(Calendar.MONTH)
+                + "." + date.get(Calendar.YEAR);
     }
 
     private Drawable getDrawableByName(String drawableName) {

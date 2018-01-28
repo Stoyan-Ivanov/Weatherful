@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.stoyan.weatherful.forecast_activity.ForecastActivityPresenter;
 import com.stoyan.weatherful.models.Location;
 import com.stoyan.weatherful.network.network_models.forecast_full_models.ForecastFullResponse;
 import com.stoyan.weatherful.network.network_models.forecast_summary_models.ForecastSummaryResponse;

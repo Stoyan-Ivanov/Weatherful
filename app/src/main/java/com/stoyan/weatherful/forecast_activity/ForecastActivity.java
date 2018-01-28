@@ -29,7 +29,7 @@ public class ForecastActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        ForecastActivityPresenter provider = new ForecastActivityPresenter(getIntent());
+        ForecastActivityPresenter provider = new ForecastActivityPresenter(getIntent(), this);
 
         headerBar.setText(provider.getHeader());
 
