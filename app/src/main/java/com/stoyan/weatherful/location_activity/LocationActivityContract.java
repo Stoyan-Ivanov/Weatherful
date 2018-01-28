@@ -7,5 +7,8 @@ import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclervie
  */
 
 public interface LocationActivityContract {
+
     LocationsRecyclerviewAdapter getAdapter();
+
+    String getHeader();
 }

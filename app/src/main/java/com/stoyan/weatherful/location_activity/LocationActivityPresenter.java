@@ -35,4 +35,9 @@ public class LocationActivityPresenter implements LocationActivityContract{
             }
         });
     }
+
+    @Override
+    public String getHeader() {
+        return "Locations";
+    }
 }

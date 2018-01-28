@@ -7,8 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.stoyan.weatherful.R;
-import com.stoyan.weatherful.forecast_activity.ForecastActivity;
-import com.stoyan.weatherful.models.Location;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,12 +26,11 @@ public class LocationActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        LocationActivityPresenter locationActivityPresenter = new LocationActivityPresenter(this);
+        LocationActivityPresenter presenter = new LocationActivityPresenter(this);
 
-        headerBar.setText(R.string.location_activity_header);
+        headerBar.setText(presenter.getHeader());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(locationActivityPresenter.getAdapter());
-
+        recyclerView.setAdapter(presenter.getAdapter());
     }
 }
