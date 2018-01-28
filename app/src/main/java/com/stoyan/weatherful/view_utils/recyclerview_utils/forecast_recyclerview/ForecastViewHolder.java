@@ -3,7 +3,6 @@ package com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclervie
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,13 +27,13 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
     ImageView weatherImage;
 
     @BindView(R.id.tv_temperature)
-    TextView temperature;
+    TextView tvTemperature;
 
     @BindView(R.id.tv_chances_of_rain)
-    TextView rainChance;
+    TextView tvRainChance;
 
     @BindView(R.id.tv_date)
-    TextView dateHolder;
+    TextView tvDateHolder;
 
 
     public ForecastViewHolder(View itemView) {
@@ -60,7 +59,7 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void setDate(final Data data) {
-        dateHolder.setText(getDateFromTimestamp(data));
+        tvDateHolder.setText(getDateFromTimestamp(data));
     }
 
     private void setWeatherImage(final Data data) {
@@ -70,13 +69,13 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
     private void setTemperature(final Data data) {
         String temp = "Temperature: " + data.getTemperatureLow()+ "\u2103" +
                 " - " + data.getTemperatureHigh() + "\u2103";
-        temperature.setText(temp);
+        tvTemperature.setText(temp);
     }
 
     private void setRainChance(final Data data) {
         double probability = Double.parseDouble(data.getPrecipProbability()) * 100;
         String displayRainChance = "Chance of raining: " + probability + "%";
-        rainChance.setText(displayRainChance);
+        tvRainChance.setText(displayRainChance);
     }
 
     private String getDateFromTimestamp(final Data data) {

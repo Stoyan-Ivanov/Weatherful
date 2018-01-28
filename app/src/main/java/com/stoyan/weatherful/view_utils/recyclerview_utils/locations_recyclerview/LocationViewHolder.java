@@ -1,8 +1,6 @@
 package com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,7 +8,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.models.Location;
-import com.stoyan.weatherful.network.WeatherfulAPI;
 import com.stoyan.weatherful.network.WeatherfulAPIImpl;
 
 import butterknife.BindView;
@@ -26,13 +23,13 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
     ImageView locationPicture;
 
     @BindView(R.id.tv_location_name)
-    TextView locationName;
+    TextView tvLocationName;
 
     @BindView(R.id.tv_location_summary)
-    TextView forecastSummary;
+    TextView tvForecastSummary;
 
     @BindView(R.id.tv_location_temperature)
-    TextView temperature;
+    TextView tvTemperature;
 
 
     public LocationViewHolder(View itemView) {
@@ -50,7 +47,7 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
-        locationName.setText(location.getLocationName());
+        tvLocationName.setText(location.getLocationName());
 
         WeatherfulAPIImpl weatherfulAPI = new WeatherfulAPIImpl();
         weatherfulAPI.getLocationImageUrl(this, location);
@@ -73,7 +70,7 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
 
     public void setForecastSummary(String summary) {
         if(summary != null) {
-            forecastSummary.setText(summary);
+            tvForecastSummary.setText(summary);
         } else {
             throw new NullPointerException("Provide valid summary!");
         }
@@ -81,9 +78,9 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
 
     public void setTemperature(String temp) {
         if(temp != null) {
-            temperature.setText(temp);
+            tvTemperature.setText(temp);
         } else {
-            throw new NullPointerException("Provide valid temperature");
+            throw new NullPointerException("Provide valid tvTemperature");
         }
 
     }

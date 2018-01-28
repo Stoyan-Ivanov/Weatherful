@@ -51,9 +51,7 @@ public class DayForecastFragment extends Fragment {
         return fragment;
     }
 
-    public DayForecastFragment() {
-
-    }
+    public DayForecastFragment() {}
 
 
     @Override
@@ -62,14 +60,18 @@ public class DayForecastFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_day_forecast, container, false);
 
         presenter = new DayForecastFragmentPresenter(getArguments());
-
         unbinder = ButterKnife.bind(this, view);
 
         weatherImage.setImageDrawable(presenter.getImageDrawable());
+
         tvDate.setText(presenter.getDate());
+
         tvMinTemperature.setText(presenter.getMinTemperature());
+
         tvMaxTemperature.setText(presenter.getMaxTemperature());
+
         tvWindSpeed.setText(presenter.getWindSpeed());
+
         tvRainChance.setText(presenter.getRainChance());
 
         return view;

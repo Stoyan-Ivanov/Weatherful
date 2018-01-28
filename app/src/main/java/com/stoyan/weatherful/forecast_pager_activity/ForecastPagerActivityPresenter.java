@@ -2,9 +2,6 @@ package com.stoyan.weatherful.forecast_pager_activity;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-
 import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.day_forecast_fragment.DayForecastFragment;
 import com.stoyan.weatherful.models.Location;
@@ -50,7 +47,7 @@ public class ForecastPagerActivityPresenter implements ForecastPagerActivityCont
 
     @Override
     public int getOffScreenLimit() {
-        return fragments.isEmpty() ? 0: fragments.size();
+        return fragments.isEmpty() ? 0: 3;
     }
 
     @Override
