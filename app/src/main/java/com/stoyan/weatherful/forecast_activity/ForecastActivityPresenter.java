@@ -2,6 +2,8 @@ package com.stoyan.weatherful.forecast_activity;
 
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 
 import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.models.Location;
