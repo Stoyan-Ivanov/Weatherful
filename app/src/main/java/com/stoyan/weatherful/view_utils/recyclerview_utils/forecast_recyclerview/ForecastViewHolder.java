@@ -3,16 +3,21 @@ package com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclervie
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.network.WeatherfulAPIImpl;
 import com.stoyan.weatherful.network.network_models.forecast_full_models.Data;
+
+import org.w3c.dom.Text;
+
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,8 +37,8 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.tv_chances_of_rain)
     TextView rainChance;
 
-    @BindView(R.id.date)
-    EditText date;
+    @BindView(R.id.tv_date)
+    TextView dateHolder;
 
 
     public ForecastViewHolder(View itemView) {
@@ -42,19 +47,20 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Data data) {
+        setDate(data);
         setWeatherImage(data);
         setTemperature(data);
         setRainChance(data);
     }
 
-    private void setRainChance(Data data) {
-        double probability = Double.parseDouble(data.getPrecipProbability()) * 100;
-        rainChance.setText(probability + "%");
-    }
+    private void setDate(Data data) {
+        Calendar date = Calendar.getInstance();
+        date.setTimeInMillis(Long.valueOf(data.getTime()) *1000);
 
-    private void setTemperature(Data data) {
-        String temp = data.getApparentTemperatureLow() + " - " + data.getApparentTemperatureHigh();
-        temperature.setText(temp);
+        String displayDate = date.get(Calendar.DAY_OF_MONTH) + "." + date.get(Calendar.MONTH)
+                                + "." + date.get(Calendar.YEAR);
+
+        dateHolder.setText(displayDate);
     }
 
     private void setWeatherImage(Data data) {
@@ -67,5 +73,17 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
         Drawable drawable = context.getResources().getDrawable(resID );
 
         weatherImage.setImageDrawable(drawable);
+    }
+
+    private void setTemperature(Data data) {
+        String temp = "Temperature: " + data.getTemperatureLow()+ "\u2103" +
+                " - " + data.getTemperatureHigh() + "\u2103";
+        temperature.setText(temp);
+    }
+
+    private void setRainChance(Data data) {
+        double probability = Double.parseDouble(data.getPrecipProbability()) * 100;
+        String displayRainChance = "Chance of raining: " + probability + "%";
+        rainChance.setText(displayRainChance);
     }
 }
