@@ -1,4 +1,4 @@
-package com.stoyan.weatherful.ui.location_activity.locations_provider;
+package com.stoyan.weatherful.locations_provider;
 
 import com.stoyan.weatherful.models.Location;
 
@@ -10,4 +10,6 @@ import java.util.ArrayList;
 
 public interface LocationsProviderContract {
     ArrayList<Location> getLocations();
+
+    boolean saveLocation(Location location);
 }

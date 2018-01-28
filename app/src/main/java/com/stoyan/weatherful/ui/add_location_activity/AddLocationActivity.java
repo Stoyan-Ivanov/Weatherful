@@ -28,7 +28,7 @@ public class AddLocationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_location);
 
         ButterKnife.bind(this);
-        final AddLocationActivityPresenter presenter = new AddLocationActivityPresenter();
+        final AddLocationActivityPresenter presenter = new AddLocationActivityPresenter(this);
 
         btnAddLocation.setOnClickListener(new View.OnClickListener() {
             @Override
