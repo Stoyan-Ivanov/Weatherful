@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="200dp"
     android:background="@color/lightRVBlue"
-    android:elevation="2dp">
+    android:elevation="2dp"
+    android:layout_marginBottom="5dp">
 
     <ImageView
         android:id="@+id/iv_location"

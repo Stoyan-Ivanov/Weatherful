@@ -12,15 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".location_activity.LocationActivity">
+        <activity android:name=".ui.location_activity.LocationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".forecast_activity.ForecastActivity" />
-        <activity android:name=".forecast_pager_activity.ForecastPagerActivity"></activity>
+        <activity android:name=".ui.forecast_activity.ForecastActivity" />
+        <activity android:name=".ui.forecast_pager_activity.ForecastPagerActivity" />
+        <activity android:name=".ui.add_location_activity.AddLocationActivity"></activity>
     </application>
 
 </manifest>

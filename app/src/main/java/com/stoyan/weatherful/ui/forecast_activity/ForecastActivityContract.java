@@ -1,4 +1,4 @@
-package com.stoyan.weatherful.forecast_activity;
+package com.stoyan.weatherful.ui.forecast_activity;
 
 
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.stoyan.weatherful.day_forecast_fragment;
+package com.stoyan.weatherful.ui.day_forecast_fragment;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

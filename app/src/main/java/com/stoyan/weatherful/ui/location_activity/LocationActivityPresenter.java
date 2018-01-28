@@ -1,10 +1,11 @@
-package com.stoyan.weatherful.location_activity;
+package com.stoyan.weatherful.ui.location_activity;
 
 import android.content.Intent;
 
 import com.stoyan.weatherful.Constants;
-import com.stoyan.weatherful.forecast_activity.ForecastActivity;
-import com.stoyan.weatherful.location_activity.locations_provider.LocationsProvider;
+import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
+import com.stoyan.weatherful.ui.forecast_activity.ForecastActivity;
+import com.stoyan.weatherful.ui.location_activity.locations_provider.LocationsProvider;
 import com.stoyan.weatherful.models.Location;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationsRecyclerviewAdapter;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.OnItemClickListener;
@@ -36,8 +37,8 @@ public class LocationActivityPresenter implements LocationActivityContract{
         });
     }
 
-    @Override
-    public String getHeader() {
-        return "Locations";
+    public void fabOnclick() {
+        Intent intent = new Intent(activity, AddLocationActivity.class);
+        activity.startActivity(intent);
     }
 }

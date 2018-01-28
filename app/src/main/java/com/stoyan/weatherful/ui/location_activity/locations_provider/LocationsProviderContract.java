@@ -1,4 +1,4 @@
-package com.stoyan.weatherful.location_activity.locations_provider;
+package com.stoyan.weatherful.ui.location_activity.locations_provider;
 
 import com.stoyan.weatherful.models.Location;
 
