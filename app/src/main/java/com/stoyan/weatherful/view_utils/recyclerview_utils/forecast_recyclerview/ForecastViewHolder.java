@@ -64,15 +64,7 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void setWeatherImage(Data data) {
-        String iconName = data.getIcon();
-
-        iconName = iconName.replaceAll("-","_").toLowerCase();
-
-        Context context = WeatherfulAPIImpl.getStaticContext();
-        int resID = context.getResources().getIdentifier(iconName , "drawable", context.getPackageName());
-        Drawable drawable = context.getResources().getDrawable(resID );
-
-        weatherImage.setImageDrawable(drawable);
+        weatherImage.setImageDrawable(getDrawableByName(data.getIcon()));
     }
 
     private void setTemperature(Data data) {
@@ -85,5 +77,14 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
         double probability = Double.parseDouble(data.getPrecipProbability()) * 100;
         String displayRainChance = "Chance of raining: " + probability + "%";
         rainChance.setText(displayRainChance);
+    }
+
+    private Drawable getDrawableByName(String drawableName) {
+        drawableName = drawableName.replaceAll("-","_").toLowerCase();
+
+        Context context = WeatherfulAPIImpl.getStaticContext();
+        int resID = context.getResources().getIdentifier(drawableName , "drawable", context.getPackageName());
+
+        return context.getResources().getDrawable(resID );
     }
 }
