@@ -1,9 +1,11 @@
-package com.stoyan.weatherful.location_activity;
+package com.stoyan.weatherful.ui.location_activity;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.stoyan.weatherful.R;
@@ -19,18 +21,29 @@ public class LocationActivity extends AppCompatActivity {
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
 
+    @BindView(R.id.fab_add)
+    FloatingActionButton fabAddLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base_recyclerview);
 
         ButterKnife.bind(this);
+        fabAddLocation.setVisibility(View.VISIBLE);
 
-        LocationActivityPresenter presenter = new LocationActivityPresenter(this);
+        final LocationActivityPresenter presenter = new LocationActivityPresenter(this);
 
-        headerBar.setText(presenter.getHeader());
+        headerBar.setText(R.string.location_activity_header);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(presenter.getAdapter());
+
+        fabAddLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.fabOnclick();
+            }
+        });
     }
 }

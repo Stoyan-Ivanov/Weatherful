@@ -3,8 +3,9 @@ package com.stoyan.weatherful.network;
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.Toast;
 
-import com.stoyan.weatherful.forecast_activity.ForecastActivityPresenter;
 import com.stoyan.weatherful.models.Location;
 import com.stoyan.weatherful.network.network_models.forecast_full_models.ForecastFullResponse;
 import com.stoyan.weatherful.network.network_models.forecast_summary_models.ForecastSummaryResponse;
@@ -25,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Stoyan on 27.1.2018 г..
  */
 
-public class WeatherfulAPIImpl extends Application implements WeatherfulAPIImplContract{
+public class WeatherfulApplication extends Application implements WeatherfulAPIImplContract{
     private static Context applicationContext;
     private static Retrofit retrofit;
     private static WeatherfulAPI api;
@@ -124,6 +125,11 @@ public class WeatherfulAPIImpl extends Application implements WeatherfulAPIImplC
 
     }
 
+    public static void showToast(String text) {
+        Toast toast=Toast.makeText(applicationContext, text,Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
+        toast.show();
+    }
 
     public static Context getStaticContext() {
         return applicationContext;

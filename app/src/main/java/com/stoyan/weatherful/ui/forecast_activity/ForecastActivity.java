@@ -1,15 +1,12 @@
-package com.stoyan.weatherful.forecast_activity;
+package com.stoyan.weatherful.ui.forecast_activity;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
-import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
-import com.stoyan.weatherful.models.Location;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

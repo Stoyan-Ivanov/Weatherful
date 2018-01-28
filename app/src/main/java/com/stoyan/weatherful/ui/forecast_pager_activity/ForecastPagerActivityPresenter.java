@@ -1,9 +1,9 @@
-package com.stoyan.weatherful.forecast_pager_activity;
+package com.stoyan.weatherful.ui.forecast_pager_activity;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import com.stoyan.weatherful.Constants;
-import com.stoyan.weatherful.day_forecast_fragment.DayForecastFragment;
+import com.stoyan.weatherful.ui.day_forecast_fragment.DayForecastFragment;
 import com.stoyan.weatherful.models.Location;
 import com.stoyan.weatherful.network.network_models.forecast_full_models.Data;
 import com.stoyan.weatherful.view_utils.CustomPagerAdapter;

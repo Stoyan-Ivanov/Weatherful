@@ -8,4 +8,6 @@ import com.stoyan.weatherful.models.Location;
 
 public interface OnItemClickListener {
     void OnItemClick(Location location);
+
+    void OnItemLongClick(Location location);
 }

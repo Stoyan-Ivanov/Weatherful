@@ -1,4 +1,4 @@
-package com.stoyan.weatherful.forecast_pager_activity;
+package com.stoyan.weatherful.ui.forecast_pager_activity;
 
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;

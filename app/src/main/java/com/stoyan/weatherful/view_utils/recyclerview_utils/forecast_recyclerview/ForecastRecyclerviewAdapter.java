@@ -1,17 +1,14 @@
 package com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.models.Location;
-import com.stoyan.weatherful.network.WeatherfulAPIImpl;
+import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.network.network_models.forecast_full_models.Data;
-import com.stoyan.weatherful.network.network_models.forecast_full_models.ForecastFullResponse;
-import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationViewHolder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +25,7 @@ public class ForecastRecyclerviewAdapter extends RecyclerView.Adapter<ForecastVi
     public ForecastRecyclerviewAdapter(Location location, OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
 
-        WeatherfulAPIImpl weatherfulAPI = new WeatherfulAPIImpl();
+        WeatherfulApplication weatherfulAPI = new WeatherfulApplication();
         weatherfulAPI.getWeeklyForecast(location, this);
     }
 
