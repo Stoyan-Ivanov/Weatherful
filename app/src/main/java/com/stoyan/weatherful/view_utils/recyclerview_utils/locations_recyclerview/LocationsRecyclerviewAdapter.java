@@ -29,7 +29,7 @@ public class LocationsRecyclerviewAdapter extends RecyclerView.Adapter<LocationV
         View view = inflater.from(parent.getContext())
                 .inflate(R.layout.location_viewholder, parent, false);
 
-        return new LocationViewHolder(view);
+        return new LocationViewHolder(view, this);
     }
 
     @Override
@@ -40,5 +40,9 @@ public class LocationsRecyclerviewAdapter extends RecyclerView.Adapter<LocationV
     @Override
     public int getItemCount() {
         return locations.size();
+    }
+
+     ArrayList<Location> getLocations() {
+        return locations;
     }
 }

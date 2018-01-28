@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import com.stoyan.weatherful.Constants;
-import com.stoyan.weatherful.network.WeatherfulAPIImpl;
+import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.network.network_models.forecast_full_models.Data;
 
 import java.util.Calendar;
@@ -31,7 +31,7 @@ public class DayForecastFragmentPresenter implements DayForcastActivityContract 
         String drawableName = data.getIcon();
         drawableName = drawableName.replaceAll("-", "_").toLowerCase();
 
-        Context context = WeatherfulAPIImpl.getStaticContext();
+        Context context = WeatherfulApplication.getStaticContext();
         int resID = context.getResources().getIdentifier(drawableName, "drawable", context.getPackageName());
 
         return context.getResources().getDrawable(resID);

@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.models.Location;
-import com.stoyan.weatherful.network.WeatherfulAPIImpl;
+import com.stoyan.weatherful.network.WeatherfulApplication;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,9 +31,11 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.tv_location_temperature)
     TextView tvTemperature;
 
+    private LocationsRecyclerviewAdapter adapter;
 
-    public LocationViewHolder(View itemView) {
+    public LocationViewHolder(View itemView, LocationsRecyclerviewAdapter adapter) {
         super(itemView);
+        this.adapter = adapter;
     }
 
     public void bind(final Location location, final OnItemClickListener onItemClickListener) {
@@ -47,12 +49,27 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
+        itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                onItemClickListener.OnItemLongClick(location);
+                removeItem();
+                return false;
+            }
+        });
+
         tvLocationName.setText(location.getLocationName());
 
-        WeatherfulAPIImpl weatherfulAPI = new WeatherfulAPIImpl();
+        WeatherfulApplication weatherfulAPI = new WeatherfulApplication();
         weatherfulAPI.getLocationImageUrl(this, location);
         weatherfulAPI.getForecastSummary(this, location);
 
+    }
+
+    private void removeItem() {
+        adapter.getLocations().remove(getAdapterPosition());
+        adapter.notifyItemRemoved(getAdapterPosition());
+        adapter.notifyItemRangeChanged(getAdapterPosition(), adapter.getLocations().size());
     }
 
     public void setLocationPicture(String url) {

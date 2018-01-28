@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.stoyan.weatherful.R;
-import com.stoyan.weatherful.network.WeatherfulAPIImpl;
+import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.network.network_models.forecast_full_models.Data;
 
 import java.util.ArrayList;
@@ -89,7 +89,7 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
     private Drawable getDrawableByName(String drawableName) {
         drawableName = drawableName.replaceAll("-","_").toLowerCase();
 
-        Context context = WeatherfulAPIImpl.getStaticContext();
+        Context context = WeatherfulApplication.getStaticContext();
         int resID = context.getResources().getIdentifier(drawableName , "drawable", context.getPackageName());
 
         return context.getResources().getDrawable(resID );

@@ -1,11 +1,8 @@
 package com.stoyan.weatherful.locations_provider;
 
-import android.view.Gravity;
-import android.widget.Toast;
-
 import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.models.Location;
-import com.stoyan.weatherful.network.WeatherfulAPIImpl;
+import com.stoyan.weatherful.network.WeatherfulApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +18,7 @@ import static io.paperdb.Paper.book;
 public class LocationsProvider implements LocationsProviderContract {
 
     public LocationsProvider() {
-        Paper.init(WeatherfulAPIImpl.getStaticContext());
+        Paper.init(WeatherfulApplication.getStaticContext());
     }
 
     @Override
@@ -47,9 +44,14 @@ public class LocationsProvider implements LocationsProviderContract {
             book().write(location.getLocationName() + location.getCountry(), location);
             return true;
         } else {
-            showDuplicationToast();
+            WeatherfulApplication.showToast(Constants.DUPLICATION_WHEN_ADDING_TOAST);
             return false;
         }
+    }
+
+    public void deleteLocation(Location location) {
+        Paper.book().delete(location.getLocationName() + location.getCountry());
+        WeatherfulApplication.showToast(Constants.SUCCESSFUL_DELETING);
     }
 
     private boolean checkIfLocationExists(Location location) {
@@ -57,12 +59,5 @@ public class LocationsProvider implements LocationsProviderContract {
             return true;
         }
         return false;
-    }
-
-    private void showDuplicationToast() {
-        Toast toast=Toast.makeText(WeatherfulAPIImpl.getStaticContext(),
-                Constants.DUPLICATION_WHEN_ADDING_TOAST,Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
-        toast.show();
     }
 }

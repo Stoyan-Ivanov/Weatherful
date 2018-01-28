@@ -34,6 +34,12 @@ public class LocationActivityPresenter implements LocationActivityContract{
                 intent.putExtra(Constants.EXTRA_LOCATION, location);
                 activity.startActivity(intent);
             }
+
+            @Override
+            public void OnItemLongClick(Location location) {
+                LocationsProvider locationsProvider = new LocationsProvider();
+                locationsProvider.deleteLocation(location);
+            }
         });
     }
 
