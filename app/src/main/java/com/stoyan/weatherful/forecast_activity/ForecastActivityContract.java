@@ -13,6 +13,5 @@ public interface ForecastActivityContract {
 
     ForecastRecyclerviewAdapter getAdapter();
     String getHeader();
-    void startActivity();
     void getExtras(Intent intent);
 }

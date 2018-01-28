@@ -1,6 +1,7 @@
 package com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,7 @@ public class ForecastRecyclerviewAdapter extends RecyclerView.Adapter<ForecastVi
 
     @Override
     public void onBindViewHolder(ForecastViewHolder holder, int position) {
-        holder.bind(weeklyForecast.get(position));
+        holder.bind(weeklyForecast, position, onItemClickListener);
     }
 
     @Override

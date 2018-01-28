@@ -6,4 +6,6 @@ package com.stoyan.weatherful;
 
 public class Constants {
     public static final String EXTRA_LOCATION = "extraLocation";
+    public static final String EXTRA_DATA = "extraData";
+    public static final String EXTRA_POSITION = "extraPosition";
 }

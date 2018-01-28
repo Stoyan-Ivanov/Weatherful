@@ -1,10 +1,12 @@
 package com.stoyan.weatherful.network.network_models.forecast_full_models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Stoyan on 27.1.2018 г..
  */
-
-public class Data {
+public class Data implements Parcelable {
     private String temperatureMinTime;
 
     private String sunsetTime;
@@ -478,4 +480,107 @@ public class Data {
     {
         return "ClassPojo [temperatureMinTime = "+temperatureMinTime+", sunsetTime = "+sunsetTime+", summary = "+summary+", precipIntensityMaxTime = "+precipIntensityMaxTime+", visibility = "+visibility+", temperatureLowTime = "+temperatureLowTime+", temperatureHighTime = "+temperatureHighTime+", temperatureLow = "+temperatureLow+", precipIntensity = "+precipIntensity+", precipIntensityMax = "+precipIntensityMax+", ozone = "+ozone+", time = "+time+", apparentTemperatureMaxTime = "+apparentTemperatureMaxTime+", uvIndex = "+uvIndex+", apparentTemperatureHighTime = "+apparentTemperatureHighTime+", temperatureHigh = "+temperatureHigh+", icon = "+icon+", windGust = "+windGust+", apparentTemperatureLowTime = "+apparentTemperatureLowTime+", temperatureMaxTime = "+temperatureMaxTime+", pressure = "+pressure+", cloudCover = "+cloudCover+", apparentTemperatureMinTime = "+apparentTemperatureMinTime+", temperatureMin = "+temperatureMin+", precipType = "+precipType+", apparentTemperatureLow = "+apparentTemperatureLow+", dewPoint = "+dewPoint+", sunriseTime = "+sunriseTime+", windSpeed = "+windSpeed+", humidity = "+humidity+", apparentTemperatureMax = "+apparentTemperatureMax+", windBearing = "+windBearing+", moonPhase = "+moonPhase+", precipProbability = "+precipProbability+", windGustTime = "+windGustTime+", apparentTemperatureMin = "+apparentTemperatureMin+", uvIndexTime = "+uvIndexTime+", temperatureMax = "+temperatureMax+", apparentTemperatureHigh = "+apparentTemperatureHigh+"]";
     }
+
+    protected Data(Parcel in) {
+        temperatureMinTime = in.readString();
+        sunsetTime = in.readString();
+        summary = in.readString();
+        precipIntensityMaxTime = in.readString();
+        visibility = in.readString();
+        temperatureLowTime = in.readString();
+        temperatureHighTime = in.readString();
+        temperatureLow = in.readString();
+        precipIntensity = in.readString();
+        precipIntensityMax = in.readString();
+        ozone = in.readString();
+        time = in.readString();
+        apparentTemperatureMaxTime = in.readString();
+        uvIndex = in.readString();
+        apparentTemperatureHighTime = in.readString();
+        temperatureHigh = in.readString();
+        icon = in.readString();
+        windGust = in.readString();
+        apparentTemperatureLowTime = in.readString();
+        temperatureMaxTime = in.readString();
+        pressure = in.readString();
+        cloudCover = in.readString();
+        apparentTemperatureMinTime = in.readString();
+        temperatureMin = in.readString();
+        precipType = in.readString();
+        apparentTemperatureLow = in.readString();
+        dewPoint = in.readString();
+        sunriseTime = in.readString();
+        windSpeed = in.readString();
+        humidity = in.readString();
+        apparentTemperatureMax = in.readString();
+        windBearing = in.readString();
+        moonPhase = in.readString();
+        precipProbability = in.readString();
+        windGustTime = in.readString();
+        apparentTemperatureMin = in.readString();
+        uvIndexTime = in.readString();
+        temperatureMax = in.readString();
+        apparentTemperatureHigh = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(temperatureMinTime);
+        dest.writeString(sunsetTime);
+        dest.writeString(summary);
+        dest.writeString(precipIntensityMaxTime);
+        dest.writeString(visibility);
+        dest.writeString(temperatureLowTime);
+        dest.writeString(temperatureHighTime);
+        dest.writeString(temperatureLow);
+        dest.writeString(precipIntensity);
+        dest.writeString(precipIntensityMax);
+        dest.writeString(ozone);
+        dest.writeString(time);
+        dest.writeString(apparentTemperatureMaxTime);
+        dest.writeString(uvIndex);
+        dest.writeString(apparentTemperatureHighTime);
+        dest.writeString(temperatureHigh);
+        dest.writeString(icon);
+        dest.writeString(windGust);
+        dest.writeString(apparentTemperatureLowTime);
+        dest.writeString(temperatureMaxTime);
+        dest.writeString(pressure);
+        dest.writeString(cloudCover);
+        dest.writeString(apparentTemperatureMinTime);
+        dest.writeString(temperatureMin);
+        dest.writeString(precipType);
+        dest.writeString(apparentTemperatureLow);
+        dest.writeString(dewPoint);
+        dest.writeString(sunriseTime);
+        dest.writeString(windSpeed);
+        dest.writeString(humidity);
+        dest.writeString(apparentTemperatureMax);
+        dest.writeString(windBearing);
+        dest.writeString(moonPhase);
+        dest.writeString(precipProbability);
+        dest.writeString(windGustTime);
+        dest.writeString(apparentTemperatureMin);
+        dest.writeString(uvIndexTime);
+        dest.writeString(temperatureMax);
+        dest.writeString(apparentTemperatureHigh);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Data> CREATOR = new Parcelable.Creator<Data>() {
+        @Override
+        public Data createFromParcel(Parcel in) {
+            return new Data(in);
+        }
+
+        @Override
+        public Data[] newArray(int size) {
+            return new Data[size];
+        }
+    };
 }

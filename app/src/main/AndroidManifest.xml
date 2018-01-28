@@ -19,7 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".forecast_activity.ForecastActivity"></activity>
+        <activity android:name=".forecast_activity.ForecastActivity" />
+        <activity android:name=".forecast_pager_activity.ForecastPagerActivity"></activity>
     </application>
 
 </manifest>
