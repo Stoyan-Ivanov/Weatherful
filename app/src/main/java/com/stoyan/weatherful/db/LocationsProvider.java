@@ -1,7 +1,6 @@
-package com.stoyan.weatherful.locations_provider;
+package com.stoyan.weatherful.db;
 
 import com.stoyan.weatherful.Constants;
-import com.stoyan.weatherful.models.Location;
 import com.stoyan.weatherful.network.WeatherfulApplication;
 
 import java.util.ArrayList;
@@ -24,8 +23,6 @@ public class LocationsProvider implements LocationsProviderContract {
     @Override
     public ArrayList<Location> getLocations() {
         ArrayList<Location> locations = new ArrayList<>();
-
-        locations.add(new Location("Sofia", "Bulgaria", 42.69751, 23.32415));
 
         List<String> allKeys= Paper.book().getAllKeys();
 

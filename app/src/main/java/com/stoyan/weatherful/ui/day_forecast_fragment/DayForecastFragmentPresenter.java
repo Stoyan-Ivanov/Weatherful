@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.network.WeatherfulApplication;
-import com.stoyan.weatherful.network.network_models.forecast_full_models.Data;
+import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 
 import java.util.Calendar;
 
@@ -14,7 +14,7 @@ import java.util.Calendar;
  * Created by Stoyan on 28.1.2018 г..
  */
 
-public class DayForecastFragmentPresenter implements DayForcastActivityContract {
+public class DayForecastFragmentPresenter implements DayForcastFragmentContract {
     private Data data;
 
     public DayForecastFragmentPresenter(final Bundle arguments) {

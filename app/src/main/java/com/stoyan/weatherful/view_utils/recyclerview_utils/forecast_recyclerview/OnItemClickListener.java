@@ -1,6 +1,6 @@
 package com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview;
 
-import com.stoyan.weatherful.network.network_models.forecast_full_models.Data;
+import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 
 import java.util.ArrayList;
 

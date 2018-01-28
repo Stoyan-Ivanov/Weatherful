@@ -1,18 +1,15 @@
-package com.stoyan.weatherful.network.network_models.forecast_summary_models;
-
-import java.util.ArrayList;
+package com.stoyan.weatherful.network.models.forecast_full_models;
 
 /**
- * Created by Stoyan on 27.1.2018 г..
+ * Created by Stoyan on 28.1.2018 г..
  */
 
-public class Hourly {
-
+public class Daily {
     private String summary;
 
     private String icon;
 
-    private ArrayList<Data> data;
+    private Data[] data;
 
     public String getSummary ()
     {
@@ -34,12 +31,12 @@ public class Hourly {
         this.icon = icon;
     }
 
-    public ArrayList<Data> getData ()
+    public Data[] getData ()
     {
         return data;
     }
 
-    public void setData (ArrayList<Data> data)
+    public void setData (Data[] data)
     {
         this.data = data;
     }

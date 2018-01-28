@@ -1,6 +1,6 @@
-package com.stoyan.weatherful.locations_provider;
+package com.stoyan.weatherful.db;
 
-import com.stoyan.weatherful.models.Location;
+import com.stoyan.weatherful.db.Location;
 
 import java.util.ArrayList;
 

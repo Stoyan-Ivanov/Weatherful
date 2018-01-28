@@ -1,4 +1,4 @@
-package com.stoyan.weatherful.models;
+package com.stoyan.weatherful.db;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -41,6 +41,11 @@ public class Location implements Parcelable {
         country = in.readString();
         latitude = in.readDouble();
         longitude = in.readDouble();
+    }
+
+    @Override
+    public String toString() {
+        return locationName + "," + country;
     }
 
     @Override

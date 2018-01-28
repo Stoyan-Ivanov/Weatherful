@@ -1,4 +1,4 @@
-package com.stoyan.weatherful.network.network_models.forecast_summary_models;
+package com.stoyan.weatherful.network.models.forecast_summary_models;
 
 /**
  * Created by Stoyan on 27.1.2018 г..

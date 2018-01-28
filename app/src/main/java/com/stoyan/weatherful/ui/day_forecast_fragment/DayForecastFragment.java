@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
-import com.stoyan.weatherful.network.network_models.forecast_full_models.Data;
+import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -1,4 +1,4 @@
-package com.stoyan.weatherful.network.network_models.image_response_models;
+package com.stoyan.weatherful.network.models.image_response_models;
 
 import com.google.gson.annotations.SerializedName;
 

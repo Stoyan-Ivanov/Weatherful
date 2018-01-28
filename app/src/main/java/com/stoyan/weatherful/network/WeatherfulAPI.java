@@ -1,8 +1,8 @@
 package com.stoyan.weatherful.network;
 
-import com.stoyan.weatherful.network.network_models.forecast_full_models.ForecastFullResponse;
-import com.stoyan.weatherful.network.network_models.forecast_summary_models.ForecastSummaryResponse;
-import com.stoyan.weatherful.network.network_models.image_response_models.ImageResponse;
+import com.stoyan.weatherful.network.models.forecast_full_models.ForecastFullResponse;
+import com.stoyan.weatherful.network.models.forecast_summary_models.ForecastSummaryResponse;
+import com.stoyan.weatherful.network.models.image_response_models.ImageResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -14,8 +14,6 @@ import retrofit2.http.Query;
  */
 
 public interface WeatherfulAPI {
-    @GET("images?")
-    Call<ImageResponse> getLocationImage(@Query("q") String searchedLocation);
 
     @GET("{latitude},{longitude}?exclude=currently,minutely,daily,alerts&&units=si")
     Call<ForecastSummaryResponse> getForecastSummaryResponse(@Path("latitude") double latitude,

@@ -7,7 +7,7 @@ import android.os.Bundle;
  * Created by Stoyan on 28.1.2018 г..
  */
 
-public interface DayForcastActivityContract {
+public interface DayForcastFragmentContract {
 
     void getExtras(Bundle bundle);
 

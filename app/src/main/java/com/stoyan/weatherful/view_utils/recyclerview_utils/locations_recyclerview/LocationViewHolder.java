@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.stoyan.weatherful.R;
-import com.stoyan.weatherful.models.Location;
+import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.WeatherfulApplication;
 
 import butterknife.BindView;

@@ -1,6 +1,6 @@
 package com.stoyan.weatherful.network;
 
-import com.stoyan.weatherful.models.Location;
+import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview.ForecastRecyclerviewAdapter;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationViewHolder;
 
@@ -8,7 +8,7 @@ import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclervie
  * Created by Stoyan on 27.1.2018 г..
  */
 
-public interface WeatherfulAPIImplContract {
+public interface NetworkManagerContract {
     void getLocationImageUrl(LocationViewHolder viewHolder, Location locaton);
 
     void getForecastSummary(LocationViewHolder viewHolder, Location locaton);

@@ -1,6 +1,6 @@
 package com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview;
 
-import com.stoyan.weatherful.models.Location;
+import com.stoyan.weatherful.db.Location;
 
 /**
  * Created by Stoya on 27.1.2018 г..

@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import com.stoyan.weatherful.Constants;
-import com.stoyan.weatherful.locations_provider.LocationsProvider;
-import com.stoyan.weatherful.models.Location;
+import com.stoyan.weatherful.db.LocationsProvider;
+import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.ui.location_activity.LocationActivity;
 

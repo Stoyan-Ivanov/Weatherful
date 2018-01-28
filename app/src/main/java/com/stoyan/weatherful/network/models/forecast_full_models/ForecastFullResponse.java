@@ -1,27 +1,24 @@
-package com.stoyan.weatherful.network.network_models.forecast_summary_models;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+package com.stoyan.weatherful.network.models.forecast_full_models;
 
 /**
  * Created by Stoyan on 27.1.2018 г..
  */
 
-public class ForecastSummaryResponse {
+public class ForecastFullResponse {
     private String timezone;
 
     private String longitude;
 
     private String latitude;
 
-    private Hourly hourly;
+    private Daily daily;
 
-    public Hourly getHourly() {
-        return hourly;
+    public Daily getDaily() {
+        return daily;
     }
 
-    public void setHourly(Hourly hourly) {
-        this.hourly = hourly;
+    public void setDaily(Daily daily) {
+        this.daily = daily;
     }
 
     public String getTimezone ()
@@ -54,4 +51,9 @@ public class ForecastSummaryResponse {
         this.latitude = latitude;
     }
 
+    @Override
+    public String toString()
+    {
+        return "ClassPojo [timezone = "+timezone+", longitude = "+longitude+", latitude = "+latitude+"]";
+    }
 }

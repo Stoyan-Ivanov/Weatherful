@@ -26,11 +26,11 @@ public class ForecastActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        ForecastActivityPresenter provider = new ForecastActivityPresenter(getIntent(), this);
+        ForecastActivityPresenter presenter = new ForecastActivityPresenter(getIntent(), this);
 
-        headerBar.setText(provider.getHeader());
+        headerBar.setText(presenter.getHeader());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(provider.getAdapter());
+        recyclerView.setAdapter(presenter.getAdapter());
     }
 }

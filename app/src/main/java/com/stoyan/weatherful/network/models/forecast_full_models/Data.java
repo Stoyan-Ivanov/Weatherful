@@ -1,4 +1,4 @@
-package com.stoyan.weatherful.network.network_models.forecast_full_models;
+package com.stoyan.weatherful.network.models.forecast_full_models;
 
 import android.os.Parcel;
 import android.os.Parcelable;

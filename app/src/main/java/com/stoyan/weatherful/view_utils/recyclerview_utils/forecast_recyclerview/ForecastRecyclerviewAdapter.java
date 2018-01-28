@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.stoyan.weatherful.R;
-import com.stoyan.weatherful.models.Location;
+import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.WeatherfulApplication;
-import com.stoyan.weatherful.network.network_models.forecast_full_models.Data;
+import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -4,8 +4,8 @@ package com.stoyan.weatherful.ui.forecast_activity;
 import android.content.Intent;
 import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.ui.forecast_pager_activity.ForecastPagerActivity;
-import com.stoyan.weatherful.models.Location;
-import com.stoyan.weatherful.network.network_models.forecast_full_models.Data;
+import com.stoyan.weatherful.db.Location;
+import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview.ForecastRecyclerviewAdapter;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview.OnItemClickListener;
 
