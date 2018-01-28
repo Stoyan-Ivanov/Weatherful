@@ -5,9 +5,11 @@ import android.content.Context;
 import android.util.Log;
 
 import com.stoyan.weatherful.models.Location;
+import com.stoyan.weatherful.network.network_models.forecast_full_models.ForecastFullResponse;
 import com.stoyan.weatherful.network.network_models.forecast_summary_models.ForecastSummaryResponse;
 import com.stoyan.weatherful.network.network_models.image_response_models.ImageResponse;
 import com.stoyan.weatherful.network.network_models.image_response_models.Picture;
+import com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview.ForecastRecyclerviewAdapter;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationViewHolder;
 
 import java.util.ArrayList;
@@ -44,7 +46,7 @@ public class WeatherfulAPIImpl extends Application implements WeatherfulAPIImplC
     }
 
     @Override
-    public void getLocationImageUrl(final LocationViewHolder viewHolder, Location location) {
+    public void getLocationImageUrl(final LocationViewHolder viewHolder, final Location location) {
         createRetrofitInstance(NetworkConstants.IMAGES_API_URL);
 
         String searchedLocation = location.getLocationName() + "," + location.getCountry();
@@ -69,11 +71,11 @@ public class WeatherfulAPIImpl extends Application implements WeatherfulAPIImplC
     }
 
     @Override
-    public void getForecastSummary(final LocationViewHolder viewHolder, Location locaton) {
-        createRetrofitInstance(NetworkConstants.FORECAST_SUMMARY_API_URL);
+    public void getForecastSummary(final LocationViewHolder viewHolder, final Location location) {
+        createRetrofitInstance(NetworkConstants.FORECAST_API_URL);
 
-        Call<ForecastSummaryResponse> call = api.getForecastSummaryResponse(locaton.getLatitude(),
-                                                                            locaton.getLongitude());
+        Call<ForecastSummaryResponse> call = api.getForecastSummaryResponse(location.getLatitude(),
+                                                                            location.getLongitude());
 
         call.enqueue(new Callback<ForecastSummaryResponse>() {
             @Override
@@ -95,6 +97,32 @@ public class WeatherfulAPIImpl extends Application implements WeatherfulAPIImplC
         });
 
     }
+
+    @Override
+    public void getWeeklyForecast(final Location location, final ForecastRecyclerviewAdapter adapter) {
+        createRetrofitInstance(NetworkConstants.FORECAST_API_URL);
+
+        Call<ForecastFullResponse> call = api.getFullForecastResponse(location.getLatitude(),
+                location.getLongitude());
+
+        call.enqueue(new Callback<ForecastFullResponse>() {
+            @Override
+            public void onResponse(Call<ForecastFullResponse> call, Response<ForecastFullResponse> response) {
+                if(response.isSuccessful()) {
+                    ForecastFullResponse fullResponse = response.body();
+                    Log.d("sii", "onResponse: " + fullResponse);
+                    adapter.setNewData(fullResponse.getDaily().getData());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ForecastFullResponse> call, Throwable t) {
+                Log.d("SII", "onFailure: getFullForecast()");
+            }
+        });
+
+    }
+
 
     public static Context getStaticContext() {
         return applicationContext;

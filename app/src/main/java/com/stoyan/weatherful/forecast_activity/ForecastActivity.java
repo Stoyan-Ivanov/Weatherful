@@ -1,19 +1,20 @@
-package com.stoyan.weatherful.location_activity;
+package com.stoyan.weatherful.forecast_activity;
 
-import android.os.Bundle;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
+import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
-import com.stoyan.weatherful.forecast_activity.ForecastActivity;
 import com.stoyan.weatherful.models.Location;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LocationActivity extends AppCompatActivity {
+public class ForecastActivity extends AppCompatActivity {
 
     @BindView(R.id.ctv_header)
     TextView headerBar;
@@ -28,12 +29,11 @@ public class LocationActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        LocationActivityPresenter locationActivityPresenter = new LocationActivityPresenter(this);
+        ForecastActivityPresenter provider = new ForecastActivityPresenter(getIntent());
 
-        headerBar.setText(R.string.location_activity_header);
+        headerBar.setText(provider.getHeader());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(locationActivityPresenter.getAdapter());
-
+        recyclerView.setAdapter(provider.getAdapter());
     }
 }
