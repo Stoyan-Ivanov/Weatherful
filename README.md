@@ -23,7 +23,7 @@ Simple Android weather app
 	- PaperDB ( https://github.com/pilgr/Paper ) - Fast and easy to use No-SQL database that is used to save the user's locations locally.
 
 
-- What can you do with this app:
+- Functunality:
 	- Add locations (using the floating action button on the bottom right).
 	- Delete locations (just by pressing longer on the location card).
 	- Gain accurate summary of the weather conditions for the day.
