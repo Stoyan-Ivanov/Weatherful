@@ -4,7 +4,7 @@ Simple Android weather app
 - Free APIs that have been used:
 	- Dark Sky weather API ( https://darksky.net/dev ) - used for getting weather parameters.
 	- Qwant API ( https://www.qwant.com/ ) - used for displaying images of the locations.
-	- Geocode API ( https://maps.googleapis.com/maps/api/geocode/ ) - used for determining the location's coordinates from it's name and country.
+	- Geocode API ( https://maps.googleapis.com/maps/api/geocode/ ) - used for determining the location's coordinates from its name and country.
 
 
 - Libraries that have been used:
@@ -16,11 +16,11 @@ Simple Android weather app
 
 
 - Analytics service:
-	- Crashlytics (by Fabric https://try.crashlytics.com/ )
+	- Crashlytics (by Fabric - https://try.crashlytics.com/ )
 	
 
 - Database that has been used:
-	- PaperDB ( https://github.com/pilgr/Paper ) - Fast and easy to use No-SQl database that is used to save the user's locations locally.
+	- PaperDB ( https://github.com/pilgr/Paper ) - Fast and easy to use No-SQL database that is used to save the user's locations locally.
 
 
 - What can you do with this app:
