@@ -51,9 +51,7 @@ public class AddLocationActivityPresenter implements  AddLocationActivityContrac
     }
 
     private void prepareLocationForSaving(Location location) {
-        LocationsProvider locationsProvider = new LocationsProvider();
-
-        if(locationsProvider.saveLocation(location)) {
+        if(LocationsProvider.getInstance().saveLocation(location)) {
             WeatherfulApplication.showToast(WeatherfulApplication
                                                 .getStringFromId(R.string.successful_adding));
             startNewActivity();

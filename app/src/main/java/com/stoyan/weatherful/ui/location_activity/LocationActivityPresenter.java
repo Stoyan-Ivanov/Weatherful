@@ -16,17 +16,16 @@ import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclervie
  */
 
 public class LocationActivityPresenter implements LocationActivityContract{
-    LocationsProvider locationsProvider;
     LocationActivity activity;
 
     public LocationActivityPresenter(LocationActivity activity) {
-        locationsProvider = new LocationsProvider();
         this.activity = activity;
     }
 
     @Override
     public LocationsRecyclerviewAdapter getAdapter() {
-        return new LocationsRecyclerviewAdapter(locationsProvider.getLocations(), new OnItemClickListener() {
+        return new LocationsRecyclerviewAdapter(LocationsProvider.getInstance().getLocations(),
+                new OnItemClickListener() {
             @Override
             public void OnItemClick(Location location) {
 
@@ -37,8 +36,7 @@ public class LocationActivityPresenter implements LocationActivityContract{
 
             @Override
             public void OnItemLongClick(Location location) {
-                LocationsProvider locationsProvider = new LocationsProvider();
-                locationsProvider.deleteLocation(location);
+                LocationsProvider.getInstance().deleteLocation(location);
             }
         });
     }

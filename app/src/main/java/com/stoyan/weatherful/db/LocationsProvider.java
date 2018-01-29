@@ -16,9 +16,17 @@ import static io.paperdb.Paper.book;
  */
 
 public class LocationsProvider implements LocationsProviderContract {
+    private static LocationsProvider instance;
 
-    public LocationsProvider() {
+    private LocationsProvider() {
         Paper.init(WeatherfulApplication.getStaticContext());
+    }
+
+    public static LocationsProvider getInstance() {
+        if(instance == null) {
+            instance = new LocationsProvider();
+        }
+        return instance;
     }
 
     @Override
