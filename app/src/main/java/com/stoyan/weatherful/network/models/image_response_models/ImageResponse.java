@@ -7,23 +7,12 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class ImageResponse {
-    @SerializedName("status")
-    private String status;
 
     @SerializedName("data")
     private Data data;
 
-    public ImageResponse(String status, Data data) {
-        this.status = status;
+    public ImageResponse(Data data) {
         this.data = data;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public Data getData() {
