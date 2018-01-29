@@ -81,6 +81,7 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
             Glide.with(locationPicture.getContext())
                     .load(url)
                     .centerCrop()
+                    .placeholder(R.drawable.cityscape)
                     .into(locationPicture);
         } else {
             throw new NullPointerException("Provide valid image url");
