@@ -18,7 +18,4 @@ public class Data {
         return result;
     }
 
-    public void setResult(Result result) {
-        this.result = result;
-    }
 }
