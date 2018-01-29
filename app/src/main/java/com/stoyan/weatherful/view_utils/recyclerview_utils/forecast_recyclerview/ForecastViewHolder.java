@@ -11,8 +11,10 @@ import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,7 +84,8 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
         Calendar date = Calendar.getInstance();
         date.setTimeInMillis(Long.valueOf(data.getTime()) * 1000);
 
-        return date.get(Calendar.DAY_OF_MONTH) + "." + date.get(Calendar.MONTH)
+        return date.get(Calendar.DAY_OF_MONTH) + "."
+                + date.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)
                 + "." + date.get(Calendar.YEAR);
     }
 

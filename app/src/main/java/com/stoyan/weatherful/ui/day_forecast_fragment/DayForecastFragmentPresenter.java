@@ -9,6 +9,7 @@ import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by Stoyan on 28.1.2018 г..
@@ -67,7 +68,8 @@ public class DayForecastFragmentPresenter implements DayForcastFragmentContract 
         Calendar date = Calendar.getInstance();
         date.setTimeInMillis(Long.valueOf(data.getTime()) * 1000);
 
-        return date.get(Calendar.DAY_OF_MONTH) + "." + date.get(Calendar.MONTH)
+        return date.get(Calendar.DAY_OF_MONTH) + "."
+                + date.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)
                 + "." + date.get(Calendar.YEAR);
     }
 }
