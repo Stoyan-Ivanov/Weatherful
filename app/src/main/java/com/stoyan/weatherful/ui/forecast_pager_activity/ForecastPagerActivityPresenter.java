@@ -35,7 +35,7 @@ public class ForecastPagerActivityPresenter implements ForecastPagerActivityCont
 
     @Override
     public String getHeader() {
-        return location.getLocationName() + ", " + location.getCountry();
+        return location.toString();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class ForecastPagerActivityPresenter implements ForecastPagerActivityCont
 
     @Override
     public int getOffScreenLimit() {
-        return fragments.isEmpty() ? 0: 3;
+        return fragments.isEmpty() ? 0: fragments.size() / 2;
     }
 
     @Override

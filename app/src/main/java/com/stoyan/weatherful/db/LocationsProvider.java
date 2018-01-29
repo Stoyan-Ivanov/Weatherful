@@ -1,6 +1,7 @@
 package com.stoyan.weatherful.db;
 
 import com.stoyan.weatherful.Constants;
+import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.network.WeatherfulApplication;
 
 import java.util.ArrayList;
@@ -30,9 +31,25 @@ public class LocationsProvider implements LocationsProviderContract {
             for (String key : allKeys) {
                 locations.add((Location) Paper.book().read(key));
             }
+        } else {
+            locations = initDatabase();
         }
 
         return locations;
+    }
+
+    private ArrayList<Location> initDatabase() {
+        ArrayList<Location> defaultLocations = new ArrayList<>();
+
+        defaultLocations.add(new Location("Sofia", "Bulgaria",  42.698334,  23.319941));
+        defaultLocations.add(new Location("Prague", "Czech Republic", 50.08804,14.42076));
+        defaultLocations.add(new Location("Toronto", "Canada", 43.653908, -79.384293));
+
+        for(Location location: defaultLocations) {
+           saveLocation(location);
+        }
+
+        return defaultLocations;
     }
 
     @Override
@@ -41,14 +58,18 @@ public class LocationsProvider implements LocationsProviderContract {
             book().write(location.getLocationName() + location.getCountry(), location);
             return true;
         } else {
-            WeatherfulApplication.showToast(Constants.DUPLICATION_WHEN_ADDING_TOAST);
+            WeatherfulApplication.showToast(
+                    WeatherfulApplication.getStringFromId(R.string.duplication_when_adding));
             return false;
         }
     }
 
+
+
     public void deleteLocation(Location location) {
         Paper.book().delete(location.getLocationName() + location.getCountry());
-        WeatherfulApplication.showToast(Constants.SUCCESSFUL_DELETING);
+        WeatherfulApplication.showToast(
+                WeatherfulApplication.getStringFromId(R.string.successful_deleting));
     }
 
     private boolean checkIfLocationExists(Location location) {

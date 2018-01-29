@@ -11,6 +11,6 @@ import retrofit2.http.Query;
  */
 
 public interface QwantAPI {
-    @GET("images?")
+    @GET("images?count=1&&offset=1")
     Call<ImageResponse> getLocationImage(@Query("q") String searchedLocation);
 }

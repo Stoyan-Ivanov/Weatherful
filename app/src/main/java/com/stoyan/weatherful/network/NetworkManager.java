@@ -55,9 +55,8 @@ public class NetworkManager implements NetworkManagerContract {
 
     @Override
     public void getLocationImageUrl(final LocationViewHolder viewHolder, final Location location) {
-        String searchedLocation = location.getLocationName() + "," + location.getCountry();
 
-        Call<ImageResponse> call = qwantAPI.getLocationImage(searchedLocation);
+        Call<ImageResponse> call = qwantAPI.getLocationImage(location.toString());
 
         call.enqueue(new Callback<ImageResponse>() {
             @Override

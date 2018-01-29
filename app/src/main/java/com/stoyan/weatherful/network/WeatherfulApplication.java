@@ -42,6 +42,10 @@ public class WeatherfulApplication extends Application  {
         toast.show();
     }
 
+    public static String getStringFromId(int id) {
+        return applicationContext.getResources().getString(id);
+    }
+
     public static Context getStaticContext() {
         return applicationContext;
     }

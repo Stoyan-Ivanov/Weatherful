@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
+import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 
@@ -25,8 +26,7 @@ public class ForecastRecyclerviewAdapter extends RecyclerView.Adapter<ForecastVi
     public ForecastRecyclerviewAdapter(Location location, OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
 
-        WeatherfulApplication weatherfulAPI = new WeatherfulApplication();
-        weatherfulAPI.getWeeklyForecast(location, this);
+        NetworkManager.getInstance().getWeeklyForecast(location, this);
     }
 
     public void setNewData(Data[] newData) {

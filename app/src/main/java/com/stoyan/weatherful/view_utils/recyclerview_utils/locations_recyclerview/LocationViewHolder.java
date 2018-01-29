@@ -1,5 +1,6 @@
 package com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview;
 
+import android.net.Network;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
+import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.network.WeatherfulApplication;
 
 import butterknife.BindView;
@@ -60,9 +62,9 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
 
         tvLocationName.setText(location.getLocationName());
 
-        WeatherfulApplication weatherfulAPI = new WeatherfulApplication();
-        weatherfulAPI.getLocationImageUrl(this, location);
-        weatherfulAPI.getForecastSummary(this, location);
+
+        NetworkManager.getInstance().getLocationImageUrl(this, location);
+        NetworkManager.getInstance().getForecastSummary(this, location);
 
     }
 

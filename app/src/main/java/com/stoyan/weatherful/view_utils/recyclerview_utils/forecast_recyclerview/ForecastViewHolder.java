@@ -73,7 +73,7 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void setRainChance(final Data data) {
-        double probability = Double.parseDouble(data.getPrecipProbability()) * 100;
+        Float probability = Float.parseFloat(data.getPrecipProbability()) * 100;
         String displayRainChance = "Chance of raining: " + probability + "%";
         tvRainChance.setText(displayRainChance);
     }

@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">Weatherful</string>
+
     <string name="location_activity_header">Locations</string>
     <string name="add_location_activity_header">Add Location</string>
     <string name="add_location_message">Help us by entering the data below and we will do the rest for you!</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Toasts -->
+    <string name="successful_adding">Location added!</string>
+    <string name="invalid_input">Please provide a valid input!</string>
+    <string name="duplication_when_adding">Location already exists!</string>
+    <string name="successful_deleting">Location deleted!</string>
+    <string name="cant_save_location">Something went wrong when adding!</string>
+
 </resources>

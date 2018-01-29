@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import com.stoyan.weatherful.Constants;
+import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.LocationsProvider;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.WeatherfulApplication;
@@ -34,7 +35,8 @@ public class AddLocationActivityPresenter implements  AddLocationActivityContrac
         if(Geocoder.isPresent()){
             try {
                 Geocoder gc = new Geocoder(WeatherfulApplication.getStaticContext());
-                List<Address> addresses= gc.getFromLocationName(cityName, 5);
+                List<Address> addresses= gc.getFromLocationName(cityName + ", "
+                                                                + countryName, 5);
 
                 for(Address a : addresses){
                     if(a.hasLatitude() && a.hasLongitude()){
@@ -52,17 +54,17 @@ public class AddLocationActivityPresenter implements  AddLocationActivityContrac
         LocationsProvider locationsProvider = new LocationsProvider();
 
         if(locationsProvider.saveLocation(location)) {
-            WeatherfulApplication.showToast(Constants.SUCCESSFUL_ADDING);
+            WeatherfulApplication.showToast(WeatherfulApplication
+                                                .getStringFromId(R.string.successful_adding));
             startNewActivity();
-        } else {
-            WeatherfulApplication.showToast(Constants.CANT_SAVE_LOCATION);
         }
 
     }
 
     private boolean checkIfDataIsCorrect(String cityName, String countryName) {
         if(cityName.equals("") || countryName.equals("")) {
-            WeatherfulApplication.showToast(Constants.INVALID_INPUT_TOAST);
+            WeatherfulApplication.showToast(WeatherfulApplication
+                                                .getStringFromId(R.string.invalid_input));
             return false;
         }
         return true;

@@ -59,7 +59,7 @@ public class DayForecastFragmentPresenter implements DayForcastFragmentContract 
 
     @Override
     public String getRainChance() {
-        double probability = Double.parseDouble(data.getPrecipProbability()) * 100;
+        float probability = Float.parseFloat(data.getPrecipProbability()) * 100;
         return "Chance of raining: " + probability + "%";
     }
 

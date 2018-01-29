@@ -18,7 +18,8 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="40sp" />
+            android:autoSizeTextType="uniform"
+            android:textSize="35sp" />
 
     </android.support.v7.widget.Toolbar>
 
