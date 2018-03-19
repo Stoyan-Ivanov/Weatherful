@@ -68,4 +68,9 @@ public class ForecastPagerActivityPresenter implements ForecastPagerActivityCont
     private Fragment getNewFragment(Data singleDataElement) {
         return DayForecastFragment.newInstance(singleDataElement);
     }
+
+    @Override
+    public void onViewDestroy() {
+        forecastPagerActivity = null;
+    }
 }

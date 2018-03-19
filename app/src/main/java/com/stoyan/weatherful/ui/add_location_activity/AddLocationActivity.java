@@ -7,11 +7,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.stoyan.weatherful.R;
+import com.stoyan.weatherful.ui.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddLocationActivity extends AppCompatActivity {
+public class AddLocationActivity extends BaseActivity {
 
     @BindView(R.id.et_city)
     EditText etCityName;
@@ -29,7 +30,6 @@ public class AddLocationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_location);
 
-        ButterKnife.bind(this);
         presenter = new AddLocationActivityPresenter(this);
 
         btnAddLocation.setOnClickListener(new View.OnClickListener() {
@@ -40,5 +40,11 @@ public class AddLocationActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        presenter.onViewDestroy();
+        super.onDestroy();
     }
 }

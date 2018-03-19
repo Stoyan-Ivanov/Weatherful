@@ -6,12 +6,13 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.stoyan.weatherful.R;
+import com.stoyan.weatherful.ui.BaseActivity;
 import com.stoyan.weatherful.ui.forecast_activity.ForecastActivityPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ForecastPagerActivity extends AppCompatActivity {
+public class ForecastPagerActivity extends BaseActivity {
 
     @BindView(R.id.ctv_header)
     TextView header;
@@ -26,8 +27,6 @@ public class ForecastPagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forecast_pager);
 
-        ButterKnife.bind(this);
-
         presenter = new ForecastPagerActivityPresenter(getIntent(), this);
 
         header.setText(presenter.getHeader());
@@ -35,5 +34,11 @@ public class ForecastPagerActivity extends AppCompatActivity {
         viewPager.setAdapter(presenter.getPagerAdapter());
         viewPager.setCurrentItem(presenter.getDefaultPosition());
         viewPager.setOffscreenPageLimit(presenter.getOffScreenLimit());
+    }
+
+    @Override
+    protected void onDestroy() {
+        presenter.onViewDestroy();
+        super.onDestroy();
     }
 }

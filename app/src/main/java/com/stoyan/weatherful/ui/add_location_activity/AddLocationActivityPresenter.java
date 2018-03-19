@@ -73,4 +73,9 @@ public class AddLocationActivityPresenter implements  AddLocationActivityContrac
         addLocationActivity.startActivity(intent);
         addLocationActivity.finish();
     }
+
+    @Override
+    public void onViewDestroy() {
+        addLocationActivity = null;
+    }
 }

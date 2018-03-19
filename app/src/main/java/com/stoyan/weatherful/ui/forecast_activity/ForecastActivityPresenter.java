@@ -53,4 +53,9 @@ public class ForecastActivityPresenter implements ForecastActivityContract {
 
         forecastActivity.startActivity(intent);
     }
+
+    @Override
+    public void onViewDestroy() {
+        forecastActivity = null;
+    }
 }

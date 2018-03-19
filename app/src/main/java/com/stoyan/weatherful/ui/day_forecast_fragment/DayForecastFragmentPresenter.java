@@ -72,4 +72,9 @@ public class DayForecastFragmentPresenter implements DayForcastFragmentContract 
                 + date.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)
                 + "." + date.get(Calendar.YEAR);
     }
+
+    @Override
+    public void onViewDestroy() {
+
+    }
 }

@@ -16,10 +16,10 @@ import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclervie
  */
 
 public class LocationActivityPresenter implements LocationActivityContract{
-    LocationActivity activity;
+    LocationActivity locationActivity;
 
     public LocationActivityPresenter(LocationActivity activity) {
-        this.activity = activity;
+        this.locationActivity = activity;
     }
 
     @Override
@@ -29,9 +29,9 @@ public class LocationActivityPresenter implements LocationActivityContract{
             @Override
             public void OnItemClick(Location location) {
 
-                Intent intent = new Intent(activity, ForecastActivity.class);
+                Intent intent = new Intent(locationActivity, ForecastActivity.class);
                 intent.putExtra(Constants.EXTRA_LOCATION, location);
-                activity.startActivity(intent);
+                locationActivity.startActivity(intent);
             }
 
             @Override
@@ -42,7 +42,12 @@ public class LocationActivityPresenter implements LocationActivityContract{
     }
 
     public void fabOnclick() {
-        Intent intent = new Intent(activity, AddLocationActivity.class);
-        activity.startActivity(intent);
+        Intent intent = new Intent(locationActivity, AddLocationActivity.class);
+        locationActivity.startActivity(intent);
+    }
+
+    @Override
+    public void onViewDestroy() {
+        locationActivity = null;
     }
 }

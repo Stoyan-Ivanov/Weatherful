@@ -10,12 +10,13 @@ import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.stoyan.weatherful.R;
+import com.stoyan.weatherful.ui.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.fabric.sdk.android.Fabric;
 
-public class LocationActivity extends AppCompatActivity {
+public class LocationActivity extends BaseActivity {
 
     @BindView(R.id.ctv_header)
     TextView headerBar;
@@ -34,7 +35,6 @@ public class LocationActivity extends AppCompatActivity {
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_base_recyclerview);
 
-        ButterKnife.bind(this);
         fabAddLocation.setVisibility(View.VISIBLE);
 
         presenter = new LocationActivityPresenter(this);
@@ -50,5 +50,11 @@ public class LocationActivity extends AppCompatActivity {
                 presenter.fabOnclick();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        presenter.onViewDestroy();
+        super.onDestroy();
     }
 }
