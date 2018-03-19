@@ -17,10 +17,12 @@ public class AddLocationActivity extends AppCompatActivity {
     EditText etCityName;
 
     @BindView(R.id.et_country)
-    EditText etCOuntryName;
+    EditText etCountryName;
 
     @BindView(R.id.btn_done_adding)
     Button btnAddLocation;
+
+    private AddLocationActivityPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +30,13 @@ public class AddLocationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_location);
 
         ButterKnife.bind(this);
-        final AddLocationActivityPresenter presenter = new AddLocationActivityPresenter(this);
+        presenter = new AddLocationActivityPresenter(this);
 
         btnAddLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 presenter.addNewLocation(etCityName.getText().toString(),
-                        etCOuntryName.getText().toString());
+                        etCountryName.getText().toString());
             }
         });
 

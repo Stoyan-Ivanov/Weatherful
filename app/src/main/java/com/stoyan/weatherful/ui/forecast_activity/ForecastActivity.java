@@ -19,6 +19,8 @@ public class ForecastActivity extends AppCompatActivity {
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
 
+    private ForecastActivityPresenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +28,7 @@ public class ForecastActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        ForecastActivityPresenter presenter = new ForecastActivityPresenter(getIntent(), this);
+        presenter = new ForecastActivityPresenter(getIntent(), this);
 
         headerBar.setText(presenter.getHeader());
 

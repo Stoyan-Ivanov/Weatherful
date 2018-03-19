@@ -26,6 +26,8 @@ public class LocationActivity extends AppCompatActivity {
     @BindView(R.id.fab_add)
     FloatingActionButton fabAddLocation;
 
+    private LocationActivityPresenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +37,7 @@ public class LocationActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         fabAddLocation.setVisibility(View.VISIBLE);
 
-        final LocationActivityPresenter presenter = new LocationActivityPresenter(this);
+        presenter = new LocationActivityPresenter(this);
 
         headerBar.setText(R.string.location_activity_header);
 
