@@ -16,7 +16,7 @@ import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclervie
  */
 
 public class LocationActivityPresenter implements LocationActivityContract{
-    LocationActivity locationActivity;
+    private LocationActivity locationActivity;
 
     public LocationActivityPresenter(LocationActivity activity) {
         this.locationActivity = activity;

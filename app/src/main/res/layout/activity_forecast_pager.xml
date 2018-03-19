@@ -6,22 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".ui.forecast_pager_activity.ForecastPagerActivity">
 
-    <android.support.v7.widget.Toolbar
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:elevation="6dp"
         android:background="@color/topBarBlue">
 
-        <TextView
+        <com.stoyan.weatherful.view_utils.CustomTextView
             android:id="@+id/ctv_header"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:textColor="@color/white"
-            android:autoSizeTextType="uniform"
-            android:textSize="35sp" />
+            />
 
-    </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
