@@ -47,13 +47,15 @@ public class DayForecastFragmentPresenter implements DayForcastFragmentContract 
     @Override
     public String getMinTemperature() {
         return WeatherfulApplication.getStringFromId(R.string.min_temperature_field)
-                + data.getTemperatureLow() + "\u2103";
+                + data.getTemperatureLow()
+                + WeatherfulApplication.getStringFromId(R.string.degree_symbol);
     }
 
     @Override
     public String getMaxTemperature() {
         return WeatherfulApplication.getStringFromId(R.string.max_temperature_field)
-                + data.getTemperatureHigh() + "\u2103";
+                + data.getTemperatureHigh()
+                + WeatherfulApplication.getStringFromId(R.string.degree_symbol);
     }
 
     @Override

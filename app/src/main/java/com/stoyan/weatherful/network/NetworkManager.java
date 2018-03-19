@@ -2,6 +2,7 @@ package com.stoyan.weatherful.network;
 
 import android.util.Log;
 
+import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.models.forecast_full_models.ForecastFullResponse;
 import com.stoyan.weatherful.network.models.forecast_summary_models.ForecastSummaryResponse;
@@ -40,13 +41,13 @@ public class NetworkManager implements NetworkManagerContract {
 
     private NetworkManager(){
         weatherfulRetrofit = new Retrofit.Builder()
-                .baseUrl("https://api.darksky.net/forecast/e84ac66032ba27bb9911d3f27d96c11d/")
+                .baseUrl(Constants.FORECAST_SERVICE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         weatherfulAPI = weatherfulRetrofit.create(WeatherfulAPI.class);
         qwantRetrofit = new Retrofit.Builder()
-                .baseUrl("https://api.qwant.com/api/search/")
+                .baseUrl(Constants.IMAGE_SERVICE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -89,7 +90,8 @@ public class NetworkManager implements NetworkManagerContract {
                     viewHolder.setForecastSummary(summaryResponse.getHourly().getSummary());
 
                     viewHolder.setTemperature(summaryResponse.getHourly()
-                            .getData().get(0).getTemperature() + "\u2103");
+                            .getData().get(0).getTemperature()
+                            + WeatherfulApplication.getStringFromId(R.string.degree_symbol));
                 }
             }
 

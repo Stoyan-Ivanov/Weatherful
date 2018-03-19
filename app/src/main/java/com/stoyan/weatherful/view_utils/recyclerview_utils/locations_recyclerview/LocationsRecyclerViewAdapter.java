@@ -14,12 +14,12 @@ import java.util.ArrayList;
  * Created by Stoyan on 27.1.2018 г..
  */
 
-public class LocationsRecyclerviewAdapter extends RecyclerView.Adapter<LocationViewHolder> {
+public class LocationsRecyclerViewAdapter extends RecyclerView.Adapter<LocationViewHolder> {
     private ArrayList<Location> locations = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
     private LayoutInflater inflater;
 
-    public LocationsRecyclerviewAdapter(ArrayList<Location> locations, OnItemClickListener onItemClickListener) {
+    public LocationsRecyclerViewAdapter(ArrayList<Location> locations, OnItemClickListener onItemClickListener) {
         this.locations = locations;
         this.onItemClickListener = onItemClickListener;
     }

@@ -17,5 +17,6 @@
     <string name="max_temperature_field">Max Temperature: </string>
     <string name="wind_speed_field">Wind speed: </string>
     <string name="rain_chance_field">Chance of raining: </string>
+    <string name="degree_symbol">℃</string>
 
 </resources>

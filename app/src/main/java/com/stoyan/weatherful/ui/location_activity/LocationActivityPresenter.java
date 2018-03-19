@@ -7,7 +7,7 @@ import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
 import com.stoyan.weatherful.ui.forecast_activity.ForecastActivity;
 import com.stoyan.weatherful.db.LocationsProvider;
 import com.stoyan.weatherful.db.Location;
-import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationsRecyclerviewAdapter;
+import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationsRecyclerViewAdapter;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.OnItemClickListener;
 
 
@@ -23,8 +23,8 @@ public class LocationActivityPresenter implements LocationActivityContract{
     }
 
     @Override
-    public LocationsRecyclerviewAdapter getAdapter() {
-        return new LocationsRecyclerviewAdapter(LocationsProvider.getInstance().getLocations(),
+    public LocationsRecyclerViewAdapter getAdapter() {
+        return new LocationsRecyclerViewAdapter(LocationsProvider.getInstance().getLocations(),
                 new OnItemClickListener() {
             @Override
             public void OnItemClick(Location location) {

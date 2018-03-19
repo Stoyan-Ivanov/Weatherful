@@ -1,6 +1,5 @@
 package com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview;
 
-import android.net.Network;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,7 +9,6 @@ import com.bumptech.glide.Glide;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.NetworkManager;
-import com.stoyan.weatherful.network.WeatherfulApplication;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,9 +31,9 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.tv_location_temperature)
     TextView tvTemperature;
 
-    private LocationsRecyclerviewAdapter adapter;
+    private LocationsRecyclerViewAdapter adapter;
 
-    public LocationViewHolder(View itemView, LocationsRecyclerviewAdapter adapter) {
+    public LocationViewHolder(View itemView, LocationsRecyclerViewAdapter adapter) {
         super(itemView);
         this.adapter = adapter;
     }
