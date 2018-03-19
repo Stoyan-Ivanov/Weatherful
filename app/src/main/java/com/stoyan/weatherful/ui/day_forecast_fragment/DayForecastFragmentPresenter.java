@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import com.stoyan.weatherful.Constants;
+import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 
@@ -45,23 +46,28 @@ public class DayForecastFragmentPresenter implements DayForcastFragmentContract 
 
     @Override
     public String getMinTemperature() {
-        return "Min Temperature: " + data.getTemperatureLow() + "\u2103";
+        return WeatherfulApplication.getStringFromId(R.string.min_temperature_field)
+                + data.getTemperatureLow() + "\u2103";
     }
 
     @Override
     public String getMaxTemperature() {
-        return "Max Temperature: " + data.getTemperatureHigh() + "\u2103";
+        return WeatherfulApplication.getStringFromId(R.string.max_temperature_field)
+                + data.getTemperatureHigh() + "\u2103";
     }
 
     @Override
     public String getWindSpeed() {
-        return "Wind speed: " + data.getWindSpeed();
+        return WeatherfulApplication.getStringFromId(R.string.wind_speed_field)
+                + data.getWindSpeed();
     }
 
     @Override
     public String getRainChance() {
         float probability = Float.parseFloat(data.getPrecipProbability()) * 100;
-        return "Chance of raining: " + probability + "%";
+
+        return WeatherfulApplication.getStringFromId(R.string.rain_chance_field)
+                + probability + "%";
     }
 
     private String getDateFromTimestamp() {
