@@ -1,8 +1,10 @@
 package com.stoyan.weatherful.ui.location_activity;
 
 import android.content.Intent;
+import android.util.Log;
 
 import com.stoyan.weatherful.Constants;
+import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
 import com.stoyan.weatherful.ui.forecast_activity.ForecastActivity;
 import com.stoyan.weatherful.db.LocationsProvider;
@@ -48,6 +50,8 @@ public class LocationActivityPresenter implements LocationActivityContract{
 
     @Override
     public void onViewDestroy() {
+        Log.d("SII", "onViewDestroy: LocationActivity");
         locationActivity = null;
+        NetworkManager.getInstance().onViewDestroy();
     }
 }
