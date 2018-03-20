@@ -10,6 +10,7 @@ import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
+import com.stoyan.weatherful.ui.forecast_activity.ForecastActivityPresenter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +27,7 @@ public class ForecastRecyclerviewAdapter extends RecyclerView.Adapter<ForecastVi
     public ForecastRecyclerviewAdapter(Location location, OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
 
-        NetworkManager.getInstance().getWeeklyForecast(location, this);
+        ForecastActivityPresenter.getWeeklyForecast(location, this);
     }
 
     public void setNewData(Data[] newData) {

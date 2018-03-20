@@ -16,22 +16,19 @@ import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclervie
 import java.util.ArrayList;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
-import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by Stoya on 29.1.2018 г..
+ * Created by Stoyan on 29.1.2018 г..
  */
 
-public class NetworkManager implements NetworkManagerContract {
+public class NetworkManager {
     private static NetworkManager instance;
     private final CompositeDisposable disposables = new CompositeDisposable();
 
@@ -66,106 +63,11 @@ public class NetworkManager implements NetworkManagerContract {
         qwantAPI = qwantRetrofit.create(QwantAPI.class);
     }
 
-    @Override
-    public void getLocationImageUrl(final LocationViewHolder viewHolder, final Location location) {
-        Observable<ImageResponse> observableImageResponse = qwantAPI.getLocationImage(location.toString());
-
-        observableImageResponse
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(getLocationImageUrlObserver(viewHolder));
+    public WeatherfulAPI getWeatherfulAPI() {
+        return weatherfulAPI;
     }
 
-    private DisposableObserver<ImageResponse> getLocationImageUrlObserver(final LocationViewHolder viewHolder) {
-        DisposableObserver<ImageResponse> locationImageUrlObserver = new DisposableObserver<ImageResponse>() {
-            @Override
-            public void onNext(ImageResponse imageResponse) {
-                ArrayList <Picture> pictures = imageResponse.getData().getResult().getPictures();
-                viewHolder.setLocationPicture("https:" + pictures.get(0).getThumbnailUrl());
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.d("SII", "onError: location observer" + e.getMessage());
-            }
-
-            @Override
-            public void onComplete() {}
-        };
-
-        disposables.add(locationImageUrlObserver);
-        return locationImageUrlObserver;
-    }
-
-    @Override
-    public void getForecastSummary(final LocationViewHolder viewHolder, final Location location) {
-        Observable<ForecastSummaryResponse> observableForecastSummary = weatherfulAPI.getForecastSummaryResponse(location.getLatitude(),
-                location.getLongitude());
-
-        observableForecastSummary
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(getForecastSummaryObserver(viewHolder));
-    }
-
-    private DisposableObserver<ForecastSummaryResponse> getForecastSummaryObserver (final LocationViewHolder viewHolder) {
-        DisposableObserver<ForecastSummaryResponse> forecastSummaryObserver = new DisposableObserver<ForecastSummaryResponse>() {
-            @Override
-            public void onNext(ForecastSummaryResponse forecastSummaryResponse) {
-                viewHolder.setForecastSummary(forecastSummaryResponse.getHourly().getSummary());
-
-                viewHolder.setTemperature(forecastSummaryResponse.getHourly()
-                        .getData().get(0).getTemperature()
-                        + WeatherfulApplication.getStringFromId(R.string.degree_symbol));
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.d("SII", "onError: Forecast summary " + e.getMessage());
-            }
-
-            @Override
-            public void onComplete() {}
-        };
-
-        disposables.add(forecastSummaryObserver);
-        return forecastSummaryObserver;
-    }
-
-    @Override
-    public void getWeeklyForecast(final Location location, final ForecastRecyclerviewAdapter adapter) {
-        Observable<ForecastFullResponse> observableFullForecast = weatherfulAPI.getFullForecastResponse(location.getLatitude(),
-                location.getLongitude());
-
-        observableFullForecast
-                .observeOn(Schedulers.newThread())
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(getWeeklyForecastObserver(adapter));
-    }
-
-    private DisposableObserver<ForecastFullResponse> getWeeklyForecastObserver(final ForecastRecyclerviewAdapter adapter) {
-        DisposableObserver<ForecastFullResponse> weeklyForecastObserver = new DisposableObserver<ForecastFullResponse>() {
-            @Override
-            public void onNext(ForecastFullResponse forecastFullResponse) {
-                adapter.setNewData(forecastFullResponse.getDaily().getData());
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.d("SII", "onError: full forecast " + e.getMessage());
-            }
-
-            @Override
-            public void onComplete() {}
-        };
-
-        disposables.add(weeklyForecastObserver);
-        return weeklyForecastObserver;
-    }
-
-    public void onViewDestroy() {
-        if(!disposables.isDisposed()) {
-            disposables.dispose();
-        }
+    public QwantAPI getQwantAPI() {
+        return qwantAPI;
     }
 }

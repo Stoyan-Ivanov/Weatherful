@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.NetworkManager;
+import com.stoyan.weatherful.ui.location_activity.LocationActivityPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,9 +61,8 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
 
         tvLocationName.setText(location.getLocationName());
 
-
-        NetworkManager.getInstance().getLocationImageUrl(this, location);
-        NetworkManager.getInstance().getForecastSummary(this, location);
+        LocationActivityPresenter.getLocationImageUrl(this, location);
+        LocationActivityPresenter.getForecastSummary(this, location);
 
     }
 
