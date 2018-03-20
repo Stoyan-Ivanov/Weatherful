@@ -69,14 +69,21 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void setTemperature(final Data data) {
-        String temp = "Temperature: " + data.getTemperatureLow()+ "\u2103" +
-                " - " + data.getTemperatureHigh() + "\u2103";
+        String temp = WeatherfulApplication.getStringFromId(R.string.temperature_field)
+                + data.getTemperatureLow()
+                + WeatherfulApplication.getStringFromId(R.string.degree_symbol)
+                + " - "
+                + data.getTemperatureHigh()
+                + WeatherfulApplication.getStringFromId(R.string.degree_symbol);
         tvTemperature.setText(temp);
     }
 
     private void setRainChance(final Data data) {
         Float probability = Float.parseFloat(data.getPrecipProbability()) * 100;
-        String displayRainChance = "Chance of raining: " + probability + "%";
+        String displayRainChance = WeatherfulApplication
+                .getStringFromId(R.string.rain_chance_field)
+                + probability + "%";
+
         tvRainChance.setText(displayRainChance);
     }
 
