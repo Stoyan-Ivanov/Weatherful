@@ -2,25 +2,8 @@ package com.stoyan.weatherful.network;
 
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
-
-import com.stoyan.weatherful.db.Location;
-import com.stoyan.weatherful.network.models.forecast_full_models.ForecastFullResponse;
-import com.stoyan.weatherful.network.models.forecast_summary_models.ForecastSummaryResponse;
-import com.stoyan.weatherful.network.models.image_response_models.ImageResponse;
-import com.stoyan.weatherful.network.models.image_response_models.Picture;
-import com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview.ForecastRecyclerviewAdapter;
-import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationViewHolder;
-
-import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Stoyan on 27.1.2018 г..

@@ -4,6 +4,8 @@ import com.stoyan.weatherful.network.models.forecast_full_models.ForecastFullRes
 import com.stoyan.weatherful.network.models.forecast_summary_models.ForecastSummaryResponse;
 import com.stoyan.weatherful.network.models.image_response_models.ImageResponse;
 
+
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -16,10 +18,10 @@ import retrofit2.http.Query;
 public interface WeatherfulAPI {
 
     @GET("{latitude},{longitude}?exclude=currently,minutely,daily,alerts&&units=si")
-    Call<ForecastSummaryResponse> getForecastSummaryResponse(@Path("latitude") double latitude,
-                                                            @Path("longitude") double longitude);
+    Observable<ForecastSummaryResponse> getForecastSummaryResponse(@Path("latitude") double latitude,
+                                                                   @Path("longitude") double longitude);
 
     @GET("{latitude},{longitude}?exclude=currently,minutely,hourly,alerts&&units=si")
-    Call<ForecastFullResponse> getFullForecastResponse(@Path("latitude") double latitude,
+    Observable<ForecastFullResponse> getFullForecastResponse(@Path("latitude") double latitude,
                                                        @Path("longitude") double longitude);
 }

@@ -1,5 +1,4 @@
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -36,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_fragment_weather_image"/>
+        app:layout_constraintTop_toBottomOf="@+id/iv_fragment_weather_image" />
 
     <TextView
         android:id="@+id/tv_fragment_date"
@@ -65,16 +64,15 @@
         android:layout_marginBottom="8dp"
 
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
 
+        android:layout_marginStart="56dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.042"
+        app:layout_constraintEnd_toStartOf="@+id/tv_fragment_max_temp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_fragment_date"
-        app:layout_constraintVertical_bias="0.14" />
+        app:layout_constraintVertical_bias="0.135" />
 
     <TextView
         android:id="@+id/tv_fragment_max_temp"
@@ -82,17 +80,14 @@
         android:layout_height="49dp"
 
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="44dp"
 
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.904"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_fragment_date"
-        app:layout_constraintVertical_bias="0.138" />
+        app:layout_constraintVertical_bias="0.135" />
 
     <TextView
         android:id="@+id/tv_fragment_wind_speed"
@@ -130,37 +125,11 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_fragment_max_temp"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="155dp"
-        android:layout_height="49dp"
-
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView13"
-        app:layout_constraintHorizontal_bias="0.782"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_fragment_wind_speed"
-        app:layout_constraintVertical_bias="0.105" />
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="155dp"
-        android:layout_height="49dp"
-        android:layout_marginBottom="8dp"
-
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.87"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_fragment_rain_chance"
-        app:layout_constraintVertical_bias="0.098" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
 
 </android.support.constraint.ConstraintLayout>

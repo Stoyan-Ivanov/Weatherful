@@ -2,6 +2,7 @@ package com.stoyan.weatherful.network;
 
 import android.util.Log;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.models.forecast_full_models.ForecastFullResponse;
@@ -13,9 +14,12 @@ import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclervie
 
 import java.util.ArrayList;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -43,12 +47,15 @@ public class NetworkManager implements NetworkManagerContract {
         weatherfulRetrofit = new Retrofit.Builder()
                 .baseUrl(Constants.FORECAST_SERVICE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
         weatherfulAPI = weatherfulRetrofit.create(WeatherfulAPI.class);
+
         qwantRetrofit = new Retrofit.Builder()
                 .baseUrl(Constants.IMAGE_SERVICE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
         qwantAPI = qwantRetrofit.create(QwantAPI.class);
@@ -57,71 +64,88 @@ public class NetworkManager implements NetworkManagerContract {
     @Override
     public void getLocationImageUrl(final LocationViewHolder viewHolder, final Location location) {
 
-        Call<ImageResponse> call = qwantAPI.getLocationImage(location.toString());
+        Observable<ImageResponse> observableImageResponse = qwantAPI.getLocationImage(location.toString());
 
-        call.enqueue(new Callback<ImageResponse>() {
-            @Override
-            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
-                if(response.isSuccessful()) {
-                    ImageResponse imageResponse = response.body();
-                    ArrayList<Picture> pictures = imageResponse.getData().getResult().getPictures();
-                    viewHolder.setLocationPicture("https:" + pictures.get(0).getThumbnailUrl());
-                }
-            }
+        observableImageResponse
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ImageResponse>() {
+                       @Override
+                       public void onSubscribe(Disposable d) {}
 
-            @Override
-            public void onFailure(Call<ImageResponse> call, Throwable t) {
-                Log.d("SII", "onFailure: getImage()");
-            }
-        });
+                       @Override
+                       public void onNext(ImageResponse imageResponse) {
+                           Log.d("SII", "onNext: " + "entered");
+                           ArrayList <Picture> pictures = imageResponse.getData().getResult().getPictures();
+                           viewHolder.setLocationPicture("https:" + pictures.get(0).getThumbnailUrl());
+                       }
+
+                       @Override
+                       public void onError(Throwable e) {
+                           Log.d("SII", "onError: " + e.getMessage());
+                       }
+
+                       @Override
+                       public void onComplete() {}
+                });
+
     }
 
     @Override
     public void getForecastSummary(final LocationViewHolder viewHolder, final Location location) {
-        Call<ForecastSummaryResponse> call = weatherfulAPI.getForecastSummaryResponse(location.getLatitude(),
+        Observable<ForecastSummaryResponse> observableForecastSummary = weatherfulAPI.getForecastSummaryResponse(location.getLatitude(),
                 location.getLongitude());
 
-        call.enqueue(new Callback<ForecastSummaryResponse>() {
-            @Override
-            public void onResponse(Call<ForecastSummaryResponse> call, Response<ForecastSummaryResponse> response) {
-                if(response.isSuccessful()) {
-                    ForecastSummaryResponse summaryResponse = response.body();
+        observableForecastSummary
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ForecastSummaryResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {}
 
-                    viewHolder.setForecastSummary(summaryResponse.getHourly().getSummary());
+                    @Override
+                    public void onNext(ForecastSummaryResponse forecastSummaryResponse) {
+                        viewHolder.setForecastSummary(forecastSummaryResponse.getHourly().getSummary());
 
-                    viewHolder.setTemperature(summaryResponse.getHourly()
-                            .getData().get(0).getTemperature()
-                            + WeatherfulApplication.getStringFromId(R.string.degree_symbol));
-                }
-            }
+                        viewHolder.setTemperature(forecastSummaryResponse.getHourly()
+                                .getData().get(0).getTemperature()
+                                + WeatherfulApplication.getStringFromId(R.string.degree_symbol));
+                    }
 
-            @Override
-            public void onFailure(Call<ForecastSummaryResponse> call, Throwable t) {
-                Log.d("SII", "onFailure: getForecastSummary()");
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("SII", "onError: Forecast summary " + e.getMessage());
+                    }
 
+                    @Override
+                    public void onComplete() {}
+                });
     }
 
     @Override
     public void getWeeklyForecast(final Location location, final ForecastRecyclerviewAdapter adapter) {
-        Call<ForecastFullResponse> call = weatherfulAPI.getFullForecastResponse(location.getLatitude(),
+        Observable<ForecastFullResponse> observableFullForecast = weatherfulAPI.getFullForecastResponse(location.getLatitude(),
                 location.getLongitude());
 
-        call.enqueue(new Callback<ForecastFullResponse>() {
-            @Override
-            public void onResponse(Call<ForecastFullResponse> call, Response<ForecastFullResponse> response) {
-                if(response.isSuccessful()) {
-                    ForecastFullResponse fullResponse = response.body();
-                    adapter.setNewData(fullResponse.getDaily().getData());
-                }
-            }
+        observableFullForecast
+                .observeOn(Schedulers.newThread())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ForecastFullResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {}
 
-            @Override
-            public void onFailure(Call<ForecastFullResponse> call, Throwable t) {
-                Log.d("SII", "onFailure: getFullForecast()");
-            }
-        });
+                    @Override
+                    public void onNext(ForecastFullResponse forecastFullResponse) {
+                        adapter.setNewData(forecastFullResponse.getDaily().getData());
+                    }
 
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("SII", "onError: full forecast " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {}
+                });
     }
 }
