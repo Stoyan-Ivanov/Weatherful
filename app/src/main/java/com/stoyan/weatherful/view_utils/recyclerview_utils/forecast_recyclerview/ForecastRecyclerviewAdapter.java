@@ -24,10 +24,11 @@ public class ForecastRecyclerviewAdapter extends RecyclerView.Adapter<ForecastVi
     private OnItemClickListener onItemClickListener;
     private ArrayList<Data> weeklyForecast = new ArrayList<>();
 
-    public ForecastRecyclerviewAdapter(Location location, OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+    public ForecastRecyclerviewAdapter(ForecastActivityPresenter presenter,
+                                       Location location, OnItemClickListener onItemClickListener) {
 
-        ForecastActivityPresenter.getWeeklyForecast(location, this);
+        this.onItemClickListener = onItemClickListener;
+        presenter.getWeeklyForecast(location, this);
     }
 
     public void setNewData(Data[] newData) {

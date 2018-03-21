@@ -10,14 +10,18 @@ import android.os.Parcelable;
 public class Location implements Parcelable {
     private String locationName;
     private String country;
-    private double latitude;
-    private double longitude;
+    private Coordinates coordinates;
+    private String imageUrl;
 
     public Location(String locationName, String country, double latitude, double longitude) {
         this.locationName = locationName;
         this.country = country;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this. coordinates = new Coordinates(latitude, longitude);
+    }
+
+    public Location(String locationName, String country, double latitude, double longitude, String imageUrl) {
+        this(locationName, country, latitude, longitude);
+        this.imageUrl = imageUrl;
     }
 
     public String getLocationName() {
@@ -29,23 +33,31 @@ public class Location implements Parcelable {
     }
 
     public double getLatitude() {
-        return latitude;
+        return coordinates.getLatitude();
     }
 
     public double getLongitude() {
-        return longitude;
+        return coordinates.getLongitude();
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    @Override
+    public String toString() {
+        return  locationName + ", " + country;
     }
 
     protected Location(Parcel in) {
         locationName = in.readString();
         country = in.readString();
-        latitude = in.readDouble();
-        longitude = in.readDouble();
-    }
-
-    @Override
-    public String toString() {
-        return locationName + "," + country;
+        coordinates = (Coordinates) in.readValue(Coordinates.class.getClassLoader());
+        imageUrl = in.readString();
     }
 
     @Override
@@ -57,8 +69,8 @@ public class Location implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(locationName);
         dest.writeString(country);
-        dest.writeDouble(latitude);
-        dest.writeDouble(longitude);
+        dest.writeValue(coordinates);
+        dest.writeString(imageUrl);
     }
 
     @SuppressWarnings("unused")

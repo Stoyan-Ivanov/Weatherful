@@ -37,7 +37,7 @@ public class ForecastActivityPresenter implements ForecastActivityContract {
 
     @Override
     public ForecastRecyclerviewAdapter getAdapter() {
-            return new ForecastRecyclerviewAdapter(location, new OnItemClickListener() {
+            return new ForecastRecyclerviewAdapter(this, location, new OnItemClickListener() {
                 @Override
                 public void OnItemClick(final ArrayList<Data> data, final int position) {
                     startNewActivity(data, position);
@@ -47,7 +47,7 @@ public class ForecastActivityPresenter implements ForecastActivityContract {
 
     @Override
     public String getHeader() {
-        return location.getLocationName() + "," + location.getCountry();
+        return location.getLocationName() + ", " + location.getCountry();
     }
 
 
@@ -66,7 +66,7 @@ public class ForecastActivityPresenter implements ForecastActivityContract {
     }
 
 
-    public static void getWeeklyForecast(final Location location, final ForecastRecyclerviewAdapter adapter) {
+    public void getWeeklyForecast(final Location location, final ForecastRecyclerviewAdapter adapter) {
         Observable<ForecastFullResponse> observableFullForecast = NetworkManager
                 .getInstance()
                 .getWeatherfulAPI()
@@ -79,7 +79,7 @@ public class ForecastActivityPresenter implements ForecastActivityContract {
                 .subscribe(getWeeklyForecastObserver(adapter));
     }
 
-    private static DisposableObserver<ForecastFullResponse> getWeeklyForecastObserver(final ForecastRecyclerviewAdapter adapter) {
+    private DisposableObserver<ForecastFullResponse> getWeeklyForecastObserver(final ForecastRecyclerviewAdapter adapter) {
         DisposableObserver<ForecastFullResponse> weeklyForecastObserver = new DisposableObserver<ForecastFullResponse>() {
             @Override
             public void onNext(ForecastFullResponse forecastFullResponse) {

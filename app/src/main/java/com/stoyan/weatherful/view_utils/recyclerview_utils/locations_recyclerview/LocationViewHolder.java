@@ -60,10 +60,6 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
         });
 
         tvLocationName.setText(location.getLocationName());
-
-        LocationActivityPresenter.getLocationImageUrl(this, location);
-        LocationActivityPresenter.getForecastSummary(this, location);
-
     }
 
     private void removeItem() {

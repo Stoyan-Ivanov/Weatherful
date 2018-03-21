@@ -42,7 +42,7 @@ public class LocationActivityPresenter implements LocationActivityContract{
 
     @Override
     public LocationsRecyclerViewAdapter getAdapter() {
-        return new LocationsRecyclerViewAdapter(LocationsProvider.getInstance().getLocations(),
+        return new LocationsRecyclerViewAdapter(this, LocationsProvider.getInstance().getLocations(),
                 new OnItemClickListener() {
             @Override
             public void OnItemClick(Location location) {
@@ -64,7 +64,7 @@ public class LocationActivityPresenter implements LocationActivityContract{
         locationActivity.startActivity(intent);
     }
 
-    public static void getLocationImageUrl(final LocationViewHolder viewHolder, final Location location) {
+    public void getLocationImageUrl(final LocationViewHolder viewHolder, final Location location) {
         Observable<ImageResponse> observableImageResponse = NetworkManager
                 .getInstance()
                 .getQwantAPI()
@@ -103,7 +103,7 @@ public class LocationActivityPresenter implements LocationActivityContract{
         return locationImageUrlObserver;
     }
 
-    public static void getForecastSummary(final LocationViewHolder viewHolder, final Location location) {
+    public void getForecastSummary(final LocationViewHolder viewHolder, final Location location) {
         Observable<ForecastSummaryResponse> observableForecastSummary = NetworkManager
                 .getInstance()
                 .getWeatherfulAPI()
@@ -116,7 +116,7 @@ public class LocationActivityPresenter implements LocationActivityContract{
                 .subscribe(getForecastSummaryObserver(viewHolder));
     }
 
-    private static DisposableObserver<ForecastSummaryResponse> getForecastSummaryObserver (final LocationViewHolder viewHolder) {
+    private DisposableObserver<ForecastSummaryResponse> getForecastSummaryObserver (final LocationViewHolder viewHolder) {
         DisposableObserver<ForecastSummaryResponse> forecastSummaryObserver = new DisposableObserver<ForecastSummaryResponse>() {
             @Override
             public void onNext(ForecastSummaryResponse forecastSummaryResponse) {
