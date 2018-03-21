@@ -143,8 +143,7 @@ public class LocationActivityPresenter implements LocationActivityContract{
     @Override
     public void onViewDestroy() {
         Log.d("SII", "onViewDestroy: LocationActivity");
-        disposables.dispose();
+        disposables.clear();
         locationActivity = null;
-
     }
 }

@@ -102,6 +102,6 @@ public class ForecastActivityPresenter implements ForecastActivityContract {
     @Override
     public void onViewDestroy() {
         forecastActivity = null;
-        //disposables.dispose();
+        disposables.clear();
     }
 }
