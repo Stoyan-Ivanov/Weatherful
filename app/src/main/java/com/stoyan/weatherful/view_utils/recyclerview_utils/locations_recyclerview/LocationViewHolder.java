@@ -11,10 +11,8 @@ import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.db.LocationsProvider;
-import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.ui.forecast_activity.ForecastActivity;
-import com.stoyan.weatherful.ui.location_activity.LocationActivityPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,6 +46,12 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
 
         ButterKnife.bind(this, itemView);
 
+        tvLocationName.setText(location.getLocationName());
+
+        setOnViewHolderClickListeners(location);
+    }
+
+    private void setOnViewHolderClickListeners(final Location location) {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,8 +69,6 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
                 return false;
             }
         });
-
-        tvLocationName.setText(location.getLocationName());
     }
 
     private void removeItem() {

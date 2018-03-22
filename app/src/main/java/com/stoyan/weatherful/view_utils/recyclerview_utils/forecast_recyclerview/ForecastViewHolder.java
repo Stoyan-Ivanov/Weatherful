@@ -100,12 +100,16 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
     }
 
     private Drawable getDrawableByName(String drawableName) {
-        drawableName = drawableName.replaceAll("-","_").toLowerCase();
+        drawableName = getProperDrawableName(drawableName);
 
         Context context = WeatherfulApplication.getStaticContext();
         int resID = context.getResources().getIdentifier(drawableName , "drawable", context.getPackageName());
 
         return context.getResources().getDrawable(resID );
+    }
+
+    private String getProperDrawableName(String drawableName) {
+        return  drawableName.replaceAll("-","_").toLowerCase();
     }
 
     private void startNewActivity(ArrayList<Data> data, int position,  Location location) {
