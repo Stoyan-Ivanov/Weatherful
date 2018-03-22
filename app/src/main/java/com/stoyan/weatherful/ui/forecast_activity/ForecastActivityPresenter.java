@@ -11,7 +11,6 @@ import com.stoyan.weatherful.ui.forecast_pager_activity.ForecastPagerActivity;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview.ForecastRecyclerviewAdapter;
-import com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview.OnItemClickListener;
 
 import java.util.ArrayList;
 
@@ -37,12 +36,7 @@ public class ForecastActivityPresenter implements ForecastActivityContract {
 
     @Override
     public ForecastRecyclerviewAdapter getAdapter() {
-            return new ForecastRecyclerviewAdapter(this, location, new OnItemClickListener() {
-                @Override
-                public void OnItemClick(final ArrayList<Data> data, final int position) {
-                    startNewActivity(data, position);
-                }
-            });
+            return new ForecastRecyclerviewAdapter(this, location);
     }
 
     @Override
@@ -50,21 +44,10 @@ public class ForecastActivityPresenter implements ForecastActivityContract {
         return location.getLocationName() + ", " + location.getCountry();
     }
 
-
     @Override
     public void getExtras(Intent intent) {
         location = intent.getParcelableExtra(Constants.EXTRA_LOCATION);
     }
-
-    private void startNewActivity(final ArrayList<Data> data, final int position) {
-        Intent intent = new Intent(forecastActivity, ForecastPagerActivity.class);
-        intent.putExtra(Constants.EXTRA_LOCATION, location);
-        intent.putExtra(Constants.EXTRA_DATA, data);
-        intent.putExtra(Constants.EXTRA_POSITION, position);
-
-        forecastActivity.startActivity(intent);
-    }
-
 
     public void getWeeklyForecast(final Location location, final ForecastRecyclerviewAdapter adapter) {
         Observable<ForecastFullResponse> observableFullForecast = NetworkManager

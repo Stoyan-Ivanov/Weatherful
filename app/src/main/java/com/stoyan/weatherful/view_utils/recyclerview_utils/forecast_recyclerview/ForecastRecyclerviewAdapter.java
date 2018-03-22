@@ -21,13 +21,11 @@ import java.util.Arrays;
 
 public class ForecastRecyclerviewAdapter extends RecyclerView.Adapter<ForecastViewHolder> {
     private LayoutInflater inflater;
-    private OnItemClickListener onItemClickListener;
     private ArrayList<Data> weeklyForecast = new ArrayList<>();
+    private Location location;
 
-    public ForecastRecyclerviewAdapter(ForecastActivityPresenter presenter,
-                                       Location location, OnItemClickListener onItemClickListener) {
-
-        this.onItemClickListener = onItemClickListener;
+    public ForecastRecyclerviewAdapter(ForecastActivityPresenter presenter, Location location) {
+        this.location = location;
         presenter.getWeeklyForecast(location, this);
     }
 
@@ -46,7 +44,7 @@ public class ForecastRecyclerviewAdapter extends RecyclerView.Adapter<ForecastVi
 
     @Override
     public void onBindViewHolder(ForecastViewHolder holder, int position) {
-        holder.bind(weeklyForecast, position, onItemClickListener);
+        holder.bind(weeklyForecast, position, location);
     }
 
     @Override

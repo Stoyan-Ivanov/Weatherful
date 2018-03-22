@@ -3,7 +3,6 @@ package com.stoyan.weatherful.ui.location_activity;
 import android.content.Intent;
 import android.util.Log;
 
-import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.network.WeatherfulApplication;
@@ -11,12 +10,10 @@ import com.stoyan.weatherful.network.models.forecast_summary_models.ForecastSumm
 import com.stoyan.weatherful.network.models.image_response_models.ImageResponse;
 import com.stoyan.weatherful.network.models.image_response_models.Picture;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
-import com.stoyan.weatherful.ui.forecast_activity.ForecastActivity;
 import com.stoyan.weatherful.db.LocationsProvider;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationViewHolder;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationsRecyclerViewAdapter;
-import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.OnItemClickListener;
 
 import java.util.ArrayList;
 
@@ -42,21 +39,7 @@ public class LocationActivityPresenter implements LocationActivityContract{
 
     @Override
     public LocationsRecyclerViewAdapter getAdapter() {
-        return new LocationsRecyclerViewAdapter(this, LocationsProvider.getInstance().getLocations(),
-                new OnItemClickListener() {
-            @Override
-            public void OnItemClick(Location location) {
-
-                Intent intent = new Intent(locationActivity, ForecastActivity.class);
-                intent.putExtra(Constants.EXTRA_LOCATION, location);
-                locationActivity.startActivity(intent);
-            }
-
-            @Override
-            public void OnItemLongClick(Location location) {
-                LocationsProvider.getInstance().deleteLocation(location);
-            }
-        });
+        return new LocationsRecyclerViewAdapter(this, LocationsProvider.getInstance().getLocations());
     }
 
     public void fabOnclick() {

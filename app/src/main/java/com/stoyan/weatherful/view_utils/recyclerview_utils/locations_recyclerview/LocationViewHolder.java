@@ -1,14 +1,19 @@
 package com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
+import com.stoyan.weatherful.db.LocationsProvider;
 import com.stoyan.weatherful.network.NetworkManager;
+import com.stoyan.weatherful.network.WeatherfulApplication;
+import com.stoyan.weatherful.ui.forecast_activity.ForecastActivity;
 import com.stoyan.weatherful.ui.location_activity.LocationActivityPresenter;
 
 import butterknife.BindView;
@@ -39,21 +44,23 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
         this.adapter = adapter;
     }
 
-    public void bind(final Location location, final OnItemClickListener onItemClickListener) {
+    public void bind(final Location location) {
 
         ButterKnife.bind(this, itemView);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onItemClickListener.OnItemClick(location);
+                Intent intent = new Intent(WeatherfulApplication.getStaticContext(), ForecastActivity.class);
+                intent.putExtra(Constants.EXTRA_LOCATION, location);
+                WeatherfulApplication.getStaticContext().startActivity(intent);
             }
         });
 
         itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                onItemClickListener.OnItemLongClick(location);
+                LocationsProvider.getInstance().deleteLocation(location);
                 removeItem();
                 return false;
             }

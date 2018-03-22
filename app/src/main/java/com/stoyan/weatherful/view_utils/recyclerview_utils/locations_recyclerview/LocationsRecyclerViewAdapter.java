@@ -17,14 +17,12 @@ import java.util.ArrayList;
 
 public class LocationsRecyclerViewAdapter extends RecyclerView.Adapter<LocationViewHolder> {
     private ArrayList<Location> locations = new ArrayList<>();
-    private OnItemClickListener onItemClickListener;
     private LayoutInflater inflater;
     private LocationActivityPresenter presenter;
 
-    public LocationsRecyclerViewAdapter(LocationActivityPresenter locationActivityPresenter, ArrayList<Location> locations, OnItemClickListener onItemClickListener) {
+    public LocationsRecyclerViewAdapter(LocationActivityPresenter locationActivityPresenter, ArrayList<Location> locations) {
         this.presenter = locationActivityPresenter;
         this.locations = locations;
-        this.onItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -37,7 +35,7 @@ public class LocationsRecyclerViewAdapter extends RecyclerView.Adapter<LocationV
 
     @Override
     public void onBindViewHolder(LocationViewHolder holder, int position) {
-        holder.bind(locations.get(position), onItemClickListener);
+        holder.bind(locations.get(position));
         presenter.getLocationImageUrl(holder, locations.get(position));
         presenter.getForecastSummary(holder, locations.get(position));
     }

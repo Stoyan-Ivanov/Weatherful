@@ -1,15 +1,19 @@
 package com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
+import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
+import com.stoyan.weatherful.ui.forecast_pager_activity.ForecastPagerActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,7 +47,7 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public void bind(final ArrayList<Data> data, final int position, final OnItemClickListener onItemClickListener) {
+    public void bind(final ArrayList<Data> data, final int position, final Location location) {
         Data currData = data.get(position);
 
         setDate(currData);
@@ -53,11 +57,10 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                onItemClickListener.OnItemClick(data, position);
+            public void onClick(View v) {
+                startNewActivity(data, position, location);
             }
         });
-
     }
 
     private void setDate(final Data data) {
@@ -103,5 +106,14 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
         int resID = context.getResources().getIdentifier(drawableName , "drawable", context.getPackageName());
 
         return context.getResources().getDrawable(resID );
+    }
+
+    private void startNewActivity(ArrayList<Data> data, int position,  Location location) {
+        Intent intent = new Intent(WeatherfulApplication.getStaticContext(), ForecastPagerActivity.class);
+        intent.putExtra(Constants.EXTRA_LOCATION, location);
+        intent.putExtra(Constants.EXTRA_DATA, data);
+        intent.putExtra(Constants.EXTRA_POSITION, position);
+
+        WeatherfulApplication.getStaticContext().startActivity(intent);
     }
 }
