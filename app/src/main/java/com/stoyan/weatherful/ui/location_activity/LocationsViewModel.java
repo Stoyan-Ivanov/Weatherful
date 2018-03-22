@@ -1,19 +1,21 @@
 package com.stoyan.weatherful.ui.location_activity;
 
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
 import com.stoyan.weatherful.R;
+import com.stoyan.weatherful.db.Location;
+import com.stoyan.weatherful.db.LocationsProvider;
 import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.network.models.forecast_summary_models.ForecastSummaryResponse;
 import com.stoyan.weatherful.network.models.image_response_models.ImageResponse;
 import com.stoyan.weatherful.network.models.image_response_models.Picture;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
-import com.stoyan.weatherful.db.LocationsProvider;
-import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationViewHolder;
-import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationsRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
@@ -24,31 +26,55 @@ import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
+import static io.reactivex.Observable.just;
 
 /**
- * Created by Stoyan on 27.1.2018 г..
+ * Created by stoyan.ivanov on 3/22/2018.
  */
 
-public class LocationActivityPresenter implements LocationActivityContract{
-    private LocationActivity locationActivity;
+public class LocationsViewModel extends ViewModel {
+    private MutableLiveData<ArrayList<Location>> locations;
+    private MutableLiveData<ArrayList<String>> imageUrls;
     private static CompositeDisposable disposables = new CompositeDisposable();
 
-    public LocationActivityPresenter(LocationActivity activity) {
-        this.locationActivity = activity;
+    public LocationsViewModel() {
+        locations = new MutableLiveData<>();
+        imageUrls = new MutableLiveData<>();
+
+        fetchLocations();
+        fetchImageUrls();
+        Log.d("SII", "LocationsViewModel: " + imageUrls.getValue());
     }
 
-    @Override
-    public LocationsRecyclerViewAdapter getAdapter() {
-       // return new LocationsRecyclerViewAdapter(this, this, LocationsProvider.getInstance().getLocations());
-        return null;
+    private void fetchLocations() {
+        locations.setValue(LocationsProvider.getInstance().getLocations());
+    }
+
+    private void fetchImageUrls() {
+        if(locations.getValue() != null) {
+            Log.d("SII", "fetchimageurls ");
+            for (Location location : locations.getValue()) {
+                Log.d("SII", "LocationsViewModel: "+ location.toString());
+                getLocationImageUrl(location);
+            }
+        }
+    }
+
+    public ArrayList<Location> getLocations() {
+        return locations.getValue();
+    }
+
+    public MutableLiveData<ArrayList<String>> getImageUrls() {
+        return imageUrls;
     }
 
     public void fabOnclick() {
-        Intent intent = new Intent(locationActivity, AddLocationActivity.class);
-        locationActivity.startActivity(intent);
+        Context context = WeatherfulApplication.getStaticContext();
+        Intent intent = new Intent(context, AddLocationActivity.class);
+        context.startActivity(intent);
     }
 
-    public void getLocationImageUrl(final LocationViewHolder viewHolder, final Location location) {
+    private void getLocationImageUrl(final Location location) {
         Observable<ImageResponse> observableImageResponse = NetworkManager
                 .getInstance()
                 .getQwantAPI()
@@ -64,14 +90,18 @@ public class LocationActivityPresenter implements LocationActivityContract{
                         return "https:" + pictures.get(0).getThumbnailUrl();
                     }
                 })
-                .subscribe(getLocationImageUrlObserver(viewHolder));
+                .subscribe(getLocationImageUrlObserver());
     }
 
-    private static DisposableObserver<String> getLocationImageUrlObserver(final LocationViewHolder viewHolder) {
-        DisposableObserver<String> locationImageUrlObserver = new DisposableObserver<String>() {
+    private DisposableObserver<String> getLocationImageUrlObserver() {
+        final DisposableObserver<String> locationImageUrlObserver = new DisposableObserver<String>() {
             @Override
-            public void onNext(String imageUrl) {
-                viewHolder.setLocationPicture(imageUrl);
+            public void onNext(String url) {
+                Log.d("SII", "onNext: " + url);
+                ArrayList<String> urls = imageUrls.getValue();
+                urls.add(url);
+
+                imageUrls.setValue(urls);
             }
 
             @Override
@@ -92,7 +122,7 @@ public class LocationActivityPresenter implements LocationActivityContract{
                 .getInstance()
                 .getWeatherfulAPI()
                 .getForecastSummaryResponse(location.getLatitude(),
-                location.getLongitude());
+                        location.getLongitude());
 
         observableForecastSummary
                 .subscribeOn(Schedulers.io())
@@ -124,10 +154,7 @@ public class LocationActivityPresenter implements LocationActivityContract{
         return forecastSummaryObserver;
     }
 
-    @Override
     public void onViewDestroy() {
-        Log.d("SII", "onViewDestroy: LocationActivity");
         disposables.clear();
-        locationActivity = null;
     }
 }

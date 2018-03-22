@@ -1,5 +1,7 @@
 package com.stoyan.weatherful.ui.location_activity;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import com.crashlytics.android.Crashlytics;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.ui.BaseActivity;
+import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationsRecyclerViewAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +30,7 @@ public class LocationActivity extends BaseActivity {
     @BindView(R.id.fab_add)
     FloatingActionButton fabAddLocation;
 
-    private LocationActivityPresenter presenter;
+    private LocationsViewModel locationsViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,26 +38,25 @@ public class LocationActivity extends BaseActivity {
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_base_recyclerview);
 
+        locationsViewModel = ViewModelProviders.of(this).get(LocationsViewModel.class);
+
         fabAddLocation.setVisibility(View.VISIBLE);
-
-        presenter = new LocationActivityPresenter(this);
-
         headerBar.setText(R.string.location_activity_header);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(presenter.getAdapter());
+        recyclerView.setAdapter(new LocationsRecyclerViewAdapter(this, locationsViewModel, locationsViewModel.getLocations()));
 
         fabAddLocation.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                presenter.fabOnclick();
+            public void onClick(View v) {
+                locationsViewModel.fabOnclick();
             }
         });
     }
 
     @Override
     protected void onDestroy() {
-        presenter.onViewDestroy();
+        locationsViewModel.onViewDestroy();
         super.onDestroy();
     }
 }
