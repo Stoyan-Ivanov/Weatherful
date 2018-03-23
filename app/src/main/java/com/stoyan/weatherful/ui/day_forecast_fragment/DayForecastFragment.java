@@ -2,6 +2,8 @@ package com.stoyan.weatherful.ui.day_forecast_fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,23 +59,22 @@ public class DayForecastFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_day_forecast, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         presenter = new DayForecastFragmentPresenter(getArguments());
-        unbinder = ButterKnife.bind(this, view);
 
         weatherImage.setImageDrawable(presenter.getImageDrawable());
-
         tvDate.setText(presenter.getDate());
-
         tvMinTemperature.setText(presenter.getMinTemperature());
-
         tvMaxTemperature.setText(presenter.getMaxTemperature());
-
         tvWindSpeed.setText(presenter.getWindSpeed());
-
         tvRainChance.setText(presenter.getRainChance());
-
-        return view;
     }
 
     @Override

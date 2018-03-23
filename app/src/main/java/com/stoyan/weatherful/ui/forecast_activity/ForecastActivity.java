@@ -1,11 +1,15 @@
 package com.stoyan.weatherful.ui.forecast_activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
+import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
+import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.ui.BaseActivity;
 
 import butterknife.BindView;
@@ -19,6 +23,12 @@ public class ForecastActivity extends BaseActivity {
     RecyclerView recyclerView;
 
     private ForecastActivityPresenter presenter;
+
+    public static void start(Context context, Location location) {
+        Intent starter = new Intent(context, ForecastActivity.class);
+        starter.putExtra(Constants.EXTRA_LOCATION, location);
+        context.startActivity(starter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

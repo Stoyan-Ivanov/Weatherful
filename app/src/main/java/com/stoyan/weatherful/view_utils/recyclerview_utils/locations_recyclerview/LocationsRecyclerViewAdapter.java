@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
-import com.stoyan.weatherful.ui.location_activity.LocationActivityPresenter;
 
 import java.util.ArrayList;
 
@@ -18,10 +17,8 @@ import java.util.ArrayList;
 public class LocationsRecyclerViewAdapter extends RecyclerView.Adapter<LocationViewHolder> {
     private ArrayList<Location> locations = new ArrayList<>();
     private LayoutInflater inflater;
-    private LocationActivityPresenter presenter;
 
-    public LocationsRecyclerViewAdapter(LocationActivityPresenter locationActivityPresenter, ArrayList<Location> locations) {
-        this.presenter = locationActivityPresenter;
+    public LocationsRecyclerViewAdapter(ArrayList<Location> locations) {
         this.locations = locations;
     }
 
@@ -35,9 +32,8 @@ public class LocationsRecyclerViewAdapter extends RecyclerView.Adapter<LocationV
 
     @Override
     public void onBindViewHolder(LocationViewHolder holder, int position) {
-        holder.bind(locations.get(position));
-        presenter.getLocationImageUrl(holder, locations.get(position));
-        presenter.getForecastSummary(holder, locations.get(position));
+        final Location location = locations.get(position);
+        holder.bind(location);
     }
 
     @Override

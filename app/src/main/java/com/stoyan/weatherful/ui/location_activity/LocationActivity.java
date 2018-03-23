@@ -2,7 +2,6 @@ package com.stoyan.weatherful.ui.location_activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,12 +10,12 @@ import android.widget.TextView;
 import com.crashlytics.android.Crashlytics;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.ui.BaseActivity;
+import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationsRecyclerViewAdapter;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.fabric.sdk.android.Fabric;
 
-public class LocationActivity extends BaseActivity {
+public class LocationActivity extends BaseActivity{
 
     @BindView(R.id.ctv_header)
     TextView headerBar;
@@ -40,9 +39,8 @@ public class LocationActivity extends BaseActivity {
         presenter = new LocationActivityPresenter(this);
 
         headerBar.setText(R.string.location_activity_header);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(presenter.getAdapter());
+        recyclerView.setAdapter(new LocationsRecyclerViewAdapter(presenter.getLocations()));
 
         fabAddLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,11 +48,17 @@ public class LocationActivity extends BaseActivity {
                 presenter.fabOnclick();
             }
         });
+
+        presenter.downloadData();
     }
 
     @Override
     protected void onDestroy() {
         presenter.onViewDestroy();
         super.onDestroy();
+    }
+
+    public void notifyDatasetChanged() {
+        recyclerView.getAdapter().notifyDataSetChanged();
     }
 }
