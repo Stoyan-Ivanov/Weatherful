@@ -50,10 +50,8 @@ public class LocationActivityPresenter implements LocationActivityContract {
 
     public void downloadData() {
         disposables.add(
-                Observable.just(locations)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .flatMapIterable(locations1 -> locations1)
+                Observable.just(LocationsProvider.getInstance().getLocations())
+                        .flatMapIterable(locations -> locations)
                         .flatMap(this::downloadLocationImage)
                         .toList()
                         .map(ArrayList::new)
@@ -63,17 +61,15 @@ public class LocationActivityPresenter implements LocationActivityContract {
 
     private Consumer<ArrayList<Location>> getLocationConsumer() {
         return locations -> {
-            LocationActivityPresenter.this.locations = locations;
+            LocationActivityPresenter.this.locations.addAll(locations);
             locationActivity.notifyDatasetChanged();
         };
     }
 
     public Consumer<? super Throwable> getErrorConsumer() {
-        return new Consumer<Throwable>() {
-            @Override
-            public void accept(final Throwable throwable) throws Exception {
-                locationActivity.showError(throwable);
-            }
+        return (Consumer<Throwable>) throwable -> {
+            throwable.printStackTrace();
+            //locationActivity.showError(throwable);
         };
     }
 
@@ -82,12 +78,14 @@ public class LocationActivityPresenter implements LocationActivityContract {
                 .getInstance()
                 .getQwantAPI()
                 .getLocationImage(location.toString())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .map(imageResponse -> imageResponse.getData().getResult().getPictures())
                 .flatMapIterable(pictures -> pictures)
                 .first(new Picture("www.google.com"))
                 .map(Picture::getThumbnailUrl)
                 .map(s -> {
-                    location.setImageUrl(s);
+                    location.setImageUrl("http:" + s);
                     return location;
                 })
                 .toObservable();
@@ -139,7 +137,7 @@ public class LocationActivityPresenter implements LocationActivityContract {
     }
 
     public ArrayList<Location> getLocations() {
-        locations = LocationsProvider.getInstance().getLocations();
+        locations = new ArrayList<>();
         return locations;
     }
 
