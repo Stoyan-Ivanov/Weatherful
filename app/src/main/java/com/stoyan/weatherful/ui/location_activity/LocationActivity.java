@@ -39,19 +39,13 @@ public class LocationActivity extends BaseActivity{
 
         presenter = new LocationActivityPresenter(this);
 
-        fabAddLocation.setVisibility(View.VISIBLE);
         headerBar.setText(R.string.location_activity_header);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new LocationsRecyclerViewAdapter(presenter.getLocations()));
 
-
-        fabAddLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.fabOnclick();
-            }
-        });
+        fabAddLocation.setVisibility(View.VISIBLE);
+        fabAddLocation.setOnClickListener(v -> presenter.fabOnclick());
 
         presenter.downloadData();
     }

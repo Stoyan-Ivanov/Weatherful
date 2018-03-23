@@ -2,6 +2,7 @@ package com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclervi
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,10 +48,10 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
 
         tvLocationName.setText(location.getLocationName());
+        Log.d("SII", "bind: " + location.getImageUrl());
         setLocationPicture(location.getImageUrl());
-        if (location.getForecastSummary() != null) {
-            setForecastSummary(location.getForecastSummary().getHourly().getSummary());
-        }
+        setForecastSummary(location.getForecastSummary().getHourly().getSummary());
+        setTemperature(location.getForecastSummary().getHourly().getData().get(0).getTemperature());
 
         setOnViewHolderClickListeners(location);
     }
@@ -58,33 +59,26 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
     private void setOnViewHolderClickListeners(final Location location) {
         itemView.setOnClickListener(view -> ForecastActivity.start(context, location));
 
-        itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                LocationsProvider.getInstance().deleteLocation(location);
-                removeItem();
-                return false;
-            }
+        itemView.setOnLongClickListener(view -> {
+            LocationsProvider.getInstance().deleteLocation(location);
+            removeItem();
+            return false;
         });
     }
 
     private void removeItem() {
-        adapter.getLocations().remove(getAdapterPosition());
-        adapter.notifyItemRemoved(getAdapterPosition());
-        adapter.notifyItemRangeChanged(getAdapterPosition(), adapter.getLocations().size());
+        adapter.removeItem(getAdapterPosition());
     }
 
     public void setLocationPicture(String url) {
 
         if ((itemView != null) && url != null) {
 
-            Glide.with(locationPicture.getContext())
+            Glide.with(itemView.getContext())
                     .load(url)
-                    .centerCrop()
+                    .fitCenter()
                     .placeholder(R.drawable.cityscape)
                     .into(locationPicture);
-        } else {
-            throw new NullPointerException("Provide valid image url");
         }
     }
 

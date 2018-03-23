@@ -44,10 +44,12 @@ public class LocationActivityPresenter implements LocationActivityContract {
     }
 
     public void downloadData() {
+        Log.d("SII", "downloadData: " + LocationsProvider.getInstance().getLocations().toString());
         disposables.add(
                 Observable.just(LocationsProvider.getInstance().getLocations())
                         .flatMapIterable(locations -> locations)
                         .flatMap(this::downloadLocationImage)
+                        .flatMap(this::downloadForecastSummary)
                         .toList()
                         .map(ArrayList::new)
                         .subscribe(getLocationConsumer(), getErrorConsumer())
@@ -60,7 +62,6 @@ public class LocationActivityPresenter implements LocationActivityContract {
             locationActivity.notifyDatasetChanged();
         };
     }
-
     public Consumer<? super Throwable> getErrorConsumer() {
         return (Consumer<Throwable>) throwable -> locationActivity.showError(throwable);
 
@@ -78,48 +79,23 @@ public class LocationActivityPresenter implements LocationActivityContract {
                 .first(new Picture("www.google.com"))
                 .map(Picture::getThumbnailUrl)
                 .map(s -> {
+                    Log.d("SII", "downloadLocationImage: " + "http:" + s);
                     location.setImageUrl("http:" + s);
                     return location;
-                })
-                .toObservable();
+                }).toObservable();
     }
 
-    public void getForecastSummary(final LocationViewHolder viewHolder, final Location location) {
-        Observable<ForecastSummaryResponse> observableForecastSummary = NetworkManager
+    private Observable<Location> downloadForecastSummary(Location location) {
+        return NetworkManager
                 .getInstance()
                 .getWeatherfulAPI()
-                .getForecastSummaryResponse(location.getLatitude(),
-                        location.getLongitude());
-
-        observableForecastSummary
+                .getForecastSummaryResponse(location.getLatitude(), location.getLongitude())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(getForecastSummaryObserver(viewHolder));
-    }
-
-    private DisposableObserver<ForecastSummaryResponse> getForecastSummaryObserver(final LocationViewHolder viewHolder) {
-        DisposableObserver<ForecastSummaryResponse> forecastSummaryObserver = new DisposableObserver<ForecastSummaryResponse>() {
-            @Override
-            public void onNext(ForecastSummaryResponse forecastSummaryResponse) {
-                viewHolder.setForecastSummary(forecastSummaryResponse.getHourly().getSummary());
-
-                viewHolder.setTemperature(forecastSummaryResponse.getHourly()
-                        .getData().get(0).getTemperature()
-                        + WeatherfulApplication.getStringFromId(R.string.degree_symbol));
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.d("SII", "onError: Forecast summary " + e.getMessage());
-            }
-
-            @Override
-            public void onComplete() {
-            }
-        };
-
-        disposables.add(forecastSummaryObserver);
-        return forecastSummaryObserver;
+                .map(forecastSummaryResponse -> {
+                    location.setForecastSummary(forecastSummaryResponse);
+                    return location;
+                });
     }
 
     @Override

@@ -22,9 +22,12 @@ public class Location implements Parcelable {
         this. coordinates = new Coordinates(latitude, longitude);
     }
 
-    public Location(String locationName, String country, double latitude, double longitude, String imageUrl) {
+    public Location(String locationName, String country, double latitude, double longitude
+            , String imageUrl, ForecastSummaryResponse forecastSummary) {
+
         this(locationName, country, latitude, longitude);
         this.imageUrl = imageUrl;
+        this.forecastSummary = forecastSummary;
     }
 
     public String getLocationName() {
@@ -53,6 +56,10 @@ public class Location implements Parcelable {
 
     public ForecastSummaryResponse getForecastSummary(){
         return forecastSummary;
+    }
+
+    public void setForecastSummary(ForecastSummaryResponse forecastSummary) {
+        this.forecastSummary = forecastSummary;
     }
 
     @Override
