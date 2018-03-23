@@ -3,6 +3,8 @@ package com.stoyan.weatherful.db;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.stoyan.weatherful.network.models.forecast_summary_models.ForecastSummaryResponse;
+
 /**
  * Created by Stoyan on 27.1.2018 г..
  */
@@ -12,6 +14,7 @@ public class Location implements Parcelable {
     private String country;
     private Coordinates coordinates;
     private String imageUrl;
+    private ForecastSummaryResponse forecastSummary;
 
     public Location(String locationName, String country, double latitude, double longitude) {
         this.locationName = locationName;
@@ -46,6 +49,10 @@ public class Location implements Parcelable {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public ForecastSummaryResponse getForecastSummary(){
+        return forecastSummary;
     }
 
     @Override

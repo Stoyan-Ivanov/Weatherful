@@ -3,16 +3,14 @@ package com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclervi
 import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
-import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.ui.location_activity.LocationActivity;
-import com.stoyan.weatherful.ui.location_activity.LocationsViewModel;
+
 
 import java.util.ArrayList;
 
@@ -23,19 +21,14 @@ import java.util.ArrayList;
 
 public class LocationsRecyclerViewAdapter extends RecyclerView.Adapter<LocationViewHolder> {
     private ArrayList<Location> locations = new ArrayList<>();
+
     private ArrayList<String> imageUrls = new ArrayList<>();
 
-    public LocationsRecyclerViewAdapter(LocationActivity locationActivity, LocationsViewModel locationsViewModel, ArrayList<Location> locations) {
+    public LocationsRecyclerViewAdapter(LocationActivity locationActivity, ArrayList<Location> locations) {}
+    private LayoutInflater inflater;
+
+    public LocationsRecyclerViewAdapter(ArrayList<Location> locations) {
         this.locations = locations;
-
-        Observer<ArrayList<String>> imageUrlObserver = new Observer<ArrayList<String>>() {
-            @Override
-            public void onChanged(@Nullable ArrayList<String> strings) {
-               imageUrls = strings;
-               notifyDataSetChanged();
-            }};
-
-        locationsViewModel.getImageUrls().observe(locationActivity, imageUrlObserver);
     }
 
     @Override
@@ -46,14 +39,9 @@ public class LocationsRecyclerViewAdapter extends RecyclerView.Adapter<LocationV
         return new LocationViewHolder(view, this);
     }
 
-    @Override
-    public void onBindViewHolder(final LocationViewHolder holder, final int position) {
-        holder.bind(locations.get(position));
-
-        Log.d("SII", "onBindViewHolder: " + imageUrls.size());
-        holder.setLocationPicture(imageUrls.get(position));
-
-        //presenter.getForecastSummary(holder, locations.get(position));
+    public void onBindViewHolder(LocationViewHolder holder, int position) {
+        final Location location = locations.get(position);
+        holder.bind(location);
     }
 
     @Override

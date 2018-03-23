@@ -1,17 +1,15 @@
 package com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview;
 
-import android.content.Intent;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.db.LocationsProvider;
-import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.ui.forecast_activity.ForecastActivity;
 
 import butterknife.BindView;
@@ -36,9 +34,11 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
     TextView tvTemperature;
 
     private LocationsRecyclerViewAdapter adapter;
+    private Context context;
 
     public LocationViewHolder(View itemView, LocationsRecyclerViewAdapter adapter) {
         super(itemView);
+        this.context = itemView.getContext();
         this.adapter = adapter;
     }
 
@@ -47,19 +47,16 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
 
         tvLocationName.setText(location.getLocationName());
+        setLocationPicture(location.getImageUrl());
+        if (location.getForecastSummary() != null) {
+            setForecastSummary(location.getForecastSummary().getHourly().getSummary());
+        }
 
         setOnViewHolderClickListeners(location);
     }
 
     private void setOnViewHolderClickListeners(final Location location) {
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(WeatherfulApplication.getStaticContext(), ForecastActivity.class);
-                intent.putExtra(Constants.EXTRA_LOCATION, location);
-                WeatherfulApplication.getStaticContext().startActivity(intent);
-            }
-        });
+        itemView.setOnClickListener(view -> ForecastActivity.start(context, location));
 
         itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -79,7 +76,7 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
 
     public void setLocationPicture(String url) {
 
-        if((itemView != null) && url != null) {
+        if ((itemView != null) && url != null) {
 
             Glide.with(locationPicture.getContext())
                     .load(url)
@@ -92,7 +89,7 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setForecastSummary(String summary) {
-        if(summary != null) {
+        if (summary != null) {
             tvForecastSummary.setText(summary);
         } else {
             throw new NullPointerException("Provide valid summary!");
@@ -100,7 +97,7 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setTemperature(String temp) {
-        if(temp != null) {
+        if (temp != null) {
             tvTemperature.setText(temp);
         } else {
             throw new NullPointerException("Provide valid tvTemperature");
