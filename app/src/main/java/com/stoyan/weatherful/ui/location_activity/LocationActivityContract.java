@@ -7,6 +7,8 @@ import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclervie
  * Created by Stoyan on 27.1.2018 г..
  */
 
-public interface LocationActivityContract extends BasePresenterContract {
-
+public interface LocationActivityContract {
+    void notifyDataSetChanged();
+    void showError(Throwable throwable);
+    void startNewActivity();
 }

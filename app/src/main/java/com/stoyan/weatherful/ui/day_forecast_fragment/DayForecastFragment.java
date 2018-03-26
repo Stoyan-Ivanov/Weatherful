@@ -43,7 +43,6 @@ public class DayForecastFragment extends Fragment {
     private DayForecastFragmentPresenter presenter;
 
     public static DayForecastFragment newInstance(Data data) {
-
         Bundle arguments = new Bundle();
         arguments.putParcelable(Constants.EXTRA_DATA, data);
 
@@ -51,9 +50,6 @@ public class DayForecastFragment extends Fragment {
         fragment.setArguments(arguments);
         return fragment;
     }
-
-    public DayForecastFragment() {}
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

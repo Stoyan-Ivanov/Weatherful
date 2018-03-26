@@ -1,5 +1,7 @@
 package com.stoyan.weatherful.ui.add_location_activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,11 +10,12 @@ import android.widget.EditText;
 
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.ui.BaseActivity;
+import com.stoyan.weatherful.ui.location_activity.LocationActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddLocationActivity extends BaseActivity {
+public class AddLocationActivity extends BaseActivity implements AddLocationActivityContract {
 
     @BindView(R.id.et_city)
     EditText etCityName;
@@ -25,6 +28,10 @@ public class AddLocationActivity extends BaseActivity {
 
     private AddLocationActivityPresenter presenter;
 
+    public static Intent getIntent(Context context) {
+        return new Intent(context, AddLocationActivity.class);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,19 +39,21 @@ public class AddLocationActivity extends BaseActivity {
 
         presenter = new AddLocationActivityPresenter(this);
 
-        btnAddLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnAddLocation.setOnClickListener(view ->
                 presenter.addNewLocation(etCityName.getText().toString(),
-                        etCountryName.getText().toString());
-            }
-        });
-
+                                        etCountryName.getText().toString())
+        );
     }
 
     @Override
     protected void onDestroy() {
         presenter.onViewDestroy();
         super.onDestroy();
+    }
+
+    @Override
+    public void startNewLocationsActivity() {
+        startActivity(LocationActivity.getIntent(this));
+        finish();
     }
 }

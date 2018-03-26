@@ -10,6 +10,7 @@ import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.network.models.forecast_summary_models.ForecastSummaryResponse;
 import com.stoyan.weatherful.network.models.image_response_models.Picture;
+import com.stoyan.weatherful.ui.BasePresenterContract;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationViewHolder;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationsRecyclerViewAdapter;
@@ -28,23 +29,21 @@ import io.reactivex.schedulers.Schedulers;
  * Created by Stoyan on 27.1.2018 г..
  */
 
-public class LocationActivityPresenter implements LocationActivityContract {
+public class LocationActivityPresenter implements BasePresenterContract {
 
     private ArrayList<Location> locations;
-    private LocationActivity locationActivity;
+    private LocationActivityContract view;
     private CompositeDisposable disposables = new CompositeDisposable();
 
-    public LocationActivityPresenter(LocationActivity activity) {
-        this.locationActivity = activity;
+    public LocationActivityPresenter(LocationActivityContract view) {
+        this.view = view;
     }
 
     public void fabOnclick() {
-        Intent intent = new Intent(locationActivity, AddLocationActivity.class);
-        locationActivity.startActivity(intent);
+        view.startNewActivity();
     }
 
     public void downloadData() {
-        Log.d("SII", "downloadData: " + LocationsProvider.getInstance().getLocations().toString());
         disposables.add(
                 Observable.just(LocationsProvider.getInstance().getLocations())
                         .flatMapIterable(locations -> locations)
@@ -59,11 +58,12 @@ public class LocationActivityPresenter implements LocationActivityContract {
     private Consumer<ArrayList<Location>> getLocationConsumer() {
         return locations -> {
             LocationActivityPresenter.this.locations.addAll(locations);
-            locationActivity.notifyDatasetChanged();
+            view.notifyDataSetChanged();
         };
     }
-    public Consumer<? super Throwable> getErrorConsumer() {
-        return (Consumer<Throwable>) throwable -> locationActivity.showError(throwable);
+
+    private Consumer<? super Throwable> getErrorConsumer() {
+        return (Consumer<Throwable>) throwable -> view.showError(throwable);
 
     }
 
@@ -100,9 +100,8 @@ public class LocationActivityPresenter implements LocationActivityContract {
 
     @Override
     public void onViewDestroy() {
-        Log.d("SII", "onViewDestroy: LocationActivity");
         disposables.clear();
-        locationActivity = null;
+        view = null;
     }
 
     public ArrayList<Location> getLocations() {

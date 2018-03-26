@@ -11,14 +11,4 @@ import com.stoyan.weatherful.view_utils.CustomPagerAdapter;
 
 public interface ForecastPagerActivityContract extends BasePresenterContract {
 
-    String getHeader();
-
-    void getExtras(Intent intent);
-
-    CustomPagerAdapter getPagerAdapter();
-
-    int getDefaultPosition();
-
-    int getOffScreenLimit();
-
 }

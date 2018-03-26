@@ -41,10 +41,12 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.tv_date)
     TextView tvDateHolder;
 
+    Context context;
 
     public ForecastViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        context = itemView.getContext();
     }
 
     public void bind(final ArrayList<Data> data, final int position, final Location location) {
@@ -55,12 +57,8 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
         setTemperature(currData);
         setRainChance(currData);
 
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startNewActivity(data, position, location);
-            }
-        });
+        itemView.setOnClickListener(v -> context
+                .startActivity(ForecastPagerActivity.getIntent(context, location, data, position)));
     }
 
     private void setDate(final Data data) {
@@ -110,14 +108,5 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
 
     private String getProperDrawableName(String drawableName) {
         return  drawableName.replaceAll("-","_").toLowerCase();
-    }
-
-    private void startNewActivity(ArrayList<Data> data, int position,  Location location) {
-        Intent intent = new Intent(WeatherfulApplication.getStaticContext(), ForecastPagerActivity.class);
-        intent.putExtra(Constants.EXTRA_LOCATION, location);
-        intent.putExtra(Constants.EXTRA_DATA, data);
-        intent.putExtra(Constants.EXTRA_POSITION, position);
-
-        WeatherfulApplication.getStaticContext().startActivity(intent);
     }
 }

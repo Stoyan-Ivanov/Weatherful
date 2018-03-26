@@ -3,11 +3,12 @@ package com.stoyan.weatherful.ui.add_location_activity;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
-import com.stoyan.weatherful.Constants;
+
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.LocationsProvider;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.WeatherfulApplication;
+import com.stoyan.weatherful.ui.BasePresenterContract;
 import com.stoyan.weatherful.ui.location_activity.LocationActivity;
 
 import java.io.IOException;
@@ -17,14 +18,13 @@ import java.util.List;
  * Created by Stoyan on 28.1.2018 г..
  */
 
-public class AddLocationActivityPresenter implements  AddLocationActivityContract{
-    private AddLocationActivity addLocationActivity;
+public class AddLocationActivityPresenter implements BasePresenterContract {
+    private AddLocationActivityContract view;
 
-    public AddLocationActivityPresenter(AddLocationActivity activity) {
-        addLocationActivity = activity;
+    public AddLocationActivityPresenter(AddLocationActivityContract view) {
+        this.view = view;
     }
 
-    @Override
     public void addNewLocation(String cityName, String countryName) {
         if(checkIfDataIsCorrect(cityName, countryName)) {
             getCoordinatesOfLocation(cityName, countryName);
@@ -52,30 +52,22 @@ public class AddLocationActivityPresenter implements  AddLocationActivityContrac
 
     private void prepareLocationForSaving(Location location) {
         if(LocationsProvider.getInstance().saveLocation(location)) {
-            WeatherfulApplication.showToast(WeatherfulApplication
-                                                .getStringFromId(R.string.successful_adding));
-            startNewActivity();
+            WeatherfulApplication.showToast(WeatherfulApplication.getStringFromId(R.string.successful_adding));
+            view.startNewLocationsActivity();
         }
 
     }
 
     private boolean checkIfDataIsCorrect(String cityName, String countryName) {
         if(cityName.equals("") || countryName.equals("")) {
-            WeatherfulApplication.showToast(WeatherfulApplication
-                                                .getStringFromId(R.string.invalid_input));
+            WeatherfulApplication.showToast(WeatherfulApplication.getStringFromId(R.string.invalid_input));
             return false;
         }
         return true;
     }
 
-    private void startNewActivity() {
-        Intent intent = new Intent(addLocationActivity, LocationActivity.class);
-        addLocationActivity.startActivity(intent);
-        addLocationActivity.finish();
-    }
-
     @Override
     public void onViewDestroy() {
-        addLocationActivity = null;
+        view = null;
     }
 }

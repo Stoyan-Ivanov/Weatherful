@@ -4,10 +4,10 @@ package com.stoyan.weatherful.ui.forecast_activity;
 import android.content.Intent;
 
 import com.stoyan.weatherful.Constants;
-import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
+import com.stoyan.weatherful.ui.BasePresenterContract;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,23 +24,22 @@ import static io.reactivex.Observable.just;
  * Created by Stoyan on 27.1.2018 г..
  */
 
-public class ForecastActivityPresenter implements ForecastActivityContract {
+public class ForecastActivityPresenter implements BasePresenterContract {
     private Location location;
-    private ForecastActivity forecastActivity;
+    private ForecastActivityContract view;
     private ArrayList<Data> weeklyForecast;
     private static CompositeDisposable disposables = new CompositeDisposable();
 
-    public ForecastActivityPresenter(Intent intent, ForecastActivity activity) {
+    public ForecastActivityPresenter(Intent intent, ForecastActivityContract view) {
         getExtras(intent);
-        forecastActivity = activity;
+        this.view = view;
     }
 
-    @Override
+
     public String getHeader() {
         return location.getLocationName() + ", " + location.getCountry();
     }
 
-    @Override
     public void getExtras(Intent intent) {
         location = intent.getParcelableExtra(Constants.EXTRA_LOCATION);
     }
@@ -59,13 +58,13 @@ public class ForecastActivityPresenter implements ForecastActivityContract {
     }
 
     private Consumer<? super Throwable> getErrorConsumer() {
-        return (Consumer<Throwable>) throwable -> forecastActivity.showError(throwable);
+        return (Consumer<Throwable>) throwable -> view.showError(throwable);
     }
 
     private Consumer<? super ArrayList<Data>> getWeeklyForecastConsumer() {
         return weeklyForecast -> {
             this.weeklyForecast.addAll(weeklyForecast);
-            forecastActivity.notifyDataSetChanged();
+            view.notifyDataSetChanged();
         };
     }
 
@@ -80,7 +79,7 @@ public class ForecastActivityPresenter implements ForecastActivityContract {
 
     @Override
     public void onViewDestroy() {
-        forecastActivity = null;
+        view = null;
         disposables.clear();
     }
 }

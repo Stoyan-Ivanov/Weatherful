@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 
-public class ForecastActivity extends BaseActivity {
+public class ForecastActivity extends BaseActivity implements ForecastActivityContract {
 
     @BindView(R.id.ctv_header)
     TextView headerBar;
@@ -55,10 +55,12 @@ public class ForecastActivity extends BaseActivity {
         super.onDestroy();
     }
 
+    @Override
     public void notifyDataSetChanged(){
         recyclerView.getAdapter().notifyDataSetChanged();
     }
 
+    @Override
     public void showError(Throwable throwable){
         Log.d("SII", "showError: " + throwable.getMessage());
     }
