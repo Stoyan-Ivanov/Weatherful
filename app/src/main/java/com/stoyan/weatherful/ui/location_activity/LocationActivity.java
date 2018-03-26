@@ -21,14 +21,9 @@ import io.fabric.sdk.android.Fabric;
 
 public class LocationActivity extends BaseActivity implements LocationActivityContract{
 
-    @BindView(R.id.ctv_header)
-    TextView headerBar;
-
-    @BindView(R.id.recyclerview)
-    RecyclerView recyclerView;
-
-    @BindView(R.id.fab_add)
-    FloatingActionButton fabAddLocation;
+    @BindView(R.id.ctv_header) TextView headerBar;
+    @BindView(R.id.recyclerview) RecyclerView recyclerView;
+    @BindView(R.id.fab_add) FloatingActionButton fabAddLocation;
 
     private LocationActivityPresenter presenter;
 

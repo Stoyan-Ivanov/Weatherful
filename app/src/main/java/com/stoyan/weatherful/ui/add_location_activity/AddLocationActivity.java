@@ -14,14 +14,9 @@ import butterknife.BindView;
 
 public class AddLocationActivity extends BaseActivity implements AddLocationActivityContract {
 
-    @BindView(R.id.et_city)
-    EditText etCityName;
-
-    @BindView(R.id.et_country)
-    EditText etCountryName;
-
-    @BindView(R.id.btn_done_adding)
-    Button btnAddLocation;
+    @BindView(R.id.et_city) EditText etCityName;
+    @BindView(R.id.et_country) EditText etCountryName;
+    @BindView(R.id.btn_done_adding) Button btnAddLocation;
 
     private AddLocationActivityPresenter presenter;
 

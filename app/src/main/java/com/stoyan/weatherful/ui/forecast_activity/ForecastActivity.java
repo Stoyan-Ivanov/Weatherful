@@ -18,11 +18,8 @@ import butterknife.BindView;
 
 public class ForecastActivity extends BaseActivity implements ForecastActivityContract {
 
-    @BindView(R.id.ctv_header)
-    TextView headerBar;
-
-    @BindView(R.id.recyclerview)
-    RecyclerView recyclerView;
+    @BindView(R.id.ctv_header) TextView headerBar;
+    @BindView(R.id.recyclerview) RecyclerView recyclerView;
 
     private ForecastActivityPresenter presenter;
 

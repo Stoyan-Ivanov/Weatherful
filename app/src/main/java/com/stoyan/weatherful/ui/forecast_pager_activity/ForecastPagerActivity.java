@@ -19,11 +19,8 @@ import butterknife.BindView;
 
 public class ForecastPagerActivity extends BaseActivity  {
 
-    @BindView(R.id.ctv_header)
-    TextView header;
-
-    @BindView(R.id.view_pager)
-    ViewPager viewPager;
+    @BindView(R.id.ctv_header) TextView header;
+    @BindView(R.id.view_pager) ViewPager viewPager;
 
     private ForecastPagerActivityPresenter presenter;
 
