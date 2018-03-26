@@ -12,7 +12,6 @@ import com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview
 
 public interface ForecastActivityContract extends BasePresenterContract {
 
-    ForecastRecyclerviewAdapter getAdapter();
     String getHeader();
     void getExtras(Intent intent);
 }

@@ -2,23 +2,23 @@ package com.stoyan.weatherful.ui.forecast_activity;
 
 
 import android.content.Intent;
-import android.util.Log;
 
 import com.stoyan.weatherful.Constants;
+import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.network.NetworkManager;
-import com.stoyan.weatherful.network.models.forecast_full_models.ForecastFullResponse;
-import com.stoyan.weatherful.ui.forecast_pager_activity.ForecastPagerActivity;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
-import com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview.ForecastRecyclerviewAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.observers.DisposableObserver;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+
+import static io.reactivex.Observable.just;
 
 /**
  * Created by Stoyan on 27.1.2018 г..
@@ -27,16 +27,12 @@ import io.reactivex.schedulers.Schedulers;
 public class ForecastActivityPresenter implements ForecastActivityContract {
     private Location location;
     private ForecastActivity forecastActivity;
+    private ArrayList<Data> weeklyForecast;
     private static CompositeDisposable disposables = new CompositeDisposable();
 
     public ForecastActivityPresenter(Intent intent, ForecastActivity activity) {
         getExtras(intent);
         forecastActivity = activity;
-    }
-
-    @Override
-    public ForecastRecyclerviewAdapter getAdapter() {
-            return new ForecastRecyclerviewAdapter(this, location);
     }
 
     @Override
@@ -49,37 +45,37 @@ public class ForecastActivityPresenter implements ForecastActivityContract {
         location = intent.getParcelableExtra(Constants.EXTRA_LOCATION);
     }
 
-    public void getWeeklyForecast(final Location location, final ForecastRecyclerviewAdapter adapter) {
-        Observable<ForecastFullResponse> observableFullForecast = NetworkManager
+    public void downloadWeeklyForecast() {
+        Observable.just(NetworkManager
                 .getInstance()
                 .getWeatherfulAPI()
-                .getFullForecastResponse(location.getLatitude(),
-                location.getLongitude());
-
-        observableFullForecast
+                .getFullForecastResponse(location.getLatitude(), location.getLongitude())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(getWeeklyForecastObserver(adapter));
+                .map(forecastFullResponse -> forecastFullResponse.getDaily().getData())
+                .map(Arrays::asList)
+                .map(ArrayList::new)
+                .subscribe(getWeeklyForecastConsumer(), getErrorConsumer()));
     }
 
-    private DisposableObserver<ForecastFullResponse> getWeeklyForecastObserver(final ForecastRecyclerviewAdapter adapter) {
-        DisposableObserver<ForecastFullResponse> weeklyForecastObserver = new DisposableObserver<ForecastFullResponse>() {
-            @Override
-            public void onNext(ForecastFullResponse forecastFullResponse) {
-                adapter.setNewData(forecastFullResponse.getDaily().getData());
-            }
+    private Consumer<? super Throwable> getErrorConsumer() {
+        return (Consumer<Throwable>) throwable -> forecastActivity.showError(throwable);
+    }
 
-            @Override
-            public void onError(Throwable e) {
-                Log.d("SII", "onError: full forecast " + e.getMessage());
-            }
-
-            @Override
-            public void onComplete() {}
+    private Consumer<? super ArrayList<Data>> getWeeklyForecastConsumer() {
+        return weeklyForecast -> {
+            this.weeklyForecast.addAll(weeklyForecast);
+            forecastActivity.notifyDataSetChanged();
         };
+    }
 
-        disposables.add(weeklyForecastObserver);
-        return weeklyForecastObserver;
+    public Location getLocation() {
+        return location;
+    }
+
+    public ArrayList<Data> getWeeklyForecast() {
+        weeklyForecast = new ArrayList<>();
+        return weeklyForecast;
     }
 
     @Override

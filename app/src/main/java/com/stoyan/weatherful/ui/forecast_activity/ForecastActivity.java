@@ -5,12 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
+import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.ui.BaseActivity;
+import com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview.ForecastRecyclerviewAdapter;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 
@@ -24,7 +29,7 @@ public class ForecastActivity extends BaseActivity {
 
     private ForecastActivityPresenter presenter;
 
-    public static void start(Context context, Location location) {
+    public static void getIntent(Context context, Location location) {
         Intent starter = new Intent(context, ForecastActivity.class);
         starter.putExtra(Constants.EXTRA_LOCATION, location);
         context.startActivity(starter);
@@ -40,12 +45,21 @@ public class ForecastActivity extends BaseActivity {
         headerBar.setText(presenter.getHeader());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(presenter.getAdapter());
+        recyclerView.setAdapter(new ForecastRecyclerviewAdapter(presenter.getWeeklyForecast(), presenter.getLocation()));
+        presenter.downloadWeeklyForecast();
     }
 
     @Override
     protected void onDestroy() {
         presenter.onViewDestroy();
         super.onDestroy();
+    }
+
+    public void notifyDataSetChanged(){
+        recyclerView.getAdapter().notifyDataSetChanged();
+    }
+
+    public void showError(Throwable throwable){
+        Log.d("SII", "showError: " + throwable.getMessage());
     }
 }

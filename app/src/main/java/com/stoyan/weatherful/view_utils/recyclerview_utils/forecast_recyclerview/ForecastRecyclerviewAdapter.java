@@ -20,13 +20,12 @@ import java.util.Arrays;
  */
 
 public class ForecastRecyclerviewAdapter extends RecyclerView.Adapter<ForecastViewHolder> {
-    private LayoutInflater inflater;
-    private ArrayList<Data> weeklyForecast = new ArrayList<>();
+    private ArrayList<Data> weeklyForecast;
     private Location location;
 
-    public ForecastRecyclerviewAdapter(ForecastActivityPresenter presenter, Location location) {
+    public ForecastRecyclerviewAdapter(ArrayList<Data> weeklyForecast, Location location) {
         this.location = location;
-        presenter.getWeeklyForecast(location, this);
+        this.weeklyForecast = weeklyForecast;
     }
 
     public void setNewData(Data[] newData) {
@@ -36,7 +35,7 @@ public class ForecastRecyclerviewAdapter extends RecyclerView.Adapter<ForecastVi
 
     @Override
     public ForecastViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.from(parent.getContext())
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.forecast_viewholder, parent, false);
 
         return new ForecastViewHolder(view);

@@ -57,7 +57,7 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void setOnViewHolderClickListeners(final Location location) {
-        itemView.setOnClickListener(view -> ForecastActivity.start(context, location));
+        itemView.setOnClickListener(view -> ForecastActivity.getIntent(context, location));
 
         itemView.setOnLongClickListener(view -> {
             LocationsProvider.getInstance().deleteLocation(location);
