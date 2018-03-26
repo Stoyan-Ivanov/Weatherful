@@ -1,4 +1,4 @@
-package com.stoyan.weatherful.ui;
+package com.stoyan.weatherful.ui.base_ui;
 
 import android.support.v7.app.AppCompatActivity;
 

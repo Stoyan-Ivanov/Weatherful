@@ -1,6 +1,5 @@
 package com.stoyan.weatherful.ui.add_location_activity;
 
-import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 
@@ -8,8 +7,7 @@ import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.LocationsProvider;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.WeatherfulApplication;
-import com.stoyan.weatherful.ui.BasePresenterContract;
-import com.stoyan.weatherful.ui.location_activity.LocationActivity;
+import com.stoyan.weatherful.ui.base_ui.BasePresenterContract;
 
 import java.io.IOException;
 import java.util.List;

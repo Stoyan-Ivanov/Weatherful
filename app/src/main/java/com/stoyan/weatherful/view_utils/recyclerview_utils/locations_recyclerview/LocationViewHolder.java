@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.db.LocationsProvider;
+import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.ui.forecast_activity.ForecastActivity;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.BaseViewHolder;
 
@@ -82,7 +83,8 @@ public class LocationViewHolder extends BaseViewHolder {
 
     public void setTemperature(String temp) {
         if (temp != null) {
-            tvTemperature.setText(temp);
+            String displayableTemp = temp + WeatherfulApplication.getStringFromId(R.string.degree_symbol);
+            tvTemperature.setText(displayableTemp);
         } else {
             throw new NullPointerException("Provide valid tvTemperature");
         }

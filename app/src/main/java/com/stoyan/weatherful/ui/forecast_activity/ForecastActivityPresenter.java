@@ -7,7 +7,7 @@ import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
-import com.stoyan.weatherful.ui.BasePresenterContract;
+import com.stoyan.weatherful.ui.base_ui.BasePresenterContract;
 
 import java.util.ArrayList;
 import java.util.Arrays;

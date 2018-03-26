@@ -14,32 +14,21 @@ import android.widget.TextView;
 import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
+import com.stoyan.weatherful.ui.base_ui.BaseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class DayForecastFragment extends Fragment {
+public class DayForecastFragment extends BaseFragment {
 
-    @BindView(R.id.iv_fragment_weather_image)
-    ImageView weatherImage;
+    @BindView(R.id.iv_fragment_weather_image) ImageView weatherImage;
+    @BindView(R.id.tv_fragment_date) TextView tvDate;
+    @BindView(R.id.tv_fragment_min_temp) TextView tvMinTemperature;
+    @BindView(R.id.tv_fragment_max_temp) TextView tvMaxTemperature;
+    @BindView(R.id.tv_fragment_wind_speed) TextView tvWindSpeed;
+    @BindView(R.id.tv_fragment_rain_chance) TextView tvRainChance;
 
-    @BindView(R.id.tv_fragment_date)
-    TextView tvDate;
-
-    @BindView(R.id.tv_fragment_min_temp)
-    TextView tvMinTemperature;
-
-    @BindView(R.id.tv_fragment_max_temp)
-    TextView tvMaxTemperature;
-
-    @BindView(R.id.tv_fragment_wind_speed)
-    TextView tvWindSpeed;
-
-    @BindView(R.id.tv_fragment_rain_chance)
-    TextView tvRainChance;
-
-    private Unbinder unbinder;
     private DayForecastFragmentPresenter presenter;
 
     public static DayForecastFragment newInstance(Data data) {
@@ -54,9 +43,7 @@ public class DayForecastFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_day_forecast, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        return view;
+        return inflateCurrentView(inflater, R.layout.fragment_day_forecast, container);
     }
 
     @Override
@@ -71,11 +58,5 @@ public class DayForecastFragment extends Fragment {
         tvMaxTemperature.setText(presenter.getMaxTemperature());
         tvWindSpeed.setText(presenter.getWindSpeed());
         tvRainChance.setText(presenter.getRainChance());
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 }

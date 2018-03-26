@@ -2,18 +2,15 @@ package com.stoyan.weatherful.ui.add_location_activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.stoyan.weatherful.R;
-import com.stoyan.weatherful.ui.BaseActivity;
+import com.stoyan.weatherful.ui.base_ui.BaseActivity;
 import com.stoyan.weatherful.ui.location_activity.LocationActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class AddLocationActivity extends BaseActivity implements AddLocationActivityContract {
 

@@ -3,23 +3,19 @@ package com.stoyan.weatherful.ui.forecast_pager_activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
-import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
-import com.stoyan.weatherful.ui.BaseActivity;
-import com.stoyan.weatherful.ui.forecast_activity.ForecastActivityPresenter;
+import com.stoyan.weatherful.ui.base_ui.BaseActivity;
 import com.stoyan.weatherful.view_utils.CustomPagerAdapter;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class ForecastPagerActivity extends BaseActivity  {
 

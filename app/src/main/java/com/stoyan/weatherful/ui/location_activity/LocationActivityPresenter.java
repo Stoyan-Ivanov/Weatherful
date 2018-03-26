@@ -1,19 +1,12 @@
 package com.stoyan.weatherful.ui.location_activity;
 
-import android.content.Intent;
 import android.util.Log;
 
-import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.db.LocationsProvider;
 import com.stoyan.weatherful.network.NetworkManager;
-import com.stoyan.weatherful.network.WeatherfulApplication;
-import com.stoyan.weatherful.network.models.forecast_summary_models.ForecastSummaryResponse;
 import com.stoyan.weatherful.network.models.image_response_models.Picture;
-import com.stoyan.weatherful.ui.BasePresenterContract;
-import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
-import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationViewHolder;
-import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationsRecyclerViewAdapter;
+import com.stoyan.weatherful.ui.base_ui.BasePresenterContract;
 
 import java.util.ArrayList;
 
@@ -21,7 +14,6 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 
