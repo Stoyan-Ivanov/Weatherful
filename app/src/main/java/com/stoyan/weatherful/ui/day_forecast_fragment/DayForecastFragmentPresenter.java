@@ -16,19 +16,18 @@ import java.util.Locale;
  * Created by Stoyan on 28.1.2018 г..
  */
 
-public class DayForecastFragmentPresenter implements DayForcastFragmentContract {
+public class DayForecastFragmentPresenter {
     private Data data;
 
     public DayForecastFragmentPresenter(final Bundle arguments) {
         getExtras(arguments);
     }
 
-    @Override
+
     public void getExtras(final Bundle arguments) {
         data = arguments.getParcelable(Constants.EXTRA_DATA);
     }
 
-    @Override
     public Drawable getImageDrawable() {
         String drawableName = data.getIcon();
         drawableName = drawableName.replaceAll("-", "_").toLowerCase();
@@ -39,32 +38,28 @@ public class DayForecastFragmentPresenter implements DayForcastFragmentContract 
         return context.getResources().getDrawable(resID);
     }
 
-    @Override
     public String getDate() {
         return getDateFromTimestamp();
     }
 
-    @Override
     public String getMinTemperature() {
         return WeatherfulApplication.getStringFromId(R.string.min_temperature_field)
                 + data.getTemperatureLow()
                 + WeatherfulApplication.getStringFromId(R.string.degree_symbol);
     }
 
-    @Override
     public String getMaxTemperature() {
         return WeatherfulApplication.getStringFromId(R.string.max_temperature_field)
                 + data.getTemperatureHigh()
                 + WeatherfulApplication.getStringFromId(R.string.degree_symbol);
     }
 
-    @Override
     public String getWindSpeed() {
         return WeatherfulApplication.getStringFromId(R.string.wind_speed_field)
                 + data.getWindSpeed();
     }
 
-    @Override
+
     public String getRainChance() {
         float probability = Float.parseFloat(data.getPrecipProbability()) * 100;
 
@@ -79,10 +74,5 @@ public class DayForecastFragmentPresenter implements DayForcastFragmentContract 
         return date.get(Calendar.DAY_OF_MONTH) + "."
                 + date.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)
                 + "." + date.get(Calendar.YEAR);
-    }
-
-    @Override
-    public void onViewDestroy() {
-
     }
 }
