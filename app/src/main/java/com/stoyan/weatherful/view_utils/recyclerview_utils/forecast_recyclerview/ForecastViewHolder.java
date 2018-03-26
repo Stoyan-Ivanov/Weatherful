@@ -14,6 +14,7 @@ import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.ui.forecast_pager_activity.ForecastPagerActivity;
+import com.stoyan.weatherful.view_utils.recyclerview_utils.BaseViewHolder;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import butterknife.ButterKnife;
  * Created by Stoyan on 27.1.2018 г..
  */
 
-public class ForecastViewHolder extends RecyclerView.ViewHolder {
+public class ForecastViewHolder extends BaseViewHolder {
 
     @BindView(R.id.iv_weather_icon)
     ImageView weatherImage;
@@ -41,12 +42,8 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.tv_date)
     TextView tvDateHolder;
 
-    Context context;
-
     public ForecastViewHolder(View itemView) {
         super(itemView);
-        ButterKnife.bind(this, itemView);
-        context = itemView.getContext();
     }
 
     public void bind(final ArrayList<Data> data, final int position, final Location location) {
@@ -100,7 +97,6 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
     private Drawable getDrawableByName(String drawableName) {
         drawableName = getProperDrawableName(drawableName);
 
-        Context context = WeatherfulApplication.getStaticContext();
         int resID = context.getResources().getIdentifier(drawableName , "drawable", context.getPackageName());
 
         return context.getResources().getDrawable(resID );

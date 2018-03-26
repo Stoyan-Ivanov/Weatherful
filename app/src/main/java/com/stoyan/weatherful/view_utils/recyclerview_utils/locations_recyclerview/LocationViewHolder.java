@@ -1,8 +1,5 @@
 package com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview;
 
-import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,15 +9,15 @@ import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.db.LocationsProvider;
 import com.stoyan.weatherful.ui.forecast_activity.ForecastActivity;
+import com.stoyan.weatherful.view_utils.recyclerview_utils.BaseViewHolder;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Stoyan on 27.1.2018 г..
  */
 
-public class LocationViewHolder extends RecyclerView.ViewHolder {
+public class LocationViewHolder extends BaseViewHolder {
 
     @BindView(R.id.iv_location)
     ImageView locationPicture;
@@ -35,20 +32,15 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
     TextView tvTemperature;
 
     private LocationsRecyclerViewAdapter adapter;
-    private Context context;
 
     public LocationViewHolder(View itemView, LocationsRecyclerViewAdapter adapter) {
         super(itemView);
-        this.context = itemView.getContext();
         this.adapter = adapter;
     }
 
     public void bind(final Location location) {
 
-        ButterKnife.bind(this, itemView);
-
         tvLocationName.setText(location.getLocationName());
-        Log.d("SII", "bind: " + location.getImageUrl());
         setLocationPicture(location.getImageUrl());
         setForecastSummary(location.getForecastSummary().getHourly().getSummary());
         setTemperature(location.getForecastSummary().getHourly().getData().get(0).getTemperature());
@@ -71,9 +63,7 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setLocationPicture(String url) {
-
         if ((itemView != null) && url != null) {
-
             Glide.with(itemView.getContext())
                     .load(url)
                     .fitCenter()
