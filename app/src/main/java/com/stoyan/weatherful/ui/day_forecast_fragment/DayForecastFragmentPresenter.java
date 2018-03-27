@@ -9,6 +9,7 @@ import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -18,9 +19,11 @@ import java.util.Locale;
 
 public class DayForecastFragmentPresenter {
     private Data data;
+    private Context context;
 
     public DayForecastFragmentPresenter(final Bundle arguments) {
         getExtras(arguments);
+        context = WeatherfulApplication.getStaticContext();
     }
 
 
@@ -43,28 +46,23 @@ public class DayForecastFragmentPresenter {
     }
 
     public String getMinTemperature() {
-        return WeatherfulApplication.getStringFromId(R.string.min_temperature_field)
-                + data.getTemperatureLow()
-                + WeatherfulApplication.getStringFromId(R.string.degree_symbol);
+        return context.getString(R.string.min_temperature_field, data.getTemperatureLow());
     }
 
     public String getMaxTemperature() {
-        return WeatherfulApplication.getStringFromId(R.string.max_temperature_field)
-                + data.getTemperatureHigh()
-                + WeatherfulApplication.getStringFromId(R.string.degree_symbol);
+        return context.getString(R.string.max_temperature_field, data.getTemperatureHigh());
     }
 
     public String getWindSpeed() {
-        return WeatherfulApplication.getStringFromId(R.string.wind_speed_field)
-                + data.getWindSpeed();
+        return context.getString(R.string.wind_speed_field, data.getWindSpeed());
     }
 
 
     public String getRainChance() {
         float probability = Float.parseFloat(data.getPrecipProbability()) * 100;
+        String displayProbability = String.format("%.2f", probability);
 
-        return WeatherfulApplication.getStringFromId(R.string.rain_chance_field)
-                + probability + "%";
+        return context.getString(R.string.rain_chance_field, displayProbability);
     }
 
     private String getDateFromTimestamp() {

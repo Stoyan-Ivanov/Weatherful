@@ -20,17 +20,10 @@ import butterknife.BindView;
 
 public class LocationViewHolder extends BaseViewHolder {
 
-    @BindView(R.id.iv_location)
-    ImageView locationPicture;
-
-    @BindView(R.id.tv_location_name)
-    TextView tvLocationName;
-
-    @BindView(R.id.tv_location_summary)
-    TextView tvForecastSummary;
-
-    @BindView(R.id.tv_location_temperature)
-    TextView tvTemperature;
+    @BindView(R.id.iv_location) ImageView locationPicture;
+    @BindView(R.id.tv_location_name) TextView tvLocationName;
+    @BindView(R.id.tv_location_summary) TextView tvForecastSummary;
+    @BindView(R.id.tv_location_temperature) TextView tvTemperature;
 
     private LocationsRecyclerViewAdapter adapter;
 

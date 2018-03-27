@@ -1,9 +1,12 @@
 package com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview;
 
+import android.content.Context;
+
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -12,26 +15,24 @@ import java.util.Locale;
  */
 
 public class ForecastViewHolderPresenter {
-    Data data;
+    private Data data;
+    private Context context;
 
     public ForecastViewHolderPresenter(Data data) {
         this.data = data;
+        context = WeatherfulApplication.getStaticContext();
     }
 
     public String getTemperature() {
-        return WeatherfulApplication.getStringFromId(R.string.temperature_field)
-                + data.getTemperatureLow()
-                + WeatherfulApplication.getStringFromId(R.string.degree_symbol)
-                + " - "
-                + data.getTemperatureHigh()
-                + WeatherfulApplication.getStringFromId(R.string.degree_symbol);
+        return context.getString(R.string.temperature_field,
+                data.getTemperatureLow(), data.getTemperatureHigh());
     }
 
     public String getRainChance() {
-        Float probability = Float.parseFloat(data.getPrecipProbability()) * 100;
+        float probability = Float.parseFloat(data.getPrecipProbability()) * 100;
+        String displayProbability = String.format("%.2f", probability);
 
-        return WeatherfulApplication.getStringFromId(R.string.rain_chance_field)
-                + probability + "%";
+        return context.getString(R.string.rain_chance_field, displayProbability);
     }
 
     public String getDateFromTimestamp() {
