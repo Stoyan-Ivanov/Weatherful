@@ -1,6 +1,8 @@
-package com.stoyan.weatherful.ui.base_ui;
+package com.stoyan.weatherful.ui.base_ui.activity;
 
 import android.support.v7.app.AppCompatActivity;
+
+import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
 
 import butterknife.ButterKnife;
 

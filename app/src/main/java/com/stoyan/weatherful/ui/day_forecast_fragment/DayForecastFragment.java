@@ -4,7 +4,6 @@ package com.stoyan.weatherful.ui.day_forecast_fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +13,12 @@ import android.widget.TextView;
 import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
-import com.stoyan.weatherful.ui.base_ui.BaseFragment;
+import com.stoyan.weatherful.ui.base_ui.contract.BaseViewContract;
+import com.stoyan.weatherful.ui.base_ui.fragment.BaseFragment;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
-public class DayForecastFragment extends BaseFragment {
+public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresenter> implements BaseViewContract {
 
     @BindView(R.id.iv_fragment_weather_image) ImageView weatherImage;
     @BindView(R.id.tv_fragment_date) TextView tvDate;
@@ -28,8 +26,6 @@ public class DayForecastFragment extends BaseFragment {
     @BindView(R.id.tv_fragment_max_temp) TextView tvMaxTemperature;
     @BindView(R.id.tv_fragment_wind_speed) TextView tvWindSpeed;
     @BindView(R.id.tv_fragment_rain_chance) TextView tvRainChance;
-
-    private DayForecastFragmentPresenter presenter;
 
     public static DayForecastFragment newInstance(Data data) {
         Bundle arguments = new Bundle();
@@ -50,7 +46,7 @@ public class DayForecastFragment extends BaseFragment {
     public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        presenter = new DayForecastFragmentPresenter(getArguments());
+        presenter = new DayForecastFragmentPresenter(getArguments(), this);
 
         weatherImage.setImageDrawable(presenter.getImageDrawable());
         tvDate.setText(presenter.getDate());

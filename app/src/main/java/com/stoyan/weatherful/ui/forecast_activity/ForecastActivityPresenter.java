@@ -7,15 +7,13 @@ import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
-import com.stoyan.weatherful.ui.base_ui.BasePresenter;
-import com.stoyan.weatherful.ui.base_ui.BasePresenterContract;
+import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 

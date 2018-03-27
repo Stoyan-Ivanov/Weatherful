@@ -1,4 +1,6 @@
-package com.stoyan.weatherful.ui.base_ui;
+package com.stoyan.weatherful.ui.base_ui.presenter;
+
+import com.stoyan.weatherful.ui.base_ui.contract.BaseViewContract;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -6,7 +8,7 @@ import io.reactivex.disposables.CompositeDisposable;
  * Created by stoyan.ivanov2 on 3/27/2018.
  */
 
-public class BasePresenter <V extends BaseActivityContract> implements BasePresenterContract{
+public class BasePresenter <V extends BaseViewContract> implements BasePresenterContract {
     protected V view;
     protected CompositeDisposable disposables;
 

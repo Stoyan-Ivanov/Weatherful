@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
-import com.stoyan.weatherful.ui.base_ui.BaseActivity;
+import com.stoyan.weatherful.ui.base_ui.activity.BaseActivity;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview.ForecastRecyclerviewAdapter;
 
 import butterknife.BindView;

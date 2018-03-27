@@ -3,7 +3,6 @@ package com.stoyan.weatherful.ui.forecast_pager_activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import com.stoyan.weatherful.Constants;
-import com.stoyan.weatherful.ui.base_ui.BasePresenter;
 import com.stoyan.weatherful.ui.day_forecast_fragment.DayForecastFragment;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;

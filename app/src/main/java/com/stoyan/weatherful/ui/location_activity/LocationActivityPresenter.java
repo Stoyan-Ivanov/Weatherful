@@ -6,8 +6,7 @@ import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.db.LocationsProvider;
 import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.network.models.image_response_models.Picture;
-import com.stoyan.weatherful.ui.base_ui.BasePresenter;
-import com.stoyan.weatherful.ui.base_ui.BasePresenterContract;
+import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
 
 import java.util.ArrayList;
 

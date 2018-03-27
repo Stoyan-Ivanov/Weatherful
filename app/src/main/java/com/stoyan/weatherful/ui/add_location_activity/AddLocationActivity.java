@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.stoyan.weatherful.R;
-import com.stoyan.weatherful.ui.base_ui.BaseActivity;
+import com.stoyan.weatherful.ui.base_ui.activity.BaseActivity;
 import com.stoyan.weatherful.ui.location_activity.LocationActivity;
 
 import butterknife.BindView;

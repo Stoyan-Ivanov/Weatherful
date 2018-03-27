@@ -8,6 +8,9 @@ import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
+import com.stoyan.weatherful.ui.base_ui.contract.BaseViewContract;
+import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
+import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenterContract;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
@@ -17,11 +20,12 @@ import java.util.Locale;
  * Created by Stoyan on 28.1.2018 г..
  */
 
-public class DayForecastFragmentPresenter {
+public class DayForecastFragmentPresenter extends BasePresenter<BaseViewContract> {
     private Data data;
     private Context context;
 
-    public DayForecastFragmentPresenter(final Bundle arguments) {
+    public DayForecastFragmentPresenter(final Bundle arguments, BaseViewContract view) {
+        super(view);
         getExtras(arguments);
         context = WeatherfulApplication.getStaticContext();
     }
@@ -72,5 +76,10 @@ public class DayForecastFragmentPresenter {
         return date.get(Calendar.DAY_OF_MONTH) + "."
                 + date.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)
                 + "." + date.get(Calendar.YEAR);
+    }
+
+    @Override
+    public void onViewDestroy() {
+
     }
 }

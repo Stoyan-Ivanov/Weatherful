@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.stoyan.weatherful.R;
-import com.stoyan.weatherful.ui.base_ui.BaseActivity;
+import com.stoyan.weatherful.ui.base_ui.activity.BaseActivity;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationsRecyclerViewAdapter;
 
