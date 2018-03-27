@@ -6,6 +6,7 @@ import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.db.LocationsProvider;
 import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.network.models.image_response_models.Picture;
+import com.stoyan.weatherful.ui.base_ui.BasePresenter;
 import com.stoyan.weatherful.ui.base_ui.BasePresenterContract;
 
 import java.util.ArrayList;
@@ -21,14 +22,12 @@ import io.reactivex.schedulers.Schedulers;
  * Created by Stoyan on 27.1.2018 г..
  */
 
-public class LocationActivityPresenter implements BasePresenterContract {
-
+public class LocationActivityPresenter extends BasePresenter<LocationActivityContract> {
     private ArrayList<Location> locations;
-    private LocationActivityContract view;
     private CompositeDisposable disposables = new CompositeDisposable();
 
     public LocationActivityPresenter(LocationActivityContract view) {
-        this.view = view;
+        super(view);
     }
 
     public void fabOnclick() {

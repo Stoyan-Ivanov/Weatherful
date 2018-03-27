@@ -7,6 +7,7 @@ import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
+import com.stoyan.weatherful.ui.base_ui.BasePresenter;
 import com.stoyan.weatherful.ui.base_ui.BasePresenterContract;
 
 import java.util.ArrayList;
@@ -24,17 +25,14 @@ import static io.reactivex.Observable.just;
  * Created by Stoyan on 27.1.2018 г..
  */
 
-public class ForecastActivityPresenter implements BasePresenterContract {
+public class ForecastActivityPresenter extends BasePresenter<ForecastActivityContract>{
     private Location location;
-    private ForecastActivityContract view;
     private ArrayList<Data> weeklyForecast;
-    private static CompositeDisposable disposables = new CompositeDisposable();
 
     public ForecastActivityPresenter(Intent intent, ForecastActivityContract view) {
+        super(view);
         getExtras(intent);
-        this.view = view;
     }
-
 
     public String getHeader() {
         return location.getLocationName() + ", " + location.getCountry();
@@ -75,11 +73,5 @@ public class ForecastActivityPresenter implements BasePresenterContract {
     public ArrayList<Data> getWeeklyForecast() {
         weeklyForecast = new ArrayList<>();
         return weeklyForecast;
-    }
-
-    @Override
-    public void onViewDestroy() {
-        view = null;
-        disposables.clear();
     }
 }

@@ -19,13 +19,11 @@ import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclervie
 import butterknife.BindView;
 import io.fabric.sdk.android.Fabric;
 
-public class LocationActivity extends BaseActivity implements LocationActivityContract{
+public class LocationActivity extends BaseActivity<LocationActivityPresenter> implements LocationActivityContract{
 
     @BindView(R.id.ctv_header) TextView headerBar;
     @BindView(R.id.recyclerview) RecyclerView recyclerView;
     @BindView(R.id.fab_add) FloatingActionButton fabAddLocation;
-
-    private LocationActivityPresenter presenter;
 
     public static Intent getIntent(Context context) {
         return new Intent(context, LocationActivity.class);
@@ -48,12 +46,6 @@ public class LocationActivity extends BaseActivity implements LocationActivityCo
         fabAddLocation.setOnClickListener(v -> presenter.fabOnclick());
 
         presenter.downloadData();
-    }
-
-    @Override
-    protected void onDestroy() {
-        presenter.onViewDestroy();
-        super.onDestroy();
     }
 
     @Override

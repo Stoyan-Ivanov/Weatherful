@@ -16,12 +16,10 @@ import com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview
 
 import butterknife.BindView;
 
-public class ForecastActivity extends BaseActivity implements ForecastActivityContract {
+public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> implements ForecastActivityContract {
 
     @BindView(R.id.ctv_header) TextView headerBar;
     @BindView(R.id.recyclerview) RecyclerView recyclerView;
-
-    private ForecastActivityPresenter presenter;
 
     public static void getIntent(Context context, Location location) {
         Intent starter = new Intent(context, ForecastActivity.class);
@@ -41,12 +39,6 @@ public class ForecastActivity extends BaseActivity implements ForecastActivityCo
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new ForecastRecyclerviewAdapter(presenter.getWeeklyForecast(), presenter.getLocation()));
         presenter.downloadWeeklyForecast();
-    }
-
-    @Override
-    protected void onDestroy() {
-        presenter.onViewDestroy();
-        super.onDestroy();
     }
 
     @Override
