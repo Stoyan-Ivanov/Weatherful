@@ -71,7 +71,7 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
                 .map(Picture::getThumbnailUrl)
                 .map(s -> {
                     Log.d("SII", "downloadLocationImage: " + "http:" + s);
-                    location.setImageUrl("http:" + s);
+                    location.setImageUrl("https:" + s);
                     return location;
                 }).toObservable();
     }

@@ -28,11 +28,6 @@ public class ForecastRecyclerviewAdapter extends RecyclerView.Adapter<ForecastVi
         this.weeklyForecast = weeklyForecast;
     }
 
-    public void setNewData(Data[] newData) {
-        weeklyForecast = new ArrayList<>(Arrays.asList(newData));
-        notifyDataSetChanged();
-    }
-
     @Override
     public ForecastViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())

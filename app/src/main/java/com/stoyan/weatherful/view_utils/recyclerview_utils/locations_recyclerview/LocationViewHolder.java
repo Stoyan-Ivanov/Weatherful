@@ -60,7 +60,7 @@ public class LocationViewHolder extends BaseViewHolder {
         if ((itemView != null) && url != null) {
             Glide.with(itemView.getContext())
                     .load(url)
-                    .fitCenter()
+                    .centerCrop()
                     .placeholder(R.drawable.cityscape)
                     .into(locationPicture);
         }
