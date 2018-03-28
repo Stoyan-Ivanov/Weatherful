@@ -1,16 +1,19 @@
 package com.stoyan.weatherful.network.models.forecast_full_models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Stoyan on 27.1.2018 г..
  */
 
 public class ForecastFullResponse {
+    @SerializedName("timezone")
     private String timezone;
-
+    @SerializedName("longitude")
     private String longitude;
-
+    @SerializedName("latitude")
     private String latitude;
-
+    @SerializedName("daily")
     private Daily daily;
 
     public Daily getDaily() {

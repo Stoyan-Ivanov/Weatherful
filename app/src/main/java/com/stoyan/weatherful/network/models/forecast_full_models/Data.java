@@ -3,27 +3,28 @@ package com.stoyan.weatherful.network.models.forecast_full_models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Stoyan on 27.1.2018 г..
  */
 public class Data implements Parcelable {
-
+    @SerializedName("temperatureLow")
     private String temperatureLow;
-
+    @SerializedName("time")
     private String time;
-
+    @SerializedName("temperatureHigh")
     private String temperatureHigh;
-
+    @SerializedName("icon")
     private String icon;
-
+    @SerializedName("temperatureMin")
     private String temperatureMin;
-
+    @SerializedName("windSpeed")
     private String windSpeed;
-
+    @SerializedName("humidity")
     private String humidity;
-
+    @SerializedName("precipProbability")
     private String precipProbability;
-
 
 
     public String getTemperatureLow ()

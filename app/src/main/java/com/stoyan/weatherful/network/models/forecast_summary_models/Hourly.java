@@ -1,5 +1,7 @@
 package com.stoyan.weatherful.network.models.forecast_summary_models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 /**
@@ -7,11 +9,11 @@ import java.util.ArrayList;
  */
 
 public class Hourly {
-
+    @SerializedName("summary")
     private String summary;
-
+    @SerializedName("icon")
     private String icon;
-
+    @SerializedName("data")
     private ArrayList<Data> data;
 
     public String getSummary ()
