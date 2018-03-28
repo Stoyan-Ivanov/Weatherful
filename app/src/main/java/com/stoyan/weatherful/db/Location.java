@@ -23,12 +23,19 @@ public class Location implements Parcelable {
     }
 
     public Location(String locationName, String country, double latitude, double longitude
-            , String imageUrl, ForecastSummaryResponse forecastSummary) {
+            , String imageUrl) {
 
         this(locationName, country, latitude, longitude);
         this.imageUrl = imageUrl;
+    }
+
+    public Location(String locationName, String country, double latitude, double longitude
+            , String imageUrl, ForecastSummaryResponse forecastSummary) {
+
+        this(locationName, country, latitude, longitude, imageUrl);
         this.forecastSummary = forecastSummary;
     }
+
 
     public String getLocationName() {
         return locationName;

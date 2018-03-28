@@ -63,7 +63,7 @@ public class LocationsProvider implements LocationsProviderContract {
     @Override
     public boolean saveLocation(Location location) {
         if(!checkIfLocationExists(location)) {
-            book().write(location.getLocationName() + location.getCountry(), location);
+            writeToDatabase(location);
             return true;
         } else {
             WeatherfulApplication.showToast(
@@ -72,7 +72,13 @@ public class LocationsProvider implements LocationsProviderContract {
         }
     }
 
+    public void updateLocation(Location location) {
+       writeToDatabase(location);
+    }
 
+    private void writeToDatabase(Location location) {
+        book().write(location.getLocationName() + location.getCountry(), location);
+    }
 
     public void deleteLocation(Location location) {
         Paper.book().delete(location.getLocationName() + location.getCountry());

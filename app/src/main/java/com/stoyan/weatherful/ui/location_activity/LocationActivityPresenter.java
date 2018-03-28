@@ -1,21 +1,12 @@
 package com.stoyan.weatherful.ui.location_activity;
 
-import android.util.Log;
-
-import com.stoyan.weatherful.RxUtils;
+import com.stoyan.weatherful.DataManager;
 import com.stoyan.weatherful.db.Location;
-import com.stoyan.weatherful.db.LocationsProvider;
-import com.stoyan.weatherful.network.NetworkManager;
-import com.stoyan.weatherful.network.models.image_response_models.Picture;
 import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
 
 import java.util.ArrayList;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -34,14 +25,8 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
     }
 
     public void downloadData() {
-        addDisposable(
-                Observable.just(LocationsProvider.getInstance().getLocations())
-                        .flatMapIterable(locations -> locations)
-                        .flatMap(this::downloadLocationImage)
-                        .flatMap(this::downloadForecastSummary)
-                        .toList()
-                        .map(ArrayList::new)
-                        .subscribe(getLocationConsumer(), getErrorConsumer())
+        addDisposable(DataManager.getInstance().getLocationDataObservable()
+                .subscribe(getLocationConsumer(), getErrorConsumer())
         );
     }
 
@@ -54,38 +39,7 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
 
     private Consumer<? super Throwable> getErrorConsumer() {
         return (Consumer<Throwable>) throwable -> view.showError(throwable);
-
     }
-
-    private Observable<Location> downloadLocationImage(Location location) {
-        return NetworkManager
-                .getInstance()
-                .getQwantAPI()
-                .getLocationImage(location.toString())
-                .compose(RxUtils.applySchedulers())
-                .map(imageResponse -> imageResponse.getData().getResult().getPictures())
-                .flatMapIterable(pictures -> pictures)
-                .first(new Picture(""))
-                .map(Picture::getThumbnailUrl)
-                .map(s -> {
-                    Log.d("SII", "downloadLocationImage: " + "http:" + s);
-                    location.setImageUrl("https:" + s);
-                    return location;
-                }).toObservable();
-    }
-
-    private Observable<Location> downloadForecastSummary(Location location) {
-        return NetworkManager
-                .getInstance()
-                .getWeatherfulAPI()
-                .getForecastSummaryResponse(location.getLatitude(), location.getLongitude())
-                .compose(RxUtils.applySchedulers())
-                .map(forecastSummaryResponse -> {
-                    location.setForecastSummary(forecastSummaryResponse);
-                    return location;
-                });
-    }
-
 
     public ArrayList<Location> getLocations() {
         locations = new ArrayList<>();

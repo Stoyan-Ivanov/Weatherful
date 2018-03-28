@@ -4,9 +4,12 @@ package com.stoyan.weatherful.ui.forecast_activity;
 import android.content.Intent;
 
 import com.stoyan.weatherful.Constants;
+import com.stoyan.weatherful.DataManager;
+import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.RxUtils;
 import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.db.Location;
+import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
 
@@ -34,7 +37,7 @@ public class ForecastActivityPresenter extends BasePresenter<ForecastActivityCon
     }
 
     public String getHeader() {
-        return location.getLocationName() + ", " + location.getCountry();
+        return location.toString();
     }
 
     public void getExtras(Intent intent) {
@@ -42,15 +45,8 @@ public class ForecastActivityPresenter extends BasePresenter<ForecastActivityCon
     }
 
     public void downloadWeeklyForecast() {
-        Observable.just(NetworkManager
-                .getInstance()
-                .getWeatherfulAPI()
-                .getFullForecastResponse(location.getLatitude(), location.getLongitude())
-                .compose(RxUtils.applySchedulers())
-                .map(forecastFullResponse -> forecastFullResponse.getDaily().getData())
-                .map(Arrays::asList)
-                .map(ArrayList::new)
-                .subscribe(getWeeklyForecastConsumer(), getErrorConsumer()));
+        DataManager.getInstance().getWeeklyForecastObservable(location)
+                .subscribe(getWeeklyForecastConsumer(), getErrorConsumer());
     }
 
     private Consumer<? super Throwable> getErrorConsumer() {
