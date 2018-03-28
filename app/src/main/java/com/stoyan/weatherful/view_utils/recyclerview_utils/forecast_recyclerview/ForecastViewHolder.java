@@ -12,8 +12,6 @@ import com.stoyan.weatherful.ui.forecast_pager_activity.ForecastPagerActivity;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.BaseViewHolder;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
 
 import butterknife.BindView;
 
@@ -65,14 +63,7 @@ public class ForecastViewHolder extends BaseViewHolder {
         tvRainChance.setText(presenter.getRainChance());
     }
 
-    private Drawable getDrawableByName(String drawableName) {
-        drawableName = getProperDrawableName(drawableName);
-        int resID = context.getResources().getIdentifier(drawableName , "drawable", context.getPackageName());
-
-        return context.getResources().getDrawable(resID );
-    }
-
-    private String getProperDrawableName(String drawableName) {
-        return  drawableName.replaceAll("-","_").toLowerCase();
+    private Drawable getDrawableByName(Data.Icon icon) {
+        return context.getResources().getDrawable(icon.getResourceId());
     }
 }

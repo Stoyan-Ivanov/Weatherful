@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
+import com.stoyan.weatherful.R;
 
 /**
  * Created by Stoyan on 27.1.2018 г..
@@ -16,7 +17,7 @@ public class Data implements Parcelable {
     @SerializedName("temperatureHigh")
     private String temperatureHigh;
     @SerializedName("icon")
-    private String icon;
+    private Icon icon;
     @SerializedName("temperatureMin")
     private String temperatureMin;
     @SerializedName("windSpeed")
@@ -47,12 +48,12 @@ public class Data implements Parcelable {
         return temperatureHigh;
     }
 
-    public String getIcon ()
+    public Icon getIcon ()
     {
         return icon;
     }
 
-    public void setIcon (String icon)
+    public void setIcon (Icon icon)
     {
         this.icon = icon;
     }
@@ -62,51 +63,72 @@ public class Data implements Parcelable {
         return windSpeed;
     }
 
-    public String getPrecipProbability ()
-    {
+    public String getPrecipProbability () {
         return precipProbability;
     }
-
-
     protected Data(Parcel in) {
         temperatureLow = in.readString();
         time = in.readString();
         temperatureHigh = in.readString();
-        icon = in.readString();
+        icon = (Icon) in.readValue(Icon.class.getClassLoader());
         temperatureMin = in.readString();
         windSpeed = in.readString();
         humidity = in.readString();
         precipProbability = in.readString();
     }
 
-    @Override
-    public int describeContents() {
+        @Override
+        public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(temperatureLow);
         dest.writeString(time);
         dest.writeString(temperatureHigh);
-        dest.writeString(icon);
+        dest.writeValue(icon);
         dest.writeString(temperatureMin);
         dest.writeString(windSpeed);
         dest.writeString(humidity);
         dest.writeString(precipProbability);
     }
 
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Data> CREATOR = new Parcelable.Creator<Data>() {
-        @Override
-        public Data createFromParcel(Parcel in) {
-            return new Data(in);
+        @SuppressWarnings("unused")
+        public static final Parcelable.Creator<Data> CREATOR = new Parcelable.Creator<Data>() {
+            @Override
+            public Data createFromParcel(Parcel in) {
+                return new Data(in);
+            }
+
+            @Override
+            public Data[] newArray(int size) {
+                return new Data[size];
+            }
+        };
+
+    public enum Icon {
+        CLEAR_DAY(R.drawable.clear_day),
+        CLEAR_NIGHT(R.drawable.clear_night),
+        CLOUDY(R.drawable.cloudy),
+        FOG(R.drawable.fog),
+        HAIL(R.drawable.hail),
+        PARTLY_CLOUDY_DAY(R.drawable.partly_cloudy_day),
+        PARTLY_CLOUDY_NIGHT(R.drawable.partly_cloudy_night),
+        RAIN(R.drawable.rain),
+        SNOW(R.drawable.snow),
+        THNDERSTORM(R.drawable.thunderstorm),
+        TORNADO(R.drawable.tornado),
+        WIND(R.drawable.wind);
+
+        private int resourceId;
+
+        Icon(int resourceId) {
+            this.resourceId = resourceId;
         }
 
-        @Override
-        public Data[] newArray(int size) {
-            return new Data[size];
+        public int getResourceId() {
+            return resourceId;
         }
-    };
+    }
 }

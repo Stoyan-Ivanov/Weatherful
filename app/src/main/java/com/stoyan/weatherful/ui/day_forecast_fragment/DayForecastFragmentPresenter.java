@@ -36,13 +36,7 @@ public class DayForecastFragmentPresenter extends BasePresenter<BaseViewContract
     }
 
     public Drawable getImageDrawable() {
-        String drawableName = data.getIcon();
-        drawableName = drawableName.replaceAll("-", "_").toLowerCase();
-
-        Context context = WeatherfulApplication.getStaticContext();
-        int resID = context.getResources().getIdentifier(drawableName, "drawable", context.getPackageName());
-
-        return context.getResources().getDrawable(resID);
+        return context.getResources().getDrawable(data.getIcon().getResourceId());
     }
 
     public String getDate() {
