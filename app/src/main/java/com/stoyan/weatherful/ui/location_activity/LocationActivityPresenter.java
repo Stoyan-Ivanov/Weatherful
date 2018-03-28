@@ -2,6 +2,7 @@ package com.stoyan.weatherful.ui.location_activity;
 
 import android.util.Log;
 
+import com.stoyan.weatherful.RxUtils;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.db.LocationsProvider;
 import com.stoyan.weatherful.network.NetworkManager;
@@ -23,7 +24,6 @@ import io.reactivex.schedulers.Schedulers;
 
 public class LocationActivityPresenter extends BasePresenter<LocationActivityContract> {
     private ArrayList<Location> locations;
-    private CompositeDisposable disposables = new CompositeDisposable();
 
     public LocationActivityPresenter(LocationActivityContract view) {
         super(view);
@@ -62,11 +62,10 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
                 .getInstance()
                 .getQwantAPI()
                 .getLocationImage(location.toString())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxUtils.applySchedulers())
                 .map(imageResponse -> imageResponse.getData().getResult().getPictures())
                 .flatMapIterable(pictures -> pictures)
-                .first(new Picture("www.google.com"))
+                .first(new Picture(""))
                 .map(Picture::getThumbnailUrl)
                 .map(s -> {
                     Log.d("SII", "downloadLocationImage: " + "http:" + s);
@@ -80,19 +79,13 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
                 .getInstance()
                 .getWeatherfulAPI()
                 .getForecastSummaryResponse(location.getLatitude(), location.getLongitude())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxUtils.applySchedulers())
                 .map(forecastSummaryResponse -> {
                     location.setForecastSummary(forecastSummaryResponse);
                     return location;
                 });
     }
 
-    @Override
-    public void onViewDestroy() {
-        disposables.clear();
-        view = null;
-    }
 
     public ArrayList<Location> getLocations() {
         locations = new ArrayList<>();

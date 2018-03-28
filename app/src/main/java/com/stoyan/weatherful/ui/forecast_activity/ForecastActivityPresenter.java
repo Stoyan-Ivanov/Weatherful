@@ -4,6 +4,7 @@ package com.stoyan.weatherful.ui.forecast_activity;
 import android.content.Intent;
 
 import com.stoyan.weatherful.Constants;
+import com.stoyan.weatherful.RxUtils;
 import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
@@ -45,8 +46,7 @@ public class ForecastActivityPresenter extends BasePresenter<ForecastActivityCon
                 .getInstance()
                 .getWeatherfulAPI()
                 .getFullForecastResponse(location.getLatitude(), location.getLongitude())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxUtils.applySchedulers())
                 .map(forecastFullResponse -> forecastFullResponse.getDaily().getData())
                 .map(Arrays::asList)
                 .map(ArrayList::new)
