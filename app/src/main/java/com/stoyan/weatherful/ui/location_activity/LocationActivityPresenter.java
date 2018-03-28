@@ -34,7 +34,7 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
     }
 
     public void downloadData() {
-        disposables.add(
+        addDisposable(
                 Observable.just(LocationsProvider.getInstance().getLocations())
                         .flatMapIterable(locations -> locations)
                         .flatMap(this::downloadLocationImage)

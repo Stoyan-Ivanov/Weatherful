@@ -38,12 +38,6 @@ public class AddLocationActivity extends BaseActivity implements AddLocationActi
     }
 
     @Override
-    protected void onDestroy() {
-        presenter.onViewDestroy();
-        super.onDestroy();
-    }
-
-    @Override
     public void startNewLocationsActivity() {
         startActivity(LocationActivity.getIntent(this));
         finish();
