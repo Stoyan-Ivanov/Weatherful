@@ -55,6 +55,7 @@ public class ForecastActivityPresenter extends BasePresenter<ForecastActivityCon
 
     private Consumer<? super ArrayList<Data>> getWeeklyForecastConsumer() {
         return weeklyForecast -> {
+            this.weeklyForecast.clear();
             this.weeklyForecast.addAll(weeklyForecast);
             view.notifyDataSetChanged();
         };

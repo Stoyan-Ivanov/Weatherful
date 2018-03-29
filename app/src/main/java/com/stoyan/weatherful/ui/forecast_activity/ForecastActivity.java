@@ -3,6 +3,7 @@ package com.stoyan.weatherful.ui.forecast_activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,6 +21,8 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> im
 
     @BindView(R.id.ctv_header) TextView headerBar;
     @BindView(R.id.recyclerview) RecyclerView recyclerView;
+    @BindView(R.id.swipe_refresh)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     public static void getIntent(Context context, Location location) {
         Intent starter = new Intent(context, ForecastActivity.class);
@@ -39,6 +42,13 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> im
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new ForecastRecyclerviewAdapter(presenter.getWeeklyForecast(), presenter.getLocation()));
         presenter.downloadWeeklyForecast();
+
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            presenter.downloadWeeklyForecast();
+            if(swipeRefreshLayout.isRefreshing()) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     @Override

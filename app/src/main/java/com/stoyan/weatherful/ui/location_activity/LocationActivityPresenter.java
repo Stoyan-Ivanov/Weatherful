@@ -32,6 +32,7 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
 
     private Consumer<ArrayList<Location>> getLocationConsumer() {
         return locations -> {
+            LocationActivityPresenter.this.locations.clear();
             LocationActivityPresenter.this.locations.addAll(locations);
             view.notifyDataSetChanged();
         };

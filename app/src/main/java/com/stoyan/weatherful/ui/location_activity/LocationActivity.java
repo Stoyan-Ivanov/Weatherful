@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,12 +19,14 @@ import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclervie
 
 import butterknife.BindView;
 import io.fabric.sdk.android.Fabric;
+import io.reactivex.annotations.BackpressureSupport;
 
 public class LocationActivity extends BaseActivity<LocationActivityPresenter> implements LocationActivityContract{
 
     @BindView(R.id.ctv_header) TextView headerBar;
     @BindView(R.id.recyclerview) RecyclerView recyclerView;
     @BindView(R.id.fab_add) FloatingActionButton fabAddLocation;
+    @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
 
     public static Intent getIntent(Context context) {
         return new Intent(context, LocationActivity.class);
@@ -44,6 +47,13 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
 
         fabAddLocation.setVisibility(View.VISIBLE);
         fabAddLocation.setOnClickListener(v -> presenter.fabOnclick());
+
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            presenter.downloadData();
+            if(swipeRefreshLayout.isRefreshing()) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         presenter.downloadData();
     }
