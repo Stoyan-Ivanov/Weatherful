@@ -7,4 +7,5 @@
     <color name="white">#ffffff</color>
     <color name="topBarBlue">#005073</color>
     <color name="lightRVBlue">#b8e3f5</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

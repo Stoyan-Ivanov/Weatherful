@@ -44,6 +44,10 @@ public class ForecastActivityPresenter extends BasePresenter<ForecastActivityCon
         location = intent.getParcelableExtra(Constants.EXTRA_LOCATION);
     }
 
+    public String getImageUrl() {
+        return location.getImageUrl();
+    }
+
     public void downloadWeeklyForecast() {
         DataManager.getInstance().getWeeklyForecastObservable(location)
                 .subscribe(getWeeklyForecastConsumer(), getErrorConsumer());

@@ -1,18 +1,15 @@
 package com.stoyan.weatherful;
 
-import android.util.Log;
-
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.db.LocationsProvider;
 import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
-import com.stoyan.weatherful.network.models.forecast_full_models.ForecastFullResponse;
 import com.stoyan.weatherful.network.models.image_response_models.Picture;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 
 /**
  * Created by stoyan.ivanov2 on 3/28/2018.
@@ -77,6 +74,9 @@ public class DataManager {
                 .getWeatherfulAPI()
                 .getFullForecastResponse(location.getLatitude(), location.getLongitude())
                 .compose(RxUtils.applySchedulers())
-                .map(forecastFullResponse -> forecastFullResponse.getDaily().getData());
+                .map(forecastFullResponse -> forecastFullResponse.getDaily().getData())
+                .map(data -> { data.remove(0);
+                    return data;
+                });
     }
 }
