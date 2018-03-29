@@ -64,6 +64,7 @@ public class ForecastViewHolder extends BaseViewHolder {
     }
 
     private Drawable getDrawableByName(Data.Icon icon) {
+
         return context.getResources().getDrawable(icon.getResourceId());
     }
 }

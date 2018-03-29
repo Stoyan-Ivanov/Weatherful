@@ -108,17 +108,29 @@ public class Data implements Parcelable {
         };
 
     public enum Icon {
+        @SerializedName("clear-day")
         CLEAR_DAY(R.drawable.clear_day),
+        @SerializedName("clear-night")
         CLEAR_NIGHT(R.drawable.clear_night),
+        @SerializedName("cloudy")
         CLOUDY(R.drawable.cloudy),
+        @SerializedName("fog")
         FOG(R.drawable.fog),
+        @SerializedName("hail")
         HAIL(R.drawable.hail),
+        @SerializedName("partly-cloudy-day")
         PARTLY_CLOUDY_DAY(R.drawable.partly_cloudy_day),
+        @SerializedName("partly-cloudy-night")
         PARTLY_CLOUDY_NIGHT(R.drawable.partly_cloudy_night),
+        @SerializedName("rain")
         RAIN(R.drawable.rain),
+        @SerializedName("snow")
         SNOW(R.drawable.snow),
+        @SerializedName("thunderstorm")
         THNDERSTORM(R.drawable.thunderstorm),
+        @SerializedName("tornado")
         TORNADO(R.drawable.tornado),
+        @SerializedName("wind")
         WIND(R.drawable.wind);
 
         private int resourceId;

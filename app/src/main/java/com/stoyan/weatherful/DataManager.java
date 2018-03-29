@@ -71,14 +71,12 @@ public class DataManager {
                 });
     }
 
-    public Observable getWeeklyForecastObservable(Location location) {
-        return Observable.just(NetworkManager
+    public Observable<ArrayList<Data>> getWeeklyForecastObservable(Location location) {
+        return NetworkManager
                 .getInstance()
                 .getWeatherfulAPI()
                 .getFullForecastResponse(location.getLatitude(), location.getLongitude())
                 .compose(RxUtils.applySchedulers())
-                .map(forecastFullResponse -> forecastFullResponse.getDaily().getData())
-                .map(Arrays::asList)
-                .map(ArrayList::new));
+                .map(forecastFullResponse -> forecastFullResponse.getDaily().getData());
     }
 }
