@@ -19,7 +19,6 @@ import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclervie
 
 import butterknife.BindView;
 import io.fabric.sdk.android.Fabric;
-import io.reactivex.annotations.BackpressureSupport;
 
 public class LocationActivity extends BaseActivity<LocationActivityPresenter> implements LocationActivityContract{
 
@@ -36,7 +35,7 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
-        setContentView(R.layout.activity_base_recyclerview);
+        setContentView(R.layout.base_recyclerview_layout);
 
         presenter = new LocationActivityPresenter(this);
 

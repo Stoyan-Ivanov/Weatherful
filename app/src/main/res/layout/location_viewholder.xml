@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="190dp"
+    android:layout_height="160dp"
     app:cardBackgroundColor="@color/lightRVBlue"
     android:elevation="2dp"
     android:layout_marginBottom="5dp"
@@ -20,8 +20,8 @@
 
         <ImageView
             android:id="@+id/iv_location"
-            android:layout_width="119dp"
-            android:layout_height="113dp"
+            android:layout_width="145dp"
+            android:layout_height="133dp"
 
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
@@ -41,7 +41,7 @@
 
             android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
 
             android:gravity="center"
             android:textColor="@color/black"
@@ -55,7 +55,7 @@
         <com.stoyan.weatherful.view_utils.CustomTextView
             android:id="@+id/tv_location_temperature"
             android:layout_width="62dp"
-            android:layout_height="57dp"
+            android:layout_height="51dp"
             android:layout_marginBottom="124dp"
             android:layout_marginEnd="16dp"
 
@@ -65,15 +65,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.421"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="RtlCompat" />
 
         <com.stoyan.weatherful.view_utils.CustomTextView
             android:id="@+id/tv_location_summary"
             android:layout_width="204dp"
-            android:layout_height="106dp"
+            android:layout_height="86dp"
 
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
 
             android:layout_marginStart="8dp"
