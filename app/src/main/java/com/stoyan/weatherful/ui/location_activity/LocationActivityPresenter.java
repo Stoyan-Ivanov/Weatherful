@@ -1,6 +1,6 @@
 package com.stoyan.weatherful.ui.location_activity;
 
-import com.stoyan.weatherful.DataManager;
+import com.stoyan.weatherful.network.DataManager;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
 
@@ -46,4 +46,5 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
         locations = new ArrayList<>();
         return locations;
     }
+
 }

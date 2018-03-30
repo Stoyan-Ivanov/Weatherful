@@ -1,5 +1,8 @@
 package com.stoyan.weatherful.network;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.provider.ContactsContract;
 import android.util.Log;
 
@@ -30,7 +33,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkManager {
     private static NetworkManager instance;
-    private final CompositeDisposable disposables = new CompositeDisposable();
 
     private Retrofit weatherfulRetrofit;
     private WeatherfulAPI weatherfulAPI;
@@ -61,6 +63,15 @@ public class NetworkManager {
                 .build();
 
         qwantAPI = qwantRetrofit.create(QwantAPI.class);
+    }
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) WeatherfulApplication.getStaticContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
     public WeatherfulAPI getWeatherfulAPI() {

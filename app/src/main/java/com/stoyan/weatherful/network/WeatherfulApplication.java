@@ -2,6 +2,8 @@ package com.stoyan.weatherful.network;
 
 import android.app.Application;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.view.Gravity;
 import android.widget.Toast;
 
