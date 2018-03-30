@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
+import com.esotericsoftware.kryo.serializers.FieldSerializer;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.network.WeatherfulApplication;
@@ -36,6 +37,7 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
     @BindView(R.id.progressBar_loading) ProgressBar loadingBar;
     @BindView(R.id.layout_loading) ConstraintLayout layoutLoading;
     @BindView(R.id.layout_recyclerview) RelativeLayout layoutRecyclerview;
+    @BindView(R.id.layout_missing_network) ConstraintLayout layoutMissingNetwork;
 
     public static Intent getIntent(Context context) {
         return new Intent(context, LocationActivity.class);
@@ -75,12 +77,10 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
             if(NetworkManager.getInstance().isNetworkAvailable()) {
                 layoutRecyclerview.setVisibility(View.VISIBLE);
             } else {
-
+                layoutMissingNetwork.setVisibility(View.VISIBLE);
             }
-        }, 3000);
+        }, 2000);
     }
-
-
 
     @Override
     public void notifyDataSetChanged() {
