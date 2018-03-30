@@ -3,12 +3,16 @@ package com.stoyan.weatherful.ui.location_activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
@@ -19,6 +23,7 @@ import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclervie
 
 import butterknife.BindView;
 import io.fabric.sdk.android.Fabric;
+import io.reactivex.Observable;
 
 public class LocationActivity extends BaseActivity<LocationActivityPresenter> implements LocationActivityContract{
 
@@ -26,6 +31,9 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
     @BindView(R.id.recyclerview) RecyclerView recyclerView;
     @BindView(R.id.fab_add) FloatingActionButton fabAddLocation;
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.progressBar_loading) ProgressBar loadingBar;
+    @BindView(R.id.layout_loading) ConstraintLayout layoutLoading;
+    @BindView(R.id.layout_recyclerview) RelativeLayout layoutRecyclerview;
 
     public static Intent getIntent(Context context) {
         return new Intent(context, LocationActivity.class);
@@ -35,7 +43,7 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
-        setContentView(R.layout.base_recyclerview_layout);
+        setContentView(R.layout.activity_locations);
 
         presenter = new LocationActivityPresenter(this);
 
@@ -55,6 +63,15 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
         });
 
         presenter.downloadData();
+        configureSplashScreen();
+    }
+
+    private void configureSplashScreen() {
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            layoutLoading.setVisibility(View.GONE);
+            layoutRecyclerview.setVisibility(View.VISIBLE);
+        }, 3000);
     }
 
     @Override
