@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.stoyan.weatherful.R;
-import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.ui.base_ui.activity.BaseActivity;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationsRecyclerViewAdapter;
@@ -33,7 +32,7 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.progressBar_loading) ProgressBar loadingBar;
     @BindView(R.id.layout_loading) ConstraintLayout layoutLoading;
-    @BindView(R.id.layout_recyclerview) RelativeLayout layoutRecyclerview;
+    @BindView(R.id.layout_locations) RelativeLayout layoutLocations;
     @BindView(R.id.layout_missing_network) ConstraintLayout layoutMissingNetwork;
 
     public static Intent getIntent(Context context) {
@@ -91,8 +90,8 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
 
     @Override
     public void showNoInternetView() {
-        if(layoutRecyclerview.getVisibility() == View.VISIBLE) {
-            layoutRecyclerview.setVisibility(View.GONE);
+        if(layoutLocations.getVisibility() == View.VISIBLE) {
+            layoutLocations.setVisibility(View.GONE);
             layoutMissingNetwork.setVisibility(View.VISIBLE);
         }
     }

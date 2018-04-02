@@ -10,5 +10,5 @@
     <include
         android:id="@+id/layout_missing_network"
         android:visibility="gone"
-        layout="@layout/missing_network_layout"/>
+        layout="@layout/layout_missing_network"/>
 </FrameLayout>

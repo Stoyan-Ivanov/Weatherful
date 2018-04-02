@@ -31,11 +31,9 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> im
     @BindView(R.id.iv_collapsible_location) ImageView locationPicture;
     @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.iv_arrow_back) ImageView arrowBack;
-    //    @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.layout_missing_network)
-    ConstraintLayout layoutMissingInternet;
-    @BindView(R.id.layout_weekly_forecast)
-    CoordinatorLayout layoutWeeklyforecast;
+    @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.layout_missing_network) ConstraintLayout layoutMissingInternet;
+    @BindView(R.id.layout_weekly_forecast) CoordinatorLayout layoutWeeklyforecast;
 
     public static void getIntent(Context context, Location location) {
         Intent starter = new Intent(context, ForecastActivity.class);
@@ -55,26 +53,39 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> im
 
         presenter = new ForecastActivityPresenter(getIntent(), this);
 
+        configureCollapsingToolbar();
+        configureRecyclerView();
+        configureSwipeRefreshLayout();
+        loadLocationImage();
+    }
+
+    private void loadLocationImage() {
         Glide.with(this)
                 .load(presenter.getImageUrl())
                 .centerCrop()
                 .placeholder(R.drawable.cityscape)
                 .into(locationPicture);
+    }
 
+    private void configureCollapsingToolbar() {
         collapsingToolbarLayout.setTitle(presenter.getHeader());
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
+    }
 
+    private void configureSwipeRefreshLayout() {
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            presenter.downloadWeeklyForecast();
+            if(swipeRefreshLayout.isRefreshing()) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
+    private void configureRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new ForecastRecyclerviewAdapter(presenter.getWeeklyForecast(), presenter.getLocation()));
         presenter.downloadWeeklyForecast();
-
-//        swipeRefreshLayout.setOnRefreshListener(() -> {
-//            presenter.downloadWeeklyForecast();
-//            if(swipeRefreshLayout.isRefreshing()) {
-//                swipeRefreshLayout.setRefreshing(false);
-//            }
-//        });
     }
 
     @Override

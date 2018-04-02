@@ -4,19 +4,20 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+
     <include
-        android:id="@+id/layout_recyclerview"
-        layout="@layout/base_recyclerview_layout"
+        android:id="@+id/layout_locations"
+        layout="@layout/layout_locations"
         android:visibility="visible"/>
 
     <include
         android:id="@+id/layout_loading"
-        layout="@layout/loading_screen_layout"
+        layout="@layout/layout_loading_screen"
         android:visibility="visible"/>
 
     <include
         android:id="@+id/layout_missing_network"
-        layout="@layout/missing_network_layout"
+        layout="@layout/layout_missing_network"
         android:visibility="gone"/>
 
 </FrameLayout>
