@@ -36,7 +36,7 @@ public class LocationsProvider implements LocationsProviderContract {
 
         if(!allKeys.isEmpty()) {
             for (String key : allKeys) {
-                locations.add((Location) Paper.book().read(key));
+                locations.add(Paper.book().read(key));
             }
         } else {
             locations = initDatabase();
@@ -72,7 +72,9 @@ public class LocationsProvider implements LocationsProviderContract {
     }
 
     public void updateLocation(Location location) {
-       writeToDatabase(location);
+        if(location != null) {
+            writeToDatabase(location);
+        }
     }
 
     private void writeToDatabase(Location location) {

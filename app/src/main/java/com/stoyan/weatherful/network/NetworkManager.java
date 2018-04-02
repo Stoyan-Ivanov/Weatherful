@@ -19,11 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkManager {
     private static NetworkManager instance;
-
-    private Retrofit weatherfulRetrofit;
     private WeatherfulAPI weatherfulAPI;
-
-    private Retrofit qwantRetrofit;
     private QwantAPI qwantAPI;
 
     public static NetworkManager getInstance(){
@@ -42,7 +38,7 @@ public class NetworkManager {
                     }
                 }).build();
 
-        weatherfulRetrofit = new Retrofit.Builder()
+        Retrofit weatherfulRetrofit = new Retrofit.Builder()
                 .baseUrl(Constants.FORECAST_SERVICE_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -51,7 +47,7 @@ public class NetworkManager {
 
         weatherfulAPI = weatherfulRetrofit.create(WeatherfulAPI.class);
 
-        qwantRetrofit = new Retrofit.Builder()
+        Retrofit qwantRetrofit = new Retrofit.Builder()
                 .baseUrl(Constants.IMAGE_SERVICE_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())

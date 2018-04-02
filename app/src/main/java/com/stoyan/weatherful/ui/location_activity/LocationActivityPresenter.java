@@ -33,7 +33,7 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
                 }));
     }
 
-    public void fabOnclick() {
+    public void fabOnClick() {
         view.startNewActivity();
     }
 

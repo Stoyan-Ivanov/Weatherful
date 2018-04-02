@@ -22,21 +22,28 @@ import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationsRecyclerViewAdapter;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.fabric.sdk.android.Fabric;
 
 public class LocationActivity extends BaseActivity<LocationActivityPresenter> implements LocationActivityContract{
 
-    @BindView(R.id.ctv_header) TextView headerBar;
+    @BindView(R.id.ctv_header) TextView titleBar;
     @BindView(R.id.recyclerview) RecyclerView recyclerView;
-    @BindView(R.id.fab_add) FloatingActionButton fabAddLocation;
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.progressBar_loading) ProgressBar loadingBar;
     @BindView(R.id.layout_loading) ConstraintLayout layoutLoading;
     @BindView(R.id.layout_locations) RelativeLayout layoutLocations;
     @BindView(R.id.layout_missing_network) ConstraintLayout layoutMissingNetwork;
 
+    private static int LOADING_SCREEN_TIME = 2000;
+
     public static Intent getIntent(Context context) {
         return new Intent(context, LocationActivity.class);
+    }
+
+    @OnClick(R.id.fab_add)
+    void fabOnClick() {
+        presenter.fabOnClick();
     }
 
     @Override
@@ -47,30 +54,30 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
 
         presenter = new LocationActivityPresenter(this);
 
-        headerBar.setText(R.string.location_activity_header);
+        titleBar.setText(R.string.location_activity_header);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new LocationsRecyclerViewAdapter(presenter.getLocations()));
 
-        fabAddLocation.setVisibility(View.VISIBLE);
-        fabAddLocation.setOnClickListener(v -> presenter.fabOnclick());
+        presenter.downloadData();
+        configureSplashScreen();
+        configureSwipeRefreshLayout();
+    }
 
+    private void configureSwipeRefreshLayout() {
         swipeRefreshLayout.setOnRefreshListener(() -> {
             presenter.downloadData();
             if(swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-
-        presenter.downloadData();
-        configureSplashScreen();
     }
 
     private void configureSplashScreen() {
         Handler handler = new Handler();
         handler.postDelayed(() -> {
             layoutLoading.setVisibility(View.GONE);
-        }, 2000);
+        }, LOADING_SCREEN_TIME);
     }
 
     @Override

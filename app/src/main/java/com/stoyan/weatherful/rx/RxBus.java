@@ -18,8 +18,8 @@ public class RxBus {
         return instance;
     }
 
-    public void post(Object o) {
-        bus.onNext(o);
+    public void post(Object event) {
+        bus.onNext(event);
     }
 
     public Observable<Object> toObservable() {
