@@ -16,17 +16,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
-import com.esotericsoftware.kryo.serializers.FieldSerializer;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.network.NetworkManager;
-import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.ui.base_ui.activity.BaseActivity;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationsRecyclerViewAdapter;
 
 import butterknife.BindView;
 import io.fabric.sdk.android.Fabric;
-import io.reactivex.Observable;
 
 public class LocationActivity extends BaseActivity<LocationActivityPresenter> implements LocationActivityContract{
 
@@ -74,11 +71,6 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
         Handler handler = new Handler();
         handler.postDelayed(() -> {
             layoutLoading.setVisibility(View.GONE);
-            if(NetworkManager.getInstance().isNetworkAvailable()) {
-                layoutRecyclerview.setVisibility(View.VISIBLE);
-            } else {
-                layoutMissingNetwork.setVisibility(View.VISIBLE);
-            }
         }, 2000);
     }
 
@@ -95,5 +87,13 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
     @Override
     public void startNewActivity() {
         startActivity(AddLocationActivity.getIntent(this));
+    }
+
+    @Override
+    public void showNoInternetView() {
+        if(layoutRecyclerview.getVisibility() == View.VISIBLE) {
+            layoutRecyclerview.setVisibility(View.GONE);
+            layoutMissingNetwork.setVisibility(View.VISIBLE);
+        }
     }
 }

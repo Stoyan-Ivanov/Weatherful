@@ -10,4 +10,5 @@ public interface LocationActivityContract extends BaseViewContract {
     void notifyDataSetChanged();
     void showError(Throwable throwable);
     void startNewActivity();
+    void showNoInternetView();
 }

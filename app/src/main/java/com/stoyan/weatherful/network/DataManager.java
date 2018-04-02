@@ -1,6 +1,6 @@
 package com.stoyan.weatherful.network;
 
-import com.stoyan.weatherful.RxUtils;
+import com.stoyan.weatherful.rx.RxUtils;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.db.LocationsProvider;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;

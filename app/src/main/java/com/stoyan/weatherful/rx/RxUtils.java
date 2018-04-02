@@ -1,4 +1,4 @@
-package com.stoyan.weatherful;
+package com.stoyan.weatherful.rx;
 
 
 import io.reactivex.ObservableTransformer;

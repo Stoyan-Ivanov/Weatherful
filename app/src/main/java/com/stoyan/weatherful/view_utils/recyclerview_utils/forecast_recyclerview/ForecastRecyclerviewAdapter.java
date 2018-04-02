@@ -7,13 +7,9 @@ import android.view.ViewGroup;
 
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
-import com.stoyan.weatherful.network.NetworkManager;
-import com.stoyan.weatherful.network.WeatherfulApplication;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
-import com.stoyan.weatherful.ui.forecast_activity.ForecastActivityPresenter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by Stoyan on 27.1.2018 г..

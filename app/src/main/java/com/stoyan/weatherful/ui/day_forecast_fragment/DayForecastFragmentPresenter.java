@@ -6,13 +6,11 @@ import android.os.Bundle;
 
 import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
-import com.stoyan.weatherful.network.WeatherfulApplication;
+import com.stoyan.weatherful.WeatherfulApplication;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.ui.base_ui.contract.BaseViewContract;
 import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
-import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenterContract;
 
-import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Locale;
 

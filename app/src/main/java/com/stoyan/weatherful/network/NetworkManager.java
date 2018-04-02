@@ -3,27 +3,13 @@ package com.stoyan.weatherful.network;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.provider.ContactsContract;
-import android.util.Log;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import com.stoyan.weatherful.R;
-import com.stoyan.weatherful.db.Location;
-import com.stoyan.weatherful.network.models.forecast_full_models.ForecastFullResponse;
-import com.stoyan.weatherful.network.models.forecast_summary_models.ForecastSummaryResponse;
-import com.stoyan.weatherful.network.models.image_response_models.ImageResponse;
-import com.stoyan.weatherful.network.models.image_response_models.Picture;
-import com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview.ForecastRecyclerviewAdapter;
-import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationViewHolder;
+import com.stoyan.weatherful.WeatherfulApplication;
+import com.stoyan.weatherful.rx.RxBus;
+import com.stoyan.weatherful.rx.events.NoInternetAvailableEvent;
 
-import java.util.ArrayList;
-
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.observers.DisposableObserver;
-import io.reactivex.schedulers.Schedulers;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -48,8 +34,17 @@ public class NetworkManager {
     }
 
     private NetworkManager(){
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(new NetworkConnectionInterceptor() {
+                    @Override
+                    public void onInternetUnavailable() {
+                        RxBus.getInstance().post(new NoInternetAvailableEvent());
+                    }
+                }).build();
+
         weatherfulRetrofit = new Retrofit.Builder()
                 .baseUrl(Constants.FORECAST_SERVICE_URL)
+                .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
@@ -58,6 +53,7 @@ public class NetworkManager {
 
         qwantRetrofit = new Retrofit.Builder()
                 .baseUrl(Constants.IMAGE_SERVICE_URL)
+                .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();

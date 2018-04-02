@@ -3,10 +3,9 @@ package com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclervie
 import android.content.Context;
 
 import com.stoyan.weatherful.R;
-import com.stoyan.weatherful.network.WeatherfulApplication;
+import com.stoyan.weatherful.WeatherfulApplication;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 
-import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Locale;
 

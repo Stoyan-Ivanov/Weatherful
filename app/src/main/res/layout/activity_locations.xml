@@ -5,13 +5,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <include
-        android:id="@+id/layout_loading"
-        layout="@layout/loading_screen_layout"/>
-
-    <include
         android:id="@+id/layout_recyclerview"
         layout="@layout/base_recyclerview_layout"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
+
+    <include
+        android:id="@+id/layout_loading"
+        layout="@layout/loading_screen_layout"
+        android:visibility="visible"/>
 
     <include
         android:id="@+id/layout_missing_network"

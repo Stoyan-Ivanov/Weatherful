@@ -3,11 +3,14 @@ package com.stoyan.weatherful.ui.forecast_activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,8 +31,11 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> im
     @BindView(R.id.iv_collapsible_location) ImageView locationPicture;
     @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.iv_arrow_back) ImageView arrowBack;
-    //    @BindView(R.id.swipe_refresh)
-//    SwipeRefreshLayout swipeRefreshLayout;
+    //    @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.layout_missing_network)
+    ConstraintLayout layoutMissingInternet;
+    @BindView(R.id.layout_weekly_forecast)
+    CoordinatorLayout layoutWeeklyforecast;
 
     public static void getIntent(Context context, Location location) {
         Intent starter = new Intent(context, ForecastActivity.class);
@@ -79,5 +85,13 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> im
     @Override
     public void showError(Throwable throwable){
         Log.d("SII", "showError: " + throwable.getMessage());
+    }
+
+    @Override
+    public void showNoInternetView() {
+        if(layoutWeeklyforecast.getVisibility() == View.VISIBLE) {
+            layoutWeeklyforecast.setVisibility(View.GONE);
+            layoutMissingInternet.setVisibility(View.VISIBLE);
+        }
     }
 }

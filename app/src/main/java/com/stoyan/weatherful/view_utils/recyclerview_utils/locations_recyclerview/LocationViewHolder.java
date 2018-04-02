@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.db.LocationsProvider;
-import com.stoyan.weatherful.network.WeatherfulApplication;
+import com.stoyan.weatherful.WeatherfulApplication;
 import com.stoyan.weatherful.ui.forecast_activity.ForecastActivity;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.BaseViewHolder;
 

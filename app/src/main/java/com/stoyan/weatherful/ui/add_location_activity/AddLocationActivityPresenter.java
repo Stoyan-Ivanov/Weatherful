@@ -6,7 +6,7 @@ import android.location.Geocoder;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.LocationsProvider;
 import com.stoyan.weatherful.db.Location;
-import com.stoyan.weatherful.network.WeatherfulApplication;
+import com.stoyan.weatherful.WeatherfulApplication;
 import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenterContract;
 
 import java.io.IOException;

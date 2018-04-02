@@ -7,6 +7,9 @@ import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.network.DataManager;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
+import com.stoyan.weatherful.rx.RxBus;
+import com.stoyan.weatherful.rx.RxUtils;
+import com.stoyan.weatherful.rx.events.NoInternetAvailableEvent;
 import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
 
 import java.util.ArrayList;
@@ -28,6 +31,16 @@ public class ForecastActivityPresenter extends BasePresenter<ForecastActivityCon
         getExtras(intent);
     }
 
+    private void subscribeToEventBus() {
+        addDisposable(RxBus.getInstance().toObservable()
+                .compose(RxUtils.applySchedulers())
+                .subscribe(event -> {
+                    if(event instanceof NoInternetAvailableEvent) {
+                        view.showNoInternetView();
+                    }
+                }));
+    }
+
     public String getHeader() {
         return location.toString();
     }
@@ -41,6 +54,7 @@ public class ForecastActivityPresenter extends BasePresenter<ForecastActivityCon
     }
 
     public void downloadWeeklyForecast() {
+        subscribeToEventBus();
         DataManager.getInstance().getWeeklyForecastObservable(location)
                 .subscribe(getWeeklyForecastConsumer(), getErrorConsumer());
     }

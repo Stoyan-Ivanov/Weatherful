@@ -2,6 +2,9 @@ package com.stoyan.weatherful.ui.location_activity;
 
 import com.stoyan.weatherful.network.DataManager;
 import com.stoyan.weatherful.db.Location;
+import com.stoyan.weatherful.rx.RxBus;
+import com.stoyan.weatherful.rx.RxUtils;
+import com.stoyan.weatherful.rx.events.NoInternetAvailableEvent;
 import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
 
 import java.util.ArrayList;
@@ -20,11 +23,22 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
         super(view);
     }
 
+    private void subscribeToEventBus() {
+        addDisposable(RxBus.getInstance().toObservable()
+                .compose(RxUtils.applySchedulers())
+                .subscribe(event -> {
+                    if(event instanceof NoInternetAvailableEvent) {
+                        view.showNoInternetView();
+                    }
+                }));
+    }
+
     public void fabOnclick() {
         view.startNewActivity();
     }
 
     public void downloadData() {
+        subscribeToEventBus();
         addDisposable(DataManager.getInstance().getLocationDataObservable()
                 .subscribe(getLocationConsumer(), getErrorConsumer())
         );

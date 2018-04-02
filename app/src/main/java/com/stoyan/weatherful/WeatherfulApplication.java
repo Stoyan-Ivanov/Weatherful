@@ -1,4 +1,4 @@
-package com.stoyan.weatherful.network;
+package com.stoyan.weatherful;
 
 import android.app.Application;
 import android.content.Context;
