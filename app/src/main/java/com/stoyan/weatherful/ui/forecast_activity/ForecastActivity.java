@@ -31,7 +31,7 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> im
     @BindView(R.id.iv_collapsible_location) ImageView locationPicture;
     @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.iv_arrow_back) ImageView arrowBack;
-    @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
+//    @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.layout_missing_network) ConstraintLayout layoutMissingInternet;
     @BindView(R.id.layout_weekly_forecast) CoordinatorLayout layoutWeeklyforecast;
 
@@ -55,7 +55,7 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> im
 
         configureCollapsingToolbar();
         configureRecyclerView();
-        configureSwipeRefreshLayout();
+        //configureSwipeRefreshLayout();
         loadLocationImage();
     }
 
@@ -73,14 +73,14 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> im
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
     }
 
-    private void configureSwipeRefreshLayout() {
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            presenter.downloadWeeklyForecast();
-            if(swipeRefreshLayout.isRefreshing()) {
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
-    }
+//    private void configureSwipeRefreshLayout() {
+//        swipeRefreshLayout.setOnRefreshListener(() -> {
+//            presenter.downloadWeeklyForecast();
+//            if(swipeRefreshLayout.isRefreshing()) {
+//                swipeRefreshLayout.setRefreshing(false);
+//            }
+//        });
+//    }
 
     private void configureRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
