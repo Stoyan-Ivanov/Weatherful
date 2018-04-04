@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="160dp"
-    android:layout_height="200dp">
+    android:layout_height="200dp"
+    android:elevation="2dp"
+    android:background="@drawable/forecast_viewholder_background"
+    android:layout_margin="4dp">
 
     <TextView
         android:id="@+id/tv_date"
@@ -27,7 +30,6 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="4dp"
         android:scaleType="fitXY"
-        android:src="@drawable/cloudy"
 
         app:layout_constraintBottom_toTopOf="@+id/tv_temperature"
         app:layout_constraintEnd_toEndOf="parent"
