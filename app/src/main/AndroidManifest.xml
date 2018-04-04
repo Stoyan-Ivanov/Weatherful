@@ -29,7 +29,7 @@
 
         <activity android:name=".ui.forecast_activity.ForecastActivity" />
         <activity android:name=".ui.forecast_pager_activity.ForecastPagerActivity" />
-        <activity android:name=".ui.add_location_activity.AddLocationActivity"></activity>
+        <activity android:name=".ui.add_location_activity.AddLocationActivity"/>
     </application>
 
 </manifest>

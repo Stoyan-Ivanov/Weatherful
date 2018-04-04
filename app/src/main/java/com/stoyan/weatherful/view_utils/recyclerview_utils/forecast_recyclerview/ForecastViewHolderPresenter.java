@@ -6,8 +6,8 @@ import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.WeatherfulApplication;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 
-import java.util.Calendar;
-import java.util.Locale;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by stoyan.ivanov on 3/26/2018.
@@ -35,11 +35,8 @@ public class ForecastViewHolderPresenter {
     }
 
     public String getDateFromTimestamp() {
-        Calendar date = Calendar.getInstance();
-        date.setTimeInMillis(Long.valueOf(data.getTime()) * 1000);
-
-        return date.get(Calendar.DAY_OF_MONTH) + "."
-                + date.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)
-                + "." + date.get(Calendar.YEAR);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+        Date dateFormat = new java.util.Date(Long.valueOf(data.getTime()) * 1000);
+        return sdf.format(dateFormat);
     }
 }
