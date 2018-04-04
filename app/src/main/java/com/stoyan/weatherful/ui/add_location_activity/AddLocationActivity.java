@@ -2,8 +2,9 @@ package com.stoyan.weatherful.ui.add_location_activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.widget.Button;
+import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
 
 import com.stoyan.weatherful.R;
@@ -17,6 +18,7 @@ public class AddLocationActivity extends BaseActivity implements AddLocationActi
 
     @BindView(R.id.et_city) EditText etCityName;
     @BindView(R.id.et_country) EditText etCountryName;
+    @BindView(R.id.toolbar_add) Toolbar titleBar;
 
     private AddLocationActivityPresenter presenter;
 
@@ -36,6 +38,15 @@ public class AddLocationActivity extends BaseActivity implements AddLocationActi
         setContentView(R.layout.activity_add_location);
 
         presenter = new AddLocationActivityPresenter(this);
+
+        setSupportActionBar(titleBar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        titleBar.setNavigationOnClickListener(v -> finish());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getSupportActionBar().setTitle(getString(R.string.add_location_activity_header));
+        }
     }
 
     @Override
