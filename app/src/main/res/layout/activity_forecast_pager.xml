@@ -12,13 +12,10 @@
         android:elevation="6dp"
         android:background="@color/topBarBlue">
 
-        <com.stoyan.weatherful.view_utils.CustomTextView
-            android:id="@+id/ctv_header"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_fragment_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textColor="@color/white"
-            />
+            android:layout_height="match_parent"/>
 
     </android.support.design.widget.AppBarLayout>
 
