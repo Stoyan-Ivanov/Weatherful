@@ -2,9 +2,10 @@ package com.stoyan.weatherful.ui.forecast_pager_activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.view.ViewPager;
+import android.os.Build;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 
 import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
@@ -19,8 +20,9 @@ import butterknife.BindView;
 
 public class ForecastPagerActivity extends BaseActivity  {
 
-    @BindView(R.id.ctv_header) TextView header;
+    @BindView(R.id.toolbar_fragment_pager) Toolbar titleBar;
     @BindView(R.id.view_pager) ViewPager viewPager;
+
 
     private ForecastPagerActivityPresenter presenter;
 
@@ -40,11 +42,23 @@ public class ForecastPagerActivity extends BaseActivity  {
 
         presenter = new ForecastPagerActivityPresenter(getIntent());
 
-        header.setText(presenter.getHeader());
+        configureToolbar();
+        configureViewPager();
+    }
 
+    private void configureToolbar() {
+        setSupportActionBar(titleBar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        titleBar.setNavigationOnClickListener(v -> finish());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getSupportActionBar().setTitle(presenter.getHeader());
+        }
+    }
+
+    private void configureViewPager() {
         viewPager.setAdapter(new CustomPagerAdapter(getSupportFragmentManager(), presenter.getFragments()));
         viewPager.setCurrentItem(presenter.getDefaultPosition());
         viewPager.setOffscreenPageLimit(presenter.getOffScreenLimit());
     }
-
 }

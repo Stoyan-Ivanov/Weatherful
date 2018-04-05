@@ -2,16 +2,16 @@ package com.stoyan.weatherful.ui.forecast_activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.stoyan.weatherful.Constants;
@@ -26,10 +26,8 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> im
 
     @BindView(R.id.rv_forecast) RecyclerView recyclerView;
     @BindView(R.id.iv_collapsible_location) ImageView locationPicture;
-    @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbarLayout;
-//    @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.layout_missing_network) ConstraintLayout layoutMissingInternet;
-    @BindView(R.id.layout_weekly_forecast) CoordinatorLayout layoutWeeklyForecast;
+    @BindView(R.id.layout_weekly_forecast) RelativeLayout layoutWeeklyForecast;
     @BindView(R.id.toolbar_collapsed) Toolbar toolbar;
 
     public static void getIntent(Context context, Location location) {
@@ -41,20 +39,29 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> im
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.black));
+        }
+
         setContentView(R.layout.activity_forecast);
 
         presenter = new ForecastActivityPresenter(getIntent(), this);
 
+        configureToolbar();
+        configureRecyclerView();
+        loadLocationImage();
+    }
+
+    private void configureToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setNavigationOnClickListener(v -> finish());
-
-
-        configureCollapsingToolbar();
-        configureRecyclerView();
-        //configureSwipeRefreshLayout();
-        loadLocationImage();
+        getSupportActionBar().setTitle(presenter.getHeader());
     }
 
     private void loadLocationImage() {
@@ -64,21 +71,6 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> im
                 .placeholder(R.drawable.cityscape)
                 .into(locationPicture);
     }
-
-    private void configureCollapsingToolbar() {
-        collapsingToolbarLayout.setTitle(presenter.getHeader());
-        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
-        collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
-    }
-
-//    private void configureSwipeRefreshLayout() {
-//        swipeRefreshLayout.setOnRefreshListener(() -> {;'
-//            presenter.downloadWeeklyForecast();
-//            if(swipeRefreshLayout.isRefreshing()) {
-//                swipeRefreshLayout.setRefreshing(false);
-//            }
-//        });
-//    }
 
     private void configureRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
