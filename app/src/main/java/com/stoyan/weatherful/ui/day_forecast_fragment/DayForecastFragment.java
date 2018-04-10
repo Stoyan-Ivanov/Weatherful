@@ -23,7 +23,7 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresent
     @BindView(R.id.iv_fragment_weather_image) ImageView weatherImage;
     @BindView(R.id.tv_fragment_date) TextView tvDate;
     @BindView(R.id.tv_fragment_min_temp) TextView tvMinTemperature;
-    @BindView(R.id.tv_fragment_max_temp) TextView tvMaxTemperature;
+    @BindView(R.id.tv_fragment_sunrise) TextView tvMaxTemperature;
     @BindView(R.id.tv_fragment_wind_speed) TextView tvWindSpeed;
     @BindView(R.id.tv_fragment_rain_chance) TextView tvRainChance;
 

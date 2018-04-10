@@ -1,7 +1,7 @@
 package com.stoyan.weatherful.ui.location_activity;
 
-import com.stoyan.weatherful.network.DataManager;
 import com.stoyan.weatherful.db.Location;
+import com.stoyan.weatherful.network.DataManager;
 import com.stoyan.weatherful.rx.RxBus;
 import com.stoyan.weatherful.rx.RxUtils;
 import com.stoyan.weatherful.rx.events.NoInternetAvailableEvent;
@@ -60,5 +60,4 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
         locations = new ArrayList<>();
         return locations;
     }
-
 }

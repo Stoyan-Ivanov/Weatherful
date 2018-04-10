@@ -7,66 +7,54 @@
     android:background="@drawable/intro_gradient_background"
     android:padding="16dp">
 
-    <ProgressBar
-        android:id="@+id/progressBar_loading"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="78dp"
-        android:layout_height="88dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/iv_sun_loading"
+        android:layout_width="@dimen/iv_sun_loading_width"
+        android:layout_height="@dimen/iv_sun_loading_height"
+        android:layout_margin="@dimen/iv_sun_loading_margin"
+        app:layout_constraintBottom_toTopOf="@+id/tv_app_name_loading"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_app_name_loading"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_intro_sun" />
+
+    <ImageView
+        android:id="@+id/iv_clouds_loading"
+        android:layout_width="@dimen/iv_clouds_loading_width"
+        android:layout_height="@dimen/iv_clouds_loading_height"
+        android:layout_margin="@dimen/iv_clouds_loading_margin"
+        app:layout_constraintBottom_toTopOf="@+id/tv_app_name_loading"
+        app:layout_constraintBottom_toBottomOf="@id/iv_sun_loading"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/cloudy" />
 
     <TextView
         android:id="@+id/tv_app_name_loading"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_margin="@dimen/app_name_loading_margin"
         android:fontFamily="sans-serif-condensed"
         android:gravity="center_vertical"
         android:text="@string/app_name"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textSize="36sp"
+        android:textSize="@dimen/app_name_loading_text_size"
         app:layout_constraintBottom_toTopOf="@+id/progressBar_loading"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_clouds_loading"/>
+        app:layout_constraintTop_toBottomOf="@+id/iv_sun_loading" />
 
-    <ImageView
-        android:id="@+id/iv_sun_loading"
-        android:layout_width="296dp"
-        android:layout_height="360dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_app_name_loading"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.385"
-        app:srcCompat="@drawable/ic_intro_sun" />
-
-    <ImageView
-        android:id="@+id/iv_clouds_loading"
-        android:layout_width="240dp"
-        android:layout_height="216dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="170dp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_app_name_loading"
+    <ProgressBar
+        android:id="@+id/progressBar_loading"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/progressBar_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/iv_sun_loading"
-        app:srcCompat="@drawable/cloudy" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_app_name_loading" />
+
 
 </android.support.constraint.ConstraintLayout>

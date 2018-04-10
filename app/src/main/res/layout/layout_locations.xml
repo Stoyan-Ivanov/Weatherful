@@ -1,7 +1,7 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/abl_header"
@@ -10,13 +10,12 @@
         android:elevation="6dp"
         android:background="@color/topBarBlue">
 
-        <com.stoyan.weatherful.view_utils.CustomTextView
-            android:id="@+id/ctv_header"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_locations"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:textColor="@color/white"
-         />
+            android:theme="@style/ToolbarStyle"
+            app:titleTextAppearance="@style/TextAppearance.AppCompat.Title"/>
 
     </android.support.design.widget.AppBarLayout>
 
