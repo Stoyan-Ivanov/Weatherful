@@ -11,66 +11,95 @@
         android:id="@+id/iv_fragment_weather_image"
         android:layout_width="245dp"
         android:layout_height="157dp"
-        tools:layout_editor_absoluteX="83dp"
-        tools:layout_editor_absoluteY="100dp" />
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="72dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="2dp"
 
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:background="@color/black"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="467dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_fragment_weather_image" />
 
     <TextView
         android:id="@+id/tv_fragment_date"
         android:layout_width="379dp"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
 
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="40sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="381dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
 
     <TextView
         android:id="@+id/tv_fragment_min_temp"
-        android:layout_width="176dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
 
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:drawableStart="@drawable/ic_thermometer"
         android:gravity="center"
-        tools:layout_editor_absoluteY="511dp" />
-
-    <TextView
-        android:id="@+id/tv_fragment_rain_chance"
-        android:layout_width="235dp"
-        android:layout_height="17dp"
-
-        android:gravity="center"
-        tools:layout_editor_absoluteX="221dp"
-        tools:layout_editor_absoluteY="599dp" />
-
-    <TextView
-        android:id="@+id/tv_fragment_wind_speed"
-        android:layout_width="174dp"
-        android:layout_height="wrap_content"
-
-        android:drawableLeft="@drawable/ic_wind_meter"
-        android:gravity="center"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="599dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_fragment_date"
+        app:layout_constraintEnd_toStartOf="@id/tv_fragment_rain_chance"/>
 
     <TextView
         android:id="@+id/tv_fragment_sunrise"
-        android:layout_width="190dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
 
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:gravity="center"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_fragment_wind_speed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toEndOf="@+id/tv_fragment_wind_speed" />
+
+    <TextView
+        android:id="@+id/tv_fragment_wind_speed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:drawableStart="@drawable/ic_wind_meter"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_fragment_min_temp"
+        app:layout_constraintEnd_toStartOf="@id/tv_fragment_sunrise"/>
+
+    <TextView
+        android:id="@+id/tv_fragment_rain_chance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
         android:drawableLeft="@drawable/ic_rain_drop"
         android:gravity="center"
-        tools:layout_editor_absoluteX="221dp"
-        tools:layout_editor_absoluteY="511dp" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_fragment_min_temp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toEndOf="@+id/tv_fragment_min_temp" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"

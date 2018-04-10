@@ -22,4 +22,9 @@
     <string name="missing_network">Missing network connection!</string>
     <string name="try_again">Try again later</string>
 
+    <!-- Hints -->
+    <string name="hint_et_country">Country</string>
+    <string name="hint_et_city">Village / City</string>
+    <string name="done">Done</string>
+
 </resources>

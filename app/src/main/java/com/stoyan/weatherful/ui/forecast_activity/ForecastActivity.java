@@ -25,7 +25,7 @@ import butterknife.BindView;
 public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> implements ForecastActivityContract {
 
     @BindView(R.id.rv_forecast) RecyclerView recyclerView;
-    @BindView(R.id.iv_collapsible_location) ImageView locationPicture;
+    @BindView(R.id.iv_weekly_forecast_location) ImageView locationPicture;
     @BindView(R.id.layout_missing_network) ConstraintLayout layoutMissingInternet;
     @BindView(R.id.layout_weekly_forecast) RelativeLayout layoutWeeklyForecast;
     @BindView(R.id.toolbar_collapsed) Toolbar toolbar;

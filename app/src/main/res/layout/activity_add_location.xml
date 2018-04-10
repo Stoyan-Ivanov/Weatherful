@@ -11,8 +11,7 @@
         android:id="@+id/abl_add"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/topBarBlue"
-        android:elevation="6dp">
+        android:background="@color/topBarBlue">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_add"
@@ -24,13 +23,11 @@
     </android.support.design.widget.AppBarLayout>
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="180dp"
-        android:layout_height="200dp"
+        android:id="@+id/iv_add_location"
+        android:layout_width="@dimen/iv_add_location_width"
+        android:layout_height="@dimen/iv_add_location_height"
 
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_margin="@dimen/iv_add_location_margin"
 
         android:src="@drawable/location_red"
         app:layout_constraintBottom_toTopOf="@+id/tv_add_location_header"
@@ -43,9 +40,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginEnd="@dimen/tv_add_location_header_margin_end"
+        android:layout_marginStart="@dimen/tv_add_location_header_margin_start"
+        android:layout_marginTop="@dimen/tv_add_location_header_margin_top"
 
         android:gravity="center"
         android:text="@string/add_location_message"
@@ -55,23 +52,22 @@
         app:layout_constraintBottom_toTopOf="@+id/et_city"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_add_location" />
 
     <EditText
         android:id="@+id/et_city"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/et_city_margin_end"
+        android:layout_marginStart="@dimen/et_city_margin_start"
+        android:layout_marginTop="@dimen/et_city_margin_top"
 
-        android:hint="Village / City"
+        android:hint="@string/hint_et_city"
         android:inputType="textCapSentences"
 
         app:layout_constraintBottom_toTopOf="@id/et_country"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_add_location_header" />
 
@@ -80,11 +76,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/et_country_margin_end"
+        android:layout_marginStart="@dimen/et_country_margin_start"
+        android:layout_marginTop="@dimen/et_country_margin_top"
 
-        android:hint="Country"
+        android:hint="@string/hint_et_country"
 
         android:inputType="textCapSentences"
         app:layout_constraintBottom_toTopOf="@id/btn_done_adding"
@@ -96,12 +92,12 @@
         android:id="@+id/btn_done_adding"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="@dimen/btn_done_adding_margin_bottom"
+        android:layout_marginEnd="@dimen/btn_done_adding_margin_end"
+        android:layout_marginStart="@dimen/btn_done_adding_margin_start"
+        android:layout_marginTop="@dimen/btn_done_adding_margin_top"
         android:background="@color/colorAccent"
-        android:text="Done"
+        android:text="@string/done"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
         android:textColor="@color/white"
 

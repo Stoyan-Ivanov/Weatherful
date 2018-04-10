@@ -1,18 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="layout_padding">16dp</dimen>
+    <dimen name="fab_elevation">6dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
 
+    <!-- text size -->
+    <dimen name="small_text">20sp</dimen>
+    <dimen name="medium_text">24sp</dimen>
+    <dimen name="large_text">28sp</dimen>
+    <dimen name="extra_large_text">36sp</dimen>
+    
+    
     <!-- loading screen -->
     <dimen name="progressBar_margin">8dp</dimen>
+
     <dimen name="app_name_loading_margin">8dp</dimen>
     <dimen name="app_name_loading_text_size">36sp</dimen>
+
     <dimen name="iv_sun_loading_width">296dp</dimen>
     <dimen name="iv_sun_loading_height">364dp</dimen>
     <dimen name="iv_sun_loading_margin">8dp</dimen>
+
     <dimen name="iv_clouds_loading_width">240dp</dimen>
     <dimen name="iv_clouds_loading_height">216dp</dimen>
     <dimen name="iv_clouds_loading_margin">8dp</dimen>
 
     <!-- missing network screen -->
+    <dimen name="iv_clouds_missing_network_width">320dp</dimen>
+    <dimen name="iv_clouds_missing_network_height">280dp</dimen>
+    <dimen name="iv_clouds_missing_network_margin_top">48dp</dimen>
+    <dimen name="iv_clouds_missing_network_margin_start">16dp</dimen>
+    <dimen name="iv_clouds_missing_network_margin_end">16dp</dimen>
+
+    <dimen name="tv_app_name_missing_network_margin_bottom">36dp</dimen>
+    <dimen name="tv_app_name_missing_network_margin_end">8dp</dimen>
+    <dimen name="tv_app_name_missing_network_margin_start">8dp</dimen>
+    <dimen name="tv_app_name_missing_network_margin_top">16dp</dimen>
+
+    <dimen name="tv_missing_connection_header_margin_start">8dp</dimen>
+    <dimen name="tv_missing_connection_header_margin_end">8dp</dimen>
+    <dimen name="tv_missing_connection_header_margin_top">24dp</dimen>
+
+    <dimen name="tv_try_again_missing_network_margin_start">16dp</dimen>
+    <dimen name="tv_try_again_missing_network_margin_end">16dp</dimen>
+
+    <!-- locations screen -->
+    <dimen name="swipe_refresh_padding_top">8dp</dimen>
+    <dimen name="fab_add_margin_start">32dp</dimen>
+    <dimen name="fab_add_margin_end">32dp</dimen>
+    <dimen name="fab_add_margin_bottom">40dp</dimen>
+
+    <!-- weekly forecast screen -->
+    <dimen name="iv_weekly_forecast_location_height">384dp</dimen>
+    <dimen name="rv_forecast_margin_top">24dp</dimen>
+
+    <!-- add location screen -->
+    <dimen name="iv_add_location_width">184dp</dimen>
+    <dimen name="iv_add_location_height">200dp</dimen>
+    <dimen name="iv_add_location_margin">8dp</dimen>
+
+    <dimen name="tv_add_location_header_margin_start">16dp</dimen>
+    <dimen name="tv_add_location_header_margin_end">16dp</dimen>
+    <dimen name="tv_add_location_header_margin_top">8dp</dimen>
+
+    <dimen name="et_city_margin_start">24dp</dimen>
+    <dimen name="et_city_margin_end">24dp</dimen>
+    <dimen name="et_city_margin_top">8dp</dimen>
+
+    <dimen name="et_country_margin_start">24dp</dimen>
+    <dimen name="et_country_margin_end">24dp</dimen>
+    <dimen name="et_country_margin_top">8dp</dimen>
+
+    <dimen name="btn_done_adding_margin_top">16dp</dimen>
+    <dimen name="btn_done_adding_margin_start">36dp</dimen>
+    <dimen name="btn_done_adding_margin_end">36dp</dimen>
+    <dimen name="btn_done_adding_margin_bottom">24dp</dimen>
+
+    <!-- viewholder location -->
+    <dimen name="viewholder_location_height">160dp</dimen>
+    <dimen name="viewholder_location_margin">8dp</dimen>
+    <dimen name="viewholder_location_card_radius">2dp</dimen>
+
+    <dimen name="iv_location_width">146dp</dimen>
+    <dimen name="iv_location_height">136dp</dimen>
+    <dimen name="iv_location_margin">16dp</dimen>
+
+    <dimen name="tv_location_name_margin">16dp</dimen>
+    <dimen name="tv_location_temperature_margin">16dp</dimen>
+    <dimen name="tv_location_summary_margin">16dp</dimen>
+
+    <!-- viewholder horizontal forecast -->
+    <dimen name="viewholder_forecast_width">160dp</dimen>
+    <dimen name="viewholder_forecast_height">200dp</dimen>
+
+    <dimen name="tv_date_margin_start">8dp</dimen>
+    <dimen name="tv_date_margin_end">8dp</dimen>
+    <dimen name="tv_date_margin_top">4dp</dimen>
+    
+    <dimen name="iv_weather_icon_width">80dp</dimen>
+    <dimen name="iv_weather_icon_height">80dp</dimen>
+    <dimen name="iv_weather_icon_margin_start">8dp</dimen>
+    <dimen name="iv_weather_icon_margin_end">8dp</dimen>
+    <dimen name="iv_weather_icon_margin_top">4dp</dimen>
+
+    <dimen name="tv_temperature_margin_start">8dp</dimen>
+    <dimen name="tv_temperature_margin_end">8dp</dimen>
+
+    <dimen name="tv_chances_of_rain_margin_start">24dp</dimen>
+    <dimen name="tv_chances_of_rain_margin_end">24dp</dimen>
+    <dimen name="tv_chances_of_rain_margin_bottom">8dp</dimen>
+    <dimen name="tv_chances_of_rain_margin_top">8dp</dimen>
+    <dimen name="tv_chances_of_rain_padding_drawable">8dp</dimen>
 
 </resources>

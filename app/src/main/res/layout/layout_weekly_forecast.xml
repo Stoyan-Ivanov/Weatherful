@@ -25,9 +25,9 @@
     </android.support.design.widget.AppBarLayout>
 
     <ImageView
-        android:id="@+id/iv_collapsible_location"
+        android:id="@+id/iv_weekly_forecast_location"
         android:layout_width="match_parent"
-        android:layout_height="370dp"
+        android:layout_height="@dimen/iv_weekly_forecast_location_height"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@color/white"
@@ -43,9 +43,9 @@
         android:id="@+id/rv_forecast"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/viewholder_forecast_horizontal"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_marginTop="24dp"
-        android:layout_below="@+id/iv_collapsible_location"/>
+        tools:listitem="@layout/viewholder_forecast_horizontal"
+        android:layout_marginTop="@dimen/rv_forecast_margin_top"
+        android:layout_below="@+id/iv_weekly_forecast_location"/>
 
 </RelativeLayout>
