@@ -11,7 +11,9 @@ import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.ui.base_ui.contract.BaseViewContract;
 import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -21,6 +23,9 @@ import java.util.Locale;
 public class DayForecastFragmentPresenter extends BasePresenter<BaseViewContract> {
     private Data data;
     private Context context;
+    private final int PERCENT_MULTIPLIER = 100;
+    private final int TIME_MULTIPLIER = 1000;
+
 
     public DayForecastFragmentPresenter(final Bundle arguments, BaseViewContract view) {
         super(view);
@@ -41,12 +46,10 @@ public class DayForecastFragmentPresenter extends BasePresenter<BaseViewContract
         return getDateFromTimestamp();
     }
 
-    public String getMinTemperature() {
-        return context.getString(R.string.min_temperature_field, data.getTemperatureLow());
-    }
-
-    public String getMaxTemperature() {
-        return context.getString(R.string.max_temperature_field, data.getTemperatureHigh());
+    public String getTemperature() {
+        float temperatureHigh = Float.parseFloat(data.getTemperatureHigh());
+        float temperatureLow = Float.parseFloat(data.getTemperatureLow());
+        return context.getString(R.string.temperature_field, (int)temperatureHigh, (int)temperatureLow);
     }
 
     public String getWindSpeed() {
@@ -55,23 +58,41 @@ public class DayForecastFragmentPresenter extends BasePresenter<BaseViewContract
 
 
     public String getRainChance() {
-        float probability = Float.parseFloat(data.getPrecipProbability()) * 100;
-        String displayProbability = String.format("%.2f", probability);
+        float probability = Float.parseFloat(data.getPrecipProbability()) * PERCENT_MULTIPLIER;
+        getHumidity();
+        return context.getString(R.string.rain_chance_field, (int) probability);
+    }
 
-        return context.getString(R.string.rain_chance_field, displayProbability);
+    public String getHumidity() {
+        return context.getString(R.string.humidity_field,(int) data.getHumidity() * PERCENT_MULTIPLIER);
+    }
+
+    public String getForecastSummary() {
+        return data.getForecastSummary();
+    }
+
+    public String getSunriseTime() {
+        return getTimeFromUnixTime(data.getSunriseTime());
+    }
+
+    public String getSunsetTime() {
+        return getTimeFromUnixTime(data.getSunsetTime());
     }
 
     private String getDateFromTimestamp() {
         Calendar date = Calendar.getInstance();
-        date.setTimeInMillis(Long.valueOf(data.getTime()) * 1000);
+        date.setTimeInMillis(Long.valueOf(data.getTime()) * TIME_MULTIPLIER);
 
         return date.get(Calendar.DAY_OF_MONTH) + "."
                 + date.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)
                 + "." + date.get(Calendar.YEAR);
     }
 
-    @Override
-    public void onViewDestroy() {
-
+    private String getTimeFromUnixTime(long unixTime) {
+        return new SimpleDateFormat("HH:mm:ss")
+                .format(new Date(unixTime * TIME_MULTIPLIER));
     }
+
+    @Override
+    public void onViewDestroy() {}
 }

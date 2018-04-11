@@ -3,6 +3,7 @@
     <dimen name="layout_padding">16dp</dimen>
     <dimen name="fab_elevation">6dp</dimen>
     <dimen name="card_elevation">2dp</dimen>
+    <dimen name="drawable_padding">8dp</dimen>
 
     <!-- text size -->
     <dimen name="small_text">20sp</dimen>
@@ -112,4 +113,27 @@
     <dimen name="tv_chances_of_rain_margin_top">8dp</dimen>
     <dimen name="tv_chances_of_rain_padding_drawable">8dp</dimen>
 
+    <!-- dayforecast fragment -->
+    <dimen name="iv_fragment_weather_image_width">248dp</dimen>
+    <dimen name="iv_fragment_weather_image_height">160dp</dimen>
+
+    <dimen name="tv_fragment_date_margin_top">28dp</dimen>
+
+    <dimen name="tv_fragment_forecast_summary_margin_bottom">8dp</dimen>
+
+    <dimen name="tv_fragment_temp_margin_bottom">24dp</dimen>
+    <dimen name="tv_fragment_temp_margin_end">8dp</dimen>
+
+    <dimen name="tv_fragment_rain_chance_margin_start">8dp</dimen>
+
+    <dimen name="tv_fragment_wind_speed_margin_bottom">24dp</dimen>
+    <dimen name="tv_fragment_wind_speed_margin_end">8dp</dimen>
+
+    <dimen name="tv_fragment_humidity_margin_start">8dp</dimen>
+
+    <dimen name="tv_fragment_sunrise_margin_end">8dp</dimen>
+
+    <dimen name="tv_fragment_sunset_margin_start">8dp</dimen>
+    <dimen name="tv_fragment_sunset_margin_bottom">80dp</dimen>
+    <dimen name="tv_fragment_sunset_margin_top">24dp</dimen>
 </resources>

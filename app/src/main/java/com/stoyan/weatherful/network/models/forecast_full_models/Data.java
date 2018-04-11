@@ -23,49 +23,64 @@ public class Data implements Parcelable {
     @SerializedName("windSpeed")
     private String windSpeed;
     @SerializedName("humidity")
-    private String humidity;
+    private float humidity;
+    @SerializedName("summary")
+    private String forecastSummary;
+    @SerializedName("sunriseTime")
+    private long sunriseTime;
+    @SerializedName("sunsetTime")
+    private long sunsetTime;
     @SerializedName("precipProbability")
     private String precipProbability;
 
+    public String getPrecipProbability() {
+        return precipProbability;
+    }
 
-    public String getTemperatureLow ()
-    {
+    public String getTemperatureLow () {
         return temperatureLow;
     }
 
-    public String getTime ()
-    {
+    public String getTime () {
         return time;
     }
 
-    public void setTime (String time)
-    {
+    public void setTime (String time) {
         this.time = time;
     }
 
-    public String getTemperatureHigh ()
-    {
+    public String getTemperatureHigh () {
         return temperatureHigh;
     }
 
-    public Icon getIcon ()
-    {
+    public Icon getIcon () {
         return icon;
     }
 
-    public void setIcon (Icon icon)
-    {
+    public void setIcon (Icon icon) {
         this.icon = icon;
     }
 
-    public String getWindSpeed ()
-    {
+    public String getWindSpeed () {
         return windSpeed;
     }
 
-    public String getPrecipProbability () {
-        return precipProbability;
+    public float getHumidity() {
+        return humidity;
     }
+
+    public String getForecastSummary() {
+        return forecastSummary;
+    }
+
+    public long getSunriseTime() {
+        return sunriseTime;
+    }
+
+    public long getSunsetTime() {
+        return sunsetTime;
+    }
+
     protected Data(Parcel in) {
         temperatureLow = in.readString();
         time = in.readString();
@@ -73,39 +88,45 @@ public class Data implements Parcelable {
         icon = (Icon) in.readValue(Icon.class.getClassLoader());
         temperatureMin = in.readString();
         windSpeed = in.readString();
-        humidity = in.readString();
+        humidity = in.readFloat();
+        forecastSummary = in.readString();
+        sunriseTime = in.readLong();
+        sunsetTime = in.readLong();
         precipProbability = in.readString();
     }
 
-        @Override
-        public int describeContents() {
+    @Override
+    public int describeContents() {
         return 0;
     }
 
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(temperatureLow);
         dest.writeString(time);
         dest.writeString(temperatureHigh);
         dest.writeValue(icon);
         dest.writeString(temperatureMin);
         dest.writeString(windSpeed);
-        dest.writeString(humidity);
+        dest.writeFloat(humidity);
+        dest.writeString(forecastSummary);
+        dest.writeLong(sunriseTime);
+        dest.writeLong(sunsetTime);
         dest.writeString(precipProbability);
     }
 
-        @SuppressWarnings("unused")
-        public static final Parcelable.Creator<Data> CREATOR = new Parcelable.Creator<Data>() {
-            @Override
-            public Data createFromParcel(Parcel in) {
-                return new Data(in);
-            }
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Data> CREATOR = new Parcelable.Creator<Data>() {
+        @Override
+        public Data createFromParcel(Parcel in) {
+            return new Data(in);
+        }
 
-            @Override
-            public Data[] newArray(int size) {
-                return new Data[size];
-            }
-        };
+        @Override
+        public Data[] newArray(int size) {
+            return new Data[size];
+        }
+    };
 
     public enum Icon {
         @SerializedName("clear-day")

@@ -22,10 +22,13 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresent
 
     @BindView(R.id.iv_fragment_weather_image) ImageView weatherImage;
     @BindView(R.id.tv_fragment_date) TextView tvDate;
-    @BindView(R.id.tv_fragment_min_temp) TextView tvMinTemperature;
-    @BindView(R.id.tv_fragment_sunrise) TextView tvMaxTemperature;
+    @BindView(R.id.tv_fragment_temp) TextView tvTemperature;
     @BindView(R.id.tv_fragment_wind_speed) TextView tvWindSpeed;
     @BindView(R.id.tv_fragment_rain_chance) TextView tvRainChance;
+    @BindView(R.id.tv_fragment_humidity) TextView tvHumidity;
+    @BindView(R.id.tv_fragment_forecast_summary) TextView tvForecastSummary;
+    @BindView(R.id.tv_fragment_sunrise) TextView tvSunrise;
+    @BindView(R.id.tv_fragment_sunset) TextView tvSunset;
 
     public static DayForecastFragment newInstance(Data data) {
         Bundle arguments = new Bundle();
@@ -50,9 +53,12 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresent
 
         weatherImage.setImageDrawable(presenter.getImageDrawable());
         tvDate.setText(presenter.getDate());
-        tvMinTemperature.setText(presenter.getMinTemperature());
-        tvMaxTemperature.setText(presenter.getMaxTemperature());
+        tvTemperature.setText(presenter.getTemperature());
         tvWindSpeed.setText(presenter.getWindSpeed());
         tvRainChance.setText(presenter.getRainChance());
+        tvHumidity.setText(presenter.getHumidity());
+        tvForecastSummary.setText(presenter.getForecastSummary());
+        tvSunrise.setText(presenter.getSunriseTime());
+        tvSunset.setText(presenter.getSunsetTime());
     }
 }

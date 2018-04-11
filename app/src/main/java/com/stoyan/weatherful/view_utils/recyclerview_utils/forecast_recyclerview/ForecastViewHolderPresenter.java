@@ -23,15 +23,15 @@ public class ForecastViewHolderPresenter {
     }
 
     public String getTemperature() {
-        return context.getString(R.string.temperature_field,
-                data.getTemperatureLow(), data.getTemperatureHigh());
+        float temperatureHigh = Float.parseFloat(data.getTemperatureHigh());
+        float temperatureLow = Float.parseFloat(data.getTemperatureLow());
+        return context.getString(R.string.temperature_field, (int)temperatureHigh, (int)temperatureLow);
     }
 
     public String getRainChance() {
         float probability = Float.parseFloat(data.getPrecipProbability()) * 100;
-        String displayProbability = String.format("%.2f", probability);
 
-        return context.getString(R.string.rain_chance_field, displayProbability);
+        return context.getString(R.string.rain_chance_field, (int) probability);
     }
 
     public String getDateFromTimestamp() {
