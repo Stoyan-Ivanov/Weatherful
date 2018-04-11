@@ -7,7 +7,8 @@
     android:layout_height="@dimen/viewholder_location_height"
     android:elevation="@dimen/card_elevation"
     app:cardCornerRadius="@dimen/viewholder_location_card_radius"
-    android:layout_margin="@dimen/viewholder_location_margin">
+    android:layout_margin="@dimen/viewholder_location_margin"
+    android:background="@drawable/forecast_viewholder_background">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
