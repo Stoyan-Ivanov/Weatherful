@@ -6,8 +6,7 @@
     android:layout_width="@dimen/viewholder_forecast_width"
     android:layout_height="@dimen/viewholder_forecast_height"
     android:elevation="@dimen/card_elevation"
-    android:background="@drawable/forecast_viewholder_background"
-    android:layout_margin="@dimen/viewholder_forecast_margin">
+    android:background="@drawable/forecast_viewholder_background">
 
     <TextView
         android:id="@+id/tv_date"

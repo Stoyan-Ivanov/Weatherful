@@ -17,6 +17,7 @@ import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.ui.base_ui.activity.BaseActivity;
+import com.stoyan.weatherful.view_utils.recyclerview_utils.decorations.SpacesItemDecoration;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview.ForecastRecyclerviewAdapter;
 
 import butterknife.BindView;
@@ -70,6 +71,7 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> im
     private void configureRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(new ForecastRecyclerviewAdapter(presenter.getWeeklyForecast(), presenter.getLocation()));
+        recyclerView.addItemDecoration(new SpacesItemDecoration(getResources().getInteger(R.integer.viewholder_forecast_margin), SpacesItemDecoration.HORIZONTAL));
         presenter.downloadWeeklyForecast();
     }
 

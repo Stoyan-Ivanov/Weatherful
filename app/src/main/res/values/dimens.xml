@@ -94,7 +94,6 @@
     <!-- viewholder horizontal forecast -->
     <dimen name="viewholder_forecast_width">160dp</dimen>
     <dimen name="viewholder_forecast_height">200dp</dimen>
-    <dimen name="viewholder_forecast_margin">4dp</dimen>
 
     <dimen name="tv_date_margin_start">8dp</dimen>
     <dimen name="tv_date_margin_end">8dp</dimen>
