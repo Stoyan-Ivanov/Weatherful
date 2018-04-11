@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 
+import com.rd.PageIndicatorView;
 import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
@@ -22,6 +23,8 @@ public class ForecastPagerActivity extends BaseActivity  {
 
     @BindView(R.id.toolbar_fragment_pager) Toolbar titleBar;
     @BindView(R.id.view_pager) ViewPager viewPager;
+    @BindView(R.id.pageIndicatorView)
+    PageIndicatorView pageIndicatorView;
 
 
     private ForecastPagerActivityPresenter presenter;
@@ -60,5 +63,23 @@ public class ForecastPagerActivity extends BaseActivity  {
         viewPager.setAdapter(new CustomPagerAdapter(getSupportFragmentManager(), presenter.getFragments()));
         viewPager.setCurrentItem(presenter.getDefaultPosition());
         viewPager.setOffscreenPageLimit(presenter.getOffScreenLimit());
+        pageIndicatorView.setCount(presenter.getFragments().size());
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                pageIndicatorView.setSelected(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 }
