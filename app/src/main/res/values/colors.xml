@@ -6,6 +6,8 @@
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
     <color name="topBarBlue">#005073</color>
+    <color name="statusBarBlue">#003e5a</color>
     <color name="lightRVBlue">#b8e3f5</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="lightBlue">#C087CEEB</color>
 </resources>

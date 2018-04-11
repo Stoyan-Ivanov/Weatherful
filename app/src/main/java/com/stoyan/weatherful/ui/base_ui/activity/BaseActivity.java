@@ -1,7 +1,9 @@
 package com.stoyan.weatherful.ui.base_ui.activity;
 
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 
+import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
 
 import butterknife.ButterKnife;
@@ -18,6 +20,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         super.setContentView(layoutResID);
 
         ButterKnife.bind(this);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.statusBarBlue));
+        }
     }
 
     @Override

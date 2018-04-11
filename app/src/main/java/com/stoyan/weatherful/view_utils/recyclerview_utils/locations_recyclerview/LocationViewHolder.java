@@ -30,6 +30,7 @@ public class LocationViewHolder extends BaseViewHolder {
     public LocationViewHolder(View itemView, LocationsRecyclerViewAdapter adapter) {
         super(itemView);
         this.adapter = adapter;
+        itemView.getBackground().setAlpha(50);
     }
 
     public void bind(final Location location) {

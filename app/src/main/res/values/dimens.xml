@@ -107,7 +107,7 @@
     <dimen name="tv_temperature_margin_start">8dp</dimen>
     <dimen name="tv_temperature_margin_end">8dp</dimen>
 
-    <dimen name="tv_chances_of_rain_margin_start">24dp</dimen>
+    <dimen name="tv_chances_of_rain_margin_start">56dp</dimen>
     <dimen name="tv_chances_of_rain_margin_end">24dp</dimen>
     <dimen name="tv_chances_of_rain_margin_bottom">8dp</dimen>
     <dimen name="tv_chances_of_rain_margin_top">8dp</dimen>
