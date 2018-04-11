@@ -24,7 +24,7 @@
 
     <TextView
         android:id="@+id/tv_app_name_missing_network"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero_width"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/tv_app_name_missing_network_margin_bottom"
         android:layout_marginEnd="@dimen/tv_app_name_missing_network_margin_end"
@@ -41,8 +41,8 @@
 
     <TextView
         android:id="@+id/tv_missing_connection_header"
-        android:layout_width="0dp"
-        android:layout_height="36dp"
+        android:layout_width="@dimen/zero_width"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/tv_missing_connection_header_margin_end"
         android:layout_marginStart="@dimen/tv_missing_connection_header_margin_start"
         android:layout_marginTop="@dimen/tv_missing_connection_header_margin_top"
@@ -57,7 +57,7 @@
 
     <TextView
         android:id="@+id/tv_try_again_missing_network"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero_width"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/tv_try_again_missing_network_margin_end"
         android:layout_marginStart="@dimen/tv_try_again_missing_network_margin_start"

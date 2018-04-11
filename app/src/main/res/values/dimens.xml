@@ -4,6 +4,7 @@
     <dimen name="fab_elevation">6dp</dimen>
     <dimen name="card_elevation">2dp</dimen>
     <dimen name="drawable_padding">8dp</dimen>
+    <dimen name="zero_width">0dp</dimen>
 
     <!-- text size -->
     <dimen name="small_text">20sp</dimen>
@@ -93,6 +94,7 @@
     <!-- viewholder horizontal forecast -->
     <dimen name="viewholder_forecast_width">160dp</dimen>
     <dimen name="viewholder_forecast_height">200dp</dimen>
+    <dimen name="viewholder_forecast_margin">4dp</dimen>
 
     <dimen name="tv_date_margin_start">8dp</dimen>
     <dimen name="tv_date_margin_end">8dp</dimen>
@@ -136,4 +138,9 @@
     <dimen name="tv_fragment_sunset_margin_start">8dp</dimen>
     <dimen name="tv_fragment_sunset_margin_bottom">80dp</dimen>
     <dimen name="tv_fragment_sunset_margin_top">24dp</dimen>
+
+    <!-- forecast pager -->
+    <dimen name="pageIndicatorView_margin_bottom">42dp</dimen>
+    <dimen name="pageIndicatorView_margin_start">8dp</dimen>
+    <dimen name="pageIndicatorView_margin_end">8dp</dimen>
 </resources>

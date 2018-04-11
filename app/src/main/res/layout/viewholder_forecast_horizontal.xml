@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/viewholder_forecast_width"
     android:layout_height="@dimen/viewholder_forecast_height"
     android:elevation="@dimen/card_elevation"
     android:background="@drawable/forecast_viewholder_background"
-    android:layout_margin="4dp">
+    android:layout_margin="@dimen/viewholder_forecast_margin">
 
     <TextView
         android:id="@+id/tv_date"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero_width"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/tv_date_margin_start"
         android:layout_marginEnd="@dimen/tv_date_margin_end"
@@ -38,7 +39,7 @@
 
     <TextView
         android:id="@+id/tv_temperature"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero_width"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/tv_temperature_margin_start"
         android:layout_marginEnd="@dimen/tv_temperature_margin_end"
@@ -52,7 +53,7 @@
 
     <TextView
         android:id="@+id/tv_chances_of_rain"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero_width"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/tv_chances_of_rain_margin_bottom"
         android:layout_marginEnd="@dimen/tv_chances_of_rain_margin_end"

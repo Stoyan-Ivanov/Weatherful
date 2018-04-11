@@ -37,7 +37,7 @@
 
     <TextView
         android:id="@+id/tv_add_location_header"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero_width"
         android:layout_height="wrap_content"
 
         android:layout_marginEnd="@dimen/tv_add_location_header_margin_end"
@@ -56,7 +56,7 @@
 
     <EditText
         android:id="@+id/et_city"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero_width"
         android:layout_height="wrap_content"
 
         android:layout_marginEnd="@dimen/et_city_margin_end"
@@ -73,7 +73,7 @@
 
     <EditText
         android:id="@+id/et_country"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero_width"
         android:layout_height="wrap_content"
 
         android:layout_marginEnd="@dimen/et_country_margin_end"
@@ -90,7 +90,7 @@
 
     <Button
         android:id="@+id/btn_done_adding"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero_width"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/btn_done_adding_margin_bottom"
         android:layout_marginEnd="@dimen/btn_done_adding_margin_end"
