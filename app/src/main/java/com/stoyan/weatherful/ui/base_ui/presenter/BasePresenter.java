@@ -13,13 +13,16 @@ public class BasePresenter <V extends BaseViewContract> implements BasePresenter
     protected V view;
     private CompositeDisposable disposables;
 
-    public BasePresenter(V view) {
-        this.view = view;
+    public BasePresenter() {
         disposables = new CompositeDisposable();
     }
 
     public void addDisposable(Disposable disposable) {
         disposables.add(disposable);
+    }
+
+    public void setView(V view) {
+        this.view = view;
     }
 
     @Override

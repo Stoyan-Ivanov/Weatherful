@@ -53,7 +53,8 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_locations);
 
-        presenter = new LocationActivityPresenter(this);
+        presenter = new LocationActivityPresenter();
+        presenter.setView(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new LocationsRecyclerViewAdapter(presenter.getLocations()));

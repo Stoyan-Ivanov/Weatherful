@@ -43,7 +43,8 @@ public class ForecastPagerActivity extends BaseActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forecast_pager);
 
-        presenter = new ForecastPagerActivityPresenter(getIntent());
+        presenter = new ForecastPagerActivityPresenter();
+        presenter.setExtras(getIntent());
 
         configureToolbar();
         configureViewPager();
@@ -67,9 +68,7 @@ public class ForecastPagerActivity extends BaseActivity  {
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
             @Override
             public void onPageSelected(int position) {
@@ -77,9 +76,7 @@ public class ForecastPagerActivity extends BaseActivity  {
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
+            public void onPageScrollStateChanged(int state) {}
         });
     }
 }

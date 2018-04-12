@@ -36,6 +36,7 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresent
 
         DayForecastFragment fragment = new DayForecastFragment();
         fragment.setArguments(arguments);
+
         return fragment;
     }
 
@@ -50,6 +51,7 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresent
         super.onViewCreated(view, savedInstanceState);
 
         presenter = new DayForecastFragmentPresenter(getArguments(), this);
+        presenter.setView(this);
 
         weatherImage.setImageDrawable(presenter.getImageDrawable());
         tvDate.setText(presenter.getDate());

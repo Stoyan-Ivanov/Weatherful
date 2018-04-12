@@ -28,7 +28,6 @@ public class DayForecastFragmentPresenter extends BasePresenter<BaseViewContract
 
 
     public DayForecastFragmentPresenter(final Bundle arguments, BaseViewContract view) {
-        super(view);
         getExtras(arguments);
         context = WeatherfulApplication.getStaticContext();
     }

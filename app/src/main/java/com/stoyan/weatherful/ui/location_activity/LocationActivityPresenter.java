@@ -19,10 +19,6 @@ import io.reactivex.functions.Consumer;
 public class LocationActivityPresenter extends BasePresenter<LocationActivityContract> {
     private ArrayList<Location> locations;
 
-    public LocationActivityPresenter(LocationActivityContract view) {
-        super(view);
-    }
-
     private void subscribeToEventBus() {
         addDisposable(RxBus.getInstance().toObservable()
                 .compose(RxUtils.applySchedulers())

@@ -2,29 +2,43 @@ package com.stoyan.weatherful;
 
 import android.app.Application;
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.view.Gravity;
 import android.widget.Toast;
+
+import com.stoyan.weatherful.di.AppComponent;
+import com.stoyan.weatherful.di.AppModule;
+import com.stoyan.weatherful.di.DaggerAppComponent;
+
+import javax.inject.Inject;
 
 /**
  * Created by Stoyan on 27.1.2018 г..
  */
 
 public class WeatherfulApplication extends Application  {
+    @Inject WeatherfulApplication application;
     private static Context applicationContext;
+    AppComponent appComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        applicationContext = getBaseContext();
-
+        applicationContext = application.getApplicationContext();
     }
 
     public static void showToast(String text) {
         Toast toast=Toast.makeText(applicationContext, text,Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
         toast.show();
+    }
+
+    public AppComponent getComponent() {
+        if (appComponent == null) {
+            appComponent = DaggerAppComponent.builder()
+                    .appModule(new AppModule(this))
+                    .build();
+        }
+        return appComponent;
     }
 
     public static String getStringFromId(int id) {

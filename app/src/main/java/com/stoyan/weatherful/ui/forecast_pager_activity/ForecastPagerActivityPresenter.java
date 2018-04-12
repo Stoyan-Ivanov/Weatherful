@@ -19,18 +19,22 @@ public class ForecastPagerActivityPresenter {
     private Location location;
     private int defaultPosition;
 
-    public ForecastPagerActivityPresenter(Intent intent) {
-        getExtras(intent);
-    }
-
     private void getExtras(Intent intent) {
         data = intent.getParcelableArrayListExtra(Constants.EXTRA_DATA);
         location = intent.getParcelableExtra(Constants.EXTRA_LOCATION);
         defaultPosition = intent.getIntExtra(Constants.EXTRA_POSITION, 0);
     }
 
+    public void setExtras(Intent intent) {
+        getExtras(intent);
+    }
+
     public String getHeader() {
-        return location.toString();
+        if(location != null) {
+            return location.toString();
+        } else {
+            throw new NullPointerException();
+        }
     }
 
     public int getOffScreenLimit() {
