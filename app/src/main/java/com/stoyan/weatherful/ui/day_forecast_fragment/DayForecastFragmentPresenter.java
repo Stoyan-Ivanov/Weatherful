@@ -58,13 +58,13 @@ public class DayForecastFragmentPresenter extends BasePresenter<BaseViewContract
 
 
     public String getRainChance() {
-        float probability = Float.parseFloat(data.getPrecipProbability()) * PERCENT_MULTIPLIER;
-        getHumidity();
-        return context.getString(R.string.rain_chance_field, (int) probability);
+       int probability = (int) (Float.parseFloat(data.getPrecipProbability()) * PERCENT_MULTIPLIER);
+       return context.getString(R.string.rain_chance_field, probability);
     }
 
     public String getHumidity() {
-        return context.getString(R.string.humidity_field,(int) data.getHumidity() * PERCENT_MULTIPLIER);
+        int humidity = (int) (data.getHumidity() * PERCENT_MULTIPLIER);
+        return context.getString(R.string.humidity_field, humidity);
     }
 
     public String getForecastSummary() {
