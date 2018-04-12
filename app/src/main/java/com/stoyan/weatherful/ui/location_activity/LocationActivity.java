@@ -18,6 +18,7 @@ import com.crashlytics.android.Crashlytics;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
 import com.stoyan.weatherful.ui.base_ui.activity.BaseActivity;
+import com.stoyan.weatherful.view_utils.recyclerview_utils.decorations.SpacesItemDecoration;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationsRecyclerViewAdapter;
 
 import butterknife.BindView;
@@ -56,6 +57,8 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new LocationsRecyclerViewAdapter(presenter.getLocations()));
+        recyclerView.addItemDecoration(new SpacesItemDecoration(getResources()
+                .getInteger(R.integer.viewholder_forecast_margin), SpacesItemDecoration.VERTICAL));
 
         presenter.downloadData();
         configureSplashScreen();

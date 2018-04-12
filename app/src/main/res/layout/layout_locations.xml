@@ -22,8 +22,7 @@
         android:id="@+id/swipe_refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/abl_header"
-        android:paddingTop="@dimen/swipe_refresh_padding_top">
+        android:layout_below="@+id/abl_header">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"

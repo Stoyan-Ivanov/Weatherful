@@ -47,7 +47,6 @@
     <dimen name="tv_try_again_missing_network_margin_end">16dp</dimen>
 
     <!-- locations screen -->
-    <dimen name="swipe_refresh_padding_top">8dp</dimen>
     <dimen name="fab_add_margin_start">32dp</dimen>
     <dimen name="fab_add_margin_end">32dp</dimen>
     <dimen name="fab_add_margin_bottom">40dp</dimen>
@@ -80,7 +79,6 @@
 
     <!-- viewholder location -->
     <dimen name="viewholder_location_height">160dp</dimen>
-    <dimen name="viewholder_location_margin">8dp</dimen>
     <dimen name="viewholder_location_card_radius">2dp</dimen>
 
     <dimen name="iv_location_width">146dp</dimen>
