@@ -1,5 +1,7 @@
 package com.stoyan.weatherful.network;
 
+import android.util.Log;
+
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.db.LocationsProvider;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
@@ -23,12 +25,13 @@ public class DataManager {
     private final LocationsProvider mLocationProvider;
 
     @Inject
-    public DataManager(final NetworkManager networkManager, final LocationsProvider locationProvider){
+    public DataManager(final NetworkManager networkManager, final LocationsProvider locationsProvider){
         mNetworkManager = networkManager;
-        mLocationProvider = locationProvider;
+        mLocationProvider = locationsProvider;
     }
 
     public Observable<ArrayList<Location>> getLocationDataObservable() {
+        Log.d("SII", "getLocationDataObservable: ");
         return Observable.just(mLocationProvider.getLocations())
                 .flatMapIterable(locations -> locations)
                 .flatMap(this::downloadLocationImage)
@@ -50,7 +53,7 @@ public class DataManager {
                     .map(Picture::getThumbnailUrl)
                     .map(s -> {
                         location.setImageUrl(URL_PREFIX + s);
-                        mLocationProvider.updateLocation(location);
+                        updateLocation(location);
                         return location;
                     }).toObservable();
         }
@@ -85,5 +88,9 @@ public class DataManager {
 
     public void deleteLocation(Location location) {
         mLocationProvider.deleteLocation(location);
+    }
+
+    public void updateLocation(Location location) {
+        mLocationProvider.updateLocation(location);
     }
 }

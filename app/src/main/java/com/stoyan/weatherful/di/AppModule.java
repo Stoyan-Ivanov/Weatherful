@@ -37,12 +37,17 @@ public class AppModule {
     }
 
     @Provides
-    NetworkConnectionInterceptor provideNetworkInterceptor(){
+    NetworkConnectionInterceptor provideNetworkInterceptor(RxBus rxBus){
         return new NetworkConnectionInterceptor() {
             @Override
             public void onInternetUnavailable() {
-                RxBus.getInstance().post(new NoInternetAvailableEvent());
+                rxBus.post(new NoInternetAvailableEvent());
             }
         };
+    }
+
+    @Provides
+    RxBus provideRxBus() {
+        return new RxBus();
     }
 }

@@ -5,9 +5,13 @@ import android.content.Context;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.stoyan.weatherful.di.AppComponent;
 import com.stoyan.weatherful.di.AppModule;
 import com.stoyan.weatherful.di.DaggerAppComponent;
+
+import io.fabric.sdk.android.Fabric;
+import io.paperdb.Paper;
 
 /**
  * Created by Stoyan on 27.1.2018 г..
@@ -23,6 +27,9 @@ public class WeatherfulApplication extends Application  {
         super.onCreate();
         sApplication = this;
         sContext = getBaseContext();
+
+        Paper.init(sContext);
+        Fabric.with(sContext, new Crashlytics());
     }
 
     public static WeatherfulApplication getInstance(){

@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
-import com.crashlytics.android.Crashlytics;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
 import com.stoyan.weatherful.ui.base_ui.activity.BaseActivity;
@@ -23,7 +22,6 @@ import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclervie
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.fabric.sdk.android.Fabric;
 
 public class LocationActivity extends BaseActivity<LocationActivityPresenter> implements LocationActivityContract{
 
@@ -50,7 +48,6 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_locations);
 
         presenter = new LocationActivityPresenter();

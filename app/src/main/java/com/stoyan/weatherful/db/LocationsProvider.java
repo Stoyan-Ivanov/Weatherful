@@ -1,5 +1,7 @@
 package com.stoyan.weatherful.db;
 
+import android.util.Log;
+
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.WeatherfulApplication;
 
@@ -21,12 +23,11 @@ import static io.paperdb.Paper.book;
 public class LocationsProvider implements LocationsProviderContract {
 
     @Inject
-    public LocationsProvider() {
-        Paper.init(WeatherfulApplication.getStaticContext());
-    }
+    public LocationsProvider() {}
 
     @Override
     public ArrayList<Location> getLocations() {
+
         ArrayList<Location> locations = new ArrayList<>();
 
         List<String> allKeys= Paper.book().getAllKeys();
@@ -39,6 +40,7 @@ public class LocationsProvider implements LocationsProviderContract {
             locations = initDatabase();
         }
 
+        Log.d("SII", "getLocations: " + locations.toString());
         return locations;
     }
 
