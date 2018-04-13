@@ -14,42 +14,41 @@ import com.stoyan.weatherful.di.DaggerAppComponent;
  */
 
 public class WeatherfulApplication extends Application  {
-    private static WeatherfulApplication application;
-    private static Context applicationContext;
-    AppComponent appComponent;
+    private static WeatherfulApplication sApplication;
+    private static Context sContext;
+    private AppComponent mAppComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        //applicationContext = application.getApplicationContext();
-        application = this;
-        applicationContext = getBaseContext();
+        sApplication = this;
+        sContext = getBaseContext();
     }
 
     public static WeatherfulApplication getInstance(){
-        return application;
+        return sApplication;
     }
 
     public static void showToast(String text) {
-        Toast toast=Toast.makeText(applicationContext, text,Toast.LENGTH_SHORT);
+        Toast toast=Toast.makeText(sContext, text,Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
         toast.show();
     }
 
     public AppComponent getComponent() {
-        if (appComponent == null) {
-            appComponent = DaggerAppComponent.builder()
+        if (mAppComponent == null) {
+            mAppComponent = DaggerAppComponent.builder()
                     .appModule(new AppModule(this))
                     .build();
         }
-        return appComponent;
+        return mAppComponent;
     }
 
     public static String getStringFromId(int id) {
-        return applicationContext.getResources().getString(id);
+        return sContext.getResources().getString(id);
     }
 
     public static Context getStaticContext() {
-        return applicationContext;
+        return sContext;
     }
 }

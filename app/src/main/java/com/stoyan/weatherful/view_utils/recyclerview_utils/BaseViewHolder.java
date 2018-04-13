@@ -11,11 +11,11 @@ import butterknife.ButterKnife;
  */
 
 public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
-    protected Context context;
+    protected Context mContext;
 
     public BaseViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-        context = itemView.getContext();
+        mContext = itemView.getContext();
     }
 }

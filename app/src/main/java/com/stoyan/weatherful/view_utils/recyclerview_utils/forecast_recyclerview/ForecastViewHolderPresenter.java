@@ -14,29 +14,29 @@ import java.util.Date;
  */
 
 public class ForecastViewHolderPresenter {
-    private Data data;
-    private Context context;
+    private Data mData;
+    private Context mContext;
 
     public ForecastViewHolderPresenter(Data data) {
-        this.data = data;
-        context = WeatherfulApplication.getStaticContext();
+        this.mData = data;
+        mContext = WeatherfulApplication.getStaticContext();
     }
 
     public String getTemperature() {
-        float temperatureHigh = Float.parseFloat(data.getTemperatureHigh());
-        float temperatureLow = Float.parseFloat(data.getTemperatureLow());
-        return context.getString(R.string.temperature_field, (int)temperatureHigh, (int)temperatureLow);
+        float temperatureHigh = Float.parseFloat(mData.getTemperatureHigh());
+        float temperatureLow = Float.parseFloat(mData.getTemperatureLow());
+        return mContext.getString(R.string.temperature_field, (int)temperatureHigh, (int)temperatureLow);
     }
 
     public String getRainChance() {
-        float probability = Float.parseFloat(data.getPrecipProbability()) * 100;
+        float probability = Float.parseFloat(mData.getPrecipProbability()) * 100;
 
-        return context.getString(R.string.rain_chance_field, (int) probability);
+        return mContext.getString(R.string.rain_chance_field, (int) probability);
     }
 
     public String getDateFromTimestamp() {
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
-        Date dateFormat = new java.util.Date(Long.valueOf(data.getTime()) * 1000);
+        Date dateFormat = new java.util.Date(Long.valueOf(mData.getTime()) * 1000);
         return sdf.format(dateFormat);
     }
 }

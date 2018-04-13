@@ -19,8 +19,9 @@ import io.reactivex.functions.Consumer;
  */
 
 public class LocationActivityPresenter extends BasePresenter<LocationActivityContract> {
-    private ArrayList<Location> locations;
+    private ArrayList<Location> mLocations;
 
+    @Inject RxBus mRxBus;
     @Inject DataManager mDataManager;
 
     @Override
@@ -29,7 +30,7 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
     }
 
     private void subscribeToEventBus() {
-        addDisposable(RxBus.getInstance().toObservable()
+        addDisposable(mRxBus.toObservable()
                 .compose(RxUtils.applySchedulers())
                 .subscribe(event -> {
                     if (event instanceof NoInternetAvailableEvent) {
@@ -51,8 +52,8 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
 
     private Consumer<ArrayList<Location>> getLocationConsumer() {
         return locations -> {
-            LocationActivityPresenter.this.locations.clear();
-            LocationActivityPresenter.this.locations.addAll(locations);
+            LocationActivityPresenter.this.mLocations.clear();
+            LocationActivityPresenter.this.mLocations.addAll(locations);
             view.notifyDataSetChanged();
         };
     }
@@ -62,7 +63,7 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
     }
 
     public ArrayList<Location> getLocations() {
-        locations = new ArrayList<>();
-        return locations;
+        mLocations = new ArrayList<>();
+        return mLocations;
     }
 }

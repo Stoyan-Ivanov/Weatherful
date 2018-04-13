@@ -1,28 +1,26 @@
 package com.stoyan.weatherful.rx;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 
 /**
  * Created by stoyan.ivanov on 4/2/2018.
  */
-
+@Singleton
 public class RxBus {
-    private static RxBus instance;
-    private PublishSubject<Object> bus = PublishSubject.create();
+    private PublishSubject<Object> mBus = PublishSubject.create();
 
-    public static RxBus getInstance() {
-        if(instance == null) {
-            instance = new RxBus();
-        }
-        return instance;
-    }
+    @Inject
+    public RxBus() {}
 
     public void post(Object event) {
-        bus.onNext(event);
+        mBus.onNext(event);
     }
 
     public Observable<Object> toObservable() {
-        return bus;
+        return mBus;
     }
 }

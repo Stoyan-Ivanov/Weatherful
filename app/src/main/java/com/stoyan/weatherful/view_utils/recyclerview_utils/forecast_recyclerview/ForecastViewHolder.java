@@ -21,50 +21,50 @@ import butterknife.BindView;
 
 public class ForecastViewHolder extends BaseViewHolder {
 
-    @BindView(R.id.iv_weather_icon) ImageView weatherImage;
-    @BindView(R.id.tv_temperature) TextView tvTemperature;
-    @BindView(R.id.tv_chances_of_rain) TextView tvRainChance;
-    @BindView(R.id.tv_date) TextView tvDateHolder;
+    @BindView(R.id.iv_weather_icon) ImageView mWeatherImage;
+    @BindView(R.id.tv_temperature) TextView mTvTemperature;
+    @BindView(R.id.tv_chances_of_rain) TextView mTvRainChance;
+    @BindView(R.id.tv_date) TextView mTvDateHolder;
 
-    private ForecastViewHolderPresenter presenter;
-    private Data currData;
+    private ForecastViewHolderPresenter mPresenter;
+    private Data mCurrData;
 
     public ForecastViewHolder(View itemView) {
         super(itemView);
     }
 
     public void bind(final ArrayList<Data> data, final int position, final Location location) {
-        currData = data.get(position);
-        presenter = new ForecastViewHolderPresenter(currData);
+        mCurrData = data.get(position);
+        mPresenter = new ForecastViewHolderPresenter(mCurrData);
 
         setDate();
         setWeatherImage();
         setTemperature();
         setRainChance();
 
-        itemView.setOnClickListener(v -> context.startActivity(
-                ForecastPagerActivity.getIntent(context, location, data, position))
+        itemView.setOnClickListener(v -> mContext.startActivity(
+                ForecastPagerActivity.getIntent(mContext, location, data, position))
         );
     }
 
     private void setDate() {
-        tvDateHolder.setText(presenter.getDateFromTimestamp());
+        mTvDateHolder.setText(mPresenter.getDateFromTimestamp());
     }
 
     private void setWeatherImage() {
-        weatherImage.setImageDrawable(getDrawableByName(currData.getIcon()));
+        mWeatherImage.setImageDrawable(getDrawableByName(mCurrData.getIcon()));
     }
 
     private void setTemperature() {
-        tvTemperature.setText(presenter.getTemperature());
+        mTvTemperature.setText(mPresenter.getTemperature());
     }
 
     private void setRainChance() {
-        tvRainChance.setText(presenter.getRainChance());
+        mTvRainChance.setText(mPresenter.getRainChance());
     }
 
     private Drawable getDrawableByName(Data.Icon icon) {
 
-        return context.getResources().getDrawable(icon.getResourceId());
+        return mContext.getResources().getDrawable(icon.getResourceId());
     }
 }

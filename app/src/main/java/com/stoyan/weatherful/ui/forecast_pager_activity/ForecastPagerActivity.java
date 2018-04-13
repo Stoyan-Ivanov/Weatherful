@@ -21,11 +21,9 @@ import butterknife.BindView;
 
 public class ForecastPagerActivity extends BaseActivity  {
 
-    @BindView(R.id.toolbar_fragment_pager) Toolbar titleBar;
-    @BindView(R.id.view_pager) ViewPager viewPager;
-    @BindView(R.id.pageIndicatorView)
-    PageIndicatorView pageIndicatorView;
-
+    @BindView(R.id.toolbar_fragment_pager) Toolbar mToolbar;
+    @BindView(R.id.view_pager) ViewPager mViewPager;
+    @BindView(R.id.pageIndicatorView) PageIndicatorView mPageIndicatorView;
 
     private ForecastPagerActivityPresenter presenter;
 
@@ -51,29 +49,29 @@ public class ForecastPagerActivity extends BaseActivity  {
     }
 
     private void configureToolbar() {
-        setSupportActionBar(titleBar);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        titleBar.setNavigationOnClickListener(v -> finish());
+        mToolbar.setNavigationOnClickListener(v -> finish());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getSupportActionBar().setTitle(presenter.getHeader());
         }
     }
 
     private void configureViewPager() {
-        viewPager.setAdapter(new CustomPagerAdapter(getSupportFragmentManager(), presenter.getFragments()));
-        viewPager.setCurrentItem(presenter.getDefaultPosition());
-        viewPager.setOffscreenPageLimit(presenter.getOffScreenLimit());
-        pageIndicatorView.setCount(presenter.getFragments().size());
-        pageIndicatorView.setSelected(presenter.getDefaultPosition());
+        mViewPager.setAdapter(new CustomPagerAdapter(getSupportFragmentManager(), presenter.getFragments()));
+        mViewPager.setCurrentItem(presenter.getDefaultPosition());
+        mViewPager.setOffscreenPageLimit(presenter.getOffScreenLimit());
+        mPageIndicatorView.setCount(presenter.getFragments().size());
+        mPageIndicatorView.setSelected(presenter.getDefaultPosition());
 
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
             @Override
             public void onPageSelected(int position) {
-                pageIndicatorView.setSelected(position);
+                mPageIndicatorView.setSelected(position);
             }
 
             @Override

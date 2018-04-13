@@ -10,75 +10,75 @@ import com.stoyan.weatherful.network.models.forecast_summary_models.ForecastSumm
  */
 
 public class Location implements Parcelable {
-    private String locationName;
-    private String country;
-    private Coordinates coordinates;
-    private String imageUrl;
-    private ForecastSummaryResponse forecastSummary;
+    private String mLocationName;
+    private String mCountry;
+    private Coordinates mCoordinates;
+    private String mImageUrl;
+    private ForecastSummaryResponse mForecastSummary;
 
     public Location(String locationName, String country, double latitude, double longitude) {
-        this.locationName = locationName;
-        this.country = country;
-        this. coordinates = new Coordinates(latitude, longitude);
+        this.mLocationName = locationName;
+        this.mCountry = country;
+        this.mCoordinates = new Coordinates(latitude, longitude);
     }
 
     public Location(String locationName, String country, double latitude, double longitude
             , String imageUrl) {
 
         this(locationName, country, latitude, longitude);
-        this.imageUrl = imageUrl;
+        this.mImageUrl = imageUrl;
     }
 
     public Location(String locationName, String country, double latitude, double longitude
             , String imageUrl, ForecastSummaryResponse forecastSummary) {
 
         this(locationName, country, latitude, longitude, imageUrl);
-        this.forecastSummary = forecastSummary;
+        this.mForecastSummary = forecastSummary;
     }
 
 
     public String getLocationName() {
-        return locationName;
+        return mLocationName;
     }
 
     public String getCountry() {
-        return country;
+        return mCountry;
     }
 
     public double getLatitude() {
-        return coordinates.getLatitude();
+        return mCoordinates.getLatitude();
     }
 
     public double getLongitude() {
-        return coordinates.getLongitude();
+        return mCoordinates.getLongitude();
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        return mImageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+        this.mImageUrl = imageUrl;
     }
 
     public ForecastSummaryResponse getForecastSummary(){
-        return forecastSummary;
+        return mForecastSummary;
     }
 
     public void setForecastSummary(ForecastSummaryResponse forecastSummary) {
-        this.forecastSummary = forecastSummary;
+        this.mForecastSummary = forecastSummary;
     }
 
     @Override
     public String toString() {
-        return  locationName + ", " + country;
+        return  mLocationName + ", " + mCountry;
     }
 
     protected Location(Parcel in) {
-        locationName = in.readString();
-        country = in.readString();
-        coordinates = (Coordinates) in.readValue(Coordinates.class.getClassLoader());
-        imageUrl = in.readString();
+        mLocationName = in.readString();
+        mCountry = in.readString();
+        mCoordinates = (Coordinates) in.readValue(Coordinates.class.getClassLoader());
+        mImageUrl = in.readString();
     }
 
     @Override
@@ -88,10 +88,10 @@ public class Location implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(locationName);
-        dest.writeString(country);
-        dest.writeValue(coordinates);
-        dest.writeString(imageUrl);
+        dest.writeString(mLocationName);
+        dest.writeString(mCountry);
+        dest.writeValue(mCoordinates);
+        dest.writeString(mImageUrl);
     }
 
     @SuppressWarnings("unused")

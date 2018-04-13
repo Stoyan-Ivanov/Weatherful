@@ -17,10 +17,10 @@ import java.util.ArrayList;
  */
 
 public class LocationsRecyclerViewAdapter extends RecyclerView.Adapter<LocationViewHolder> {
-    private ArrayList<Location> locations = new ArrayList<>();
+    private ArrayList<Location> mLocations = new ArrayList<>();
 
     public LocationsRecyclerViewAdapter(ArrayList<Location> locations) {
-        this.locations = locations;
+        this.mLocations = locations;
     }
 
     @Override
@@ -32,18 +32,18 @@ public class LocationsRecyclerViewAdapter extends RecyclerView.Adapter<LocationV
     }
 
     public void onBindViewHolder(LocationViewHolder holder, int position) {
-        final Location location = locations.get(position);
+        final Location location = mLocations.get(position);
         holder.bind(location);
     }
 
     @Override
     public int getItemCount() {
-        return locations.size();
+        return mLocations.size();
     }
 
     public void removeItem(int position) {
-        locations.remove(position);
+        mLocations.remove(position);
         notifyItemRemoved(position);
-        notifyItemRangeChanged(position, locations.size());
+        notifyItemRangeChanged(position, mLocations.size());
     }
 }

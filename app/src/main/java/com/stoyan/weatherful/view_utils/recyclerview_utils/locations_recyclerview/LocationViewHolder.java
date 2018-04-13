@@ -47,7 +47,7 @@ public class LocationViewHolder extends BaseViewHolder {
     }
 
     private void setOnViewHolderClickListeners(final Location location) {
-        itemView.setOnClickListener(view -> ForecastActivity.getIntent(context, location));
+        itemView.setOnClickListener(view -> ForecastActivity.getIntent(mContext, location));
 
         itemView.setOnLongClickListener(view -> {
             mDataManager.deleteLocation(location);

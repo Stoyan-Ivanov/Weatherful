@@ -15,10 +15,10 @@ import java.util.ArrayList;
  */
 
 public class ForecastPagerActivityPresenter extends BasePresenter {
-    private ArrayList<Fragment> fragments;
-    private ArrayList<Data> data;
-    private Location location;
-    private int defaultPosition;
+    private ArrayList<Fragment> mFragments;
+    private ArrayList<Data> mData;
+    private Location mLocation;
+    private int mDefaultPosition;
 
     @Override
     protected void inject() {
@@ -26,9 +26,9 @@ public class ForecastPagerActivityPresenter extends BasePresenter {
     }
 
     private void getExtras(Intent intent) {
-        data = intent.getParcelableArrayListExtra(Constants.EXTRA_DATA);
-        location = intent.getParcelableExtra(Constants.EXTRA_LOCATION);
-        defaultPosition = intent.getIntExtra(Constants.EXTRA_POSITION, 0);
+        mData = intent.getParcelableArrayListExtra(Constants.EXTRA_DATA);
+        mLocation = intent.getParcelableExtra(Constants.EXTRA_LOCATION);
+        mDefaultPosition = intent.getIntExtra(Constants.EXTRA_POSITION, 0);
     }
 
     public void setExtras(Intent intent) {
@@ -36,30 +36,30 @@ public class ForecastPagerActivityPresenter extends BasePresenter {
     }
 
     public String getHeader() {
-        if(location != null) {
-            return location.toString();
+        if(mLocation != null) {
+            return mLocation.toString();
         } else {
             throw new NullPointerException();
         }
     }
 
     public int getOffScreenLimit() {
-        return fragments.isEmpty() ? 0: fragments.size() / 2;
+        return mFragments.isEmpty() ? 0: mFragments.size() / 2;
     }
 
 
     public int getDefaultPosition() {
-        return defaultPosition;
+        return mDefaultPosition;
     }
 
     public ArrayList<Fragment> getFragments() {
-        fragments = new ArrayList<>();
+        mFragments = new ArrayList<>();
 
-        for(Data singleDataElement: data) {
-            fragments.add(getNewFragment(singleDataElement));
+        for(Data singleDataElement: mData) {
+            mFragments.add(getNewFragment(singleDataElement));
         }
 
-        return fragments;
+        return mFragments;
     }
 
     private Fragment getNewFragment(Data singleDataElement) {

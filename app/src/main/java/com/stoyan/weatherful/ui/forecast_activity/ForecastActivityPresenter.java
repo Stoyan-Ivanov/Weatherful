@@ -23,9 +23,10 @@ import io.reactivex.functions.Consumer;
  */
 
 public class ForecastActivityPresenter extends BasePresenter<ForecastActivityContract>{
-    private Location location;
-    private ArrayList<Data> weeklyForecast;
+    private Location mLocation;
+    private ArrayList<Data> mWeeklyForecast;
 
+    @Inject RxBus mRxBus;
     @Inject DataManager mDataManager;
 
     @Override
@@ -34,7 +35,7 @@ public class ForecastActivityPresenter extends BasePresenter<ForecastActivityCon
     }
 
     private void subscribeToEventBus() {
-        addDisposable(RxBus.getInstance().toObservable()
+        addDisposable(mRxBus.toObservable()
                 .compose(RxUtils.applySchedulers())
                 .subscribe(event -> {
                     if(event instanceof NoInternetAvailableEvent) {
@@ -48,20 +49,20 @@ public class ForecastActivityPresenter extends BasePresenter<ForecastActivityCon
     }
 
     public String getHeader() {
-        return location.toString();
+        return mLocation.toString();
     }
 
     public void getExtras(Intent intent) {
-        location = intent.getParcelableExtra(Constants.EXTRA_LOCATION);
+        mLocation = intent.getParcelableExtra(Constants.EXTRA_LOCATION);
     }
 
     public String getImageUrl() {
-        return location.getImageUrl();
+        return mLocation.getImageUrl();
     }
 
     public void downloadWeeklyForecast() {
         subscribeToEventBus();
-        mDataManager.getWeeklyForecastObservable(location)
+        mDataManager.getWeeklyForecastObservable(mLocation)
                 .subscribe(getWeeklyForecastConsumer(), getErrorConsumer());
     }
 
@@ -71,18 +72,18 @@ public class ForecastActivityPresenter extends BasePresenter<ForecastActivityCon
 
     private Consumer<? super ArrayList<Data>> getWeeklyForecastConsumer() {
         return weeklyForecast -> {
-            this.weeklyForecast.clear();
-            this.weeklyForecast.addAll(weeklyForecast);
+            this.mWeeklyForecast.clear();
+            this.mWeeklyForecast.addAll(weeklyForecast);
             view.notifyDataSetChanged();
         };
     }
 
-    public Location getLocation() {
-        return location;
+    public Location getmLocation() {
+        return mLocation;
     }
 
-    public ArrayList<Data> getWeeklyForecast() {
-        weeklyForecast = new ArrayList<>();
-        return weeklyForecast;
+    public ArrayList<Data> getmWeeklyForecast() {
+        mWeeklyForecast = new ArrayList<>();
+        return mWeeklyForecast;
     }
 }

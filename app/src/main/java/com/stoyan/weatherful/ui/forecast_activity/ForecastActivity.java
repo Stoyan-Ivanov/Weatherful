@@ -24,11 +24,11 @@ import butterknife.BindView;
 
 public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> implements ForecastActivityContract {
 
-    @BindView(R.id.rv_forecast) RecyclerView recyclerView;
-    @BindView(R.id.iv_weekly_forecast_location) ImageView locationPicture;
-    @BindView(R.id.layout_missing_network) ConstraintLayout layoutMissingInternet;
-    @BindView(R.id.layout_weekly_forecast) RelativeLayout layoutWeeklyForecast;
-    @BindView(R.id.toolbar_collapsed) Toolbar toolbar;
+    @BindView(R.id.rv_forecast) RecyclerView mRecyclerView;
+    @BindView(R.id.iv_weekly_forecast_location) ImageView mLocationPicture;
+    @BindView(R.id.layout_missing_network) ConstraintLayout mLayoutMissingInternet;
+    @BindView(R.id.layout_weekly_forecast) RelativeLayout mLayoutWeeklyForecast;
+    @BindView(R.id.toolbar_collapsed) Toolbar mToolbar;
 
     public static void getIntent(Context context, Location location) {
         Intent starter = new Intent(context, ForecastActivity.class);
@@ -52,10 +52,10 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> im
     }
 
     private void configureToolbar() {
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        mToolbar.setNavigationOnClickListener(v -> finish());
         getSupportActionBar().setTitle(presenter.getHeader());
     }
 
@@ -64,20 +64,20 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> im
                 .load(presenter.getImageUrl())
                 .centerCrop()
                 .placeholder(R.drawable.cityscape)
-                .into(locationPicture);
+                .into(mLocationPicture);
     }
 
     private void configureRecyclerView() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerView.setAdapter(new ForecastRecyclerviewAdapter(presenter.getWeeklyForecast(), presenter.getLocation()));
-        recyclerView.addItemDecoration(new SpacesItemDecoration(getResources().getInteger(R.integer.viewholder_forecast_margin), SpacesItemDecoration.HORIZONTAL));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mRecyclerView.setAdapter(new ForecastRecyclerviewAdapter(presenter.getmWeeklyForecast(), presenter.getmLocation()));
+        mRecyclerView.addItemDecoration(new SpacesItemDecoration(getResources().getInteger(R.integer.viewholder_forecast_margin), SpacesItemDecoration.HORIZONTAL));
 
         presenter.downloadWeeklyForecast();
     }
 
     @Override
     public void notifyDataSetChanged(){
-        recyclerView.getAdapter().notifyDataSetChanged();
+        mRecyclerView.getAdapter().notifyDataSetChanged();
     }
 
     @Override
@@ -87,9 +87,9 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> im
 
     @Override
     public void showNoInternetView() {
-        if(layoutWeeklyForecast.getVisibility() == View.VISIBLE) {
-            layoutWeeklyForecast.setVisibility(View.GONE);
-            layoutMissingInternet.setVisibility(View.VISIBLE);
+        if(mLayoutWeeklyForecast.getVisibility() == View.VISIBLE) {
+            mLayoutWeeklyForecast.setVisibility(View.GONE);
+            mLayoutMissingInternet.setVisibility(View.VISIBLE);
         }
     }
 }

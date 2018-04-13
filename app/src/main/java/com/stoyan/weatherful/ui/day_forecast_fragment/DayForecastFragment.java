@@ -20,15 +20,15 @@ import butterknife.BindView;
 
 public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresenter> implements BaseViewContract {
 
-    @BindView(R.id.iv_fragment_weather_image) ImageView weatherImage;
-    @BindView(R.id.tv_fragment_date) TextView tvDate;
-    @BindView(R.id.tv_fragment_temp) TextView tvTemperature;
-    @BindView(R.id.tv_fragment_wind_speed) TextView tvWindSpeed;
-    @BindView(R.id.tv_fragment_rain_chance) TextView tvRainChance;
-    @BindView(R.id.tv_fragment_humidity) TextView tvHumidity;
-    @BindView(R.id.tv_fragment_forecast_summary) TextView tvForecastSummary;
-    @BindView(R.id.tv_fragment_sunrise) TextView tvSunrise;
-    @BindView(R.id.tv_fragment_sunset) TextView tvSunset;
+    @BindView(R.id.iv_fragment_weather_image) ImageView mWeatherImage;
+    @BindView(R.id.tv_fragment_date) TextView mTvDate;
+    @BindView(R.id.tv_fragment_temp) TextView mTvTemperature;
+    @BindView(R.id.tv_fragment_wind_speed) TextView mTvWindSpeed;
+    @BindView(R.id.tv_fragment_rain_chance) TextView mTvRainChance;
+    @BindView(R.id.tv_fragment_humidity) TextView mTvHumidity;
+    @BindView(R.id.tv_fragment_forecast_summary) TextView mTvForecastSummary;
+    @BindView(R.id.tv_fragment_sunrise) TextView mTvSunrise;
+    @BindView(R.id.tv_fragment_sunset) TextView mTvSunset;
 
     public static DayForecastFragment newInstance(Data data) {
         Bundle arguments = new Bundle();
@@ -53,14 +53,14 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresent
         presenter = new DayForecastFragmentPresenter(getArguments(), this);
         presenter.setView(this);
 
-        weatherImage.setImageDrawable(presenter.getImageDrawable());
-        tvDate.setText(presenter.getDate());
-        tvTemperature.setText(presenter.getTemperature());
-        tvWindSpeed.setText(presenter.getWindSpeed());
-        tvRainChance.setText(presenter.getRainChance());
-        tvHumidity.setText(presenter.getHumidity());
-        tvForecastSummary.setText(presenter.getForecastSummary());
-        tvSunrise.setText(presenter.getSunriseTime());
-        tvSunset.setText(presenter.getSunsetTime());
+        mWeatherImage.setImageDrawable(presenter.getImageDrawable());
+        mTvDate.setText(presenter.getDate());
+        mTvTemperature.setText(presenter.getTemperature());
+        mTvWindSpeed.setText(presenter.getWindSpeed());
+        mTvRainChance.setText(presenter.getRainChance());
+        mTvHumidity.setText(presenter.getHumidity());
+        mTvForecastSummary.setText(presenter.getForecastSummary());
+        mTvSunrise.setText(presenter.getSunriseTime());
+        mTvSunset.setText(presenter.getSunsetTime());
     }
 }

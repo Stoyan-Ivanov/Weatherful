@@ -8,25 +8,25 @@ import android.os.Parcelable;
  */
 
 public class Coordinates implements Parcelable {
-    private double latitude;
-    private double longitude;
+    private double mLatitude;
+    private double mLongitude;
 
     public Coordinates(double latitude, double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.mLatitude = latitude;
+        this.mLongitude = longitude;
     }
 
     public double getLatitude() {
-        return latitude;
+        return mLatitude;
     }
 
     public double getLongitude() {
-        return longitude;
+        return mLongitude;
     }
 
     protected Coordinates(Parcel in) {
-        latitude = in.readDouble();
-        longitude = in.readDouble();
+        mLatitude = in.readDouble();
+        mLongitude = in.readDouble();
     }
 
     @Override
@@ -36,8 +36,8 @@ public class Coordinates implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeDouble(latitude);
-        dest.writeDouble(longitude);
+        dest.writeDouble(mLatitude);
+        dest.writeDouble(mLongitude);
     }
 
     @SuppressWarnings("unused")

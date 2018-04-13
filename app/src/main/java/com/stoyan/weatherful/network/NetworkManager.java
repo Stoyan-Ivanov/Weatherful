@@ -19,8 +19,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 @Singleton
 public class NetworkManager {
-    private WeatherfulAPI weatherfulAPI;
-    private QwantAPI qwantAPI;
+    private WeatherfulAPI mWeatherfulAPI;
+    private QwantAPI mQwantAPI;
 
     @Inject
     public NetworkManager(OkHttpClient client) {
@@ -32,7 +32,7 @@ public class NetworkManager {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
-        weatherfulAPI = weatherfulRetrofit.create(WeatherfulAPI.class);
+        mWeatherfulAPI = weatherfulRetrofit.create(WeatherfulAPI.class);
 
         Retrofit qwantRetrofit = new Retrofit.Builder()
                 .baseUrl(Constants.IMAGE_SERVICE_URL)
@@ -41,7 +41,7 @@ public class NetworkManager {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
-        qwantAPI = qwantRetrofit.create(QwantAPI.class);
+        mQwantAPI = qwantRetrofit.create(QwantAPI.class);
     }
 
     public boolean isNetworkAvailable() {
@@ -54,10 +54,10 @@ public class NetworkManager {
     }
 
     public WeatherfulAPI getWeatherfulAPI() {
-        return weatherfulAPI;
+        return mWeatherfulAPI;
     }
 
     public QwantAPI getQwantAPI() {
-        return qwantAPI;
+        return mQwantAPI;
     }
 }

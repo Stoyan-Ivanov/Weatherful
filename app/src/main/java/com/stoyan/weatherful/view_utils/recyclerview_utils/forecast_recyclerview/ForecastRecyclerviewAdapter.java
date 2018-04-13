@@ -16,12 +16,12 @@ import java.util.ArrayList;
  */
 
 public class ForecastRecyclerviewAdapter extends RecyclerView.Adapter<ForecastViewHolder> {
-    private ArrayList<Data> weeklyForecast;
-    private Location location;
+    private ArrayList<Data> mWeeklyForecast;
+    private Location mLocation;
 
     public ForecastRecyclerviewAdapter(ArrayList<Data> weeklyForecast, Location location) {
-        this.location = location;
-        this.weeklyForecast = weeklyForecast;
+        this.mLocation = location;
+        this.mWeeklyForecast = weeklyForecast;
     }
 
     @Override
@@ -34,11 +34,11 @@ public class ForecastRecyclerviewAdapter extends RecyclerView.Adapter<ForecastVi
 
     @Override
     public void onBindViewHolder(ForecastViewHolder holder, int position) {
-        holder.bind(weeklyForecast, position, location);
+        holder.bind(mWeeklyForecast, position, mLocation);
     }
 
     @Override
     public int getItemCount() {
-        return weeklyForecast.size();
+        return mWeeklyForecast.size();
     }
 }

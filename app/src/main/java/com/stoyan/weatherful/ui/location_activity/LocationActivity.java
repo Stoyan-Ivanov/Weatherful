@@ -28,13 +28,13 @@ import io.fabric.sdk.android.Fabric;
 public class LocationActivity extends BaseActivity<LocationActivityPresenter> implements LocationActivityContract{
 
 
-    @BindView(R.id.recyclerview) RecyclerView recyclerView;
-    @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.progressBar_loading) ProgressBar loadingBar;
-    @BindView(R.id.layout_loading) ConstraintLayout layoutLoading;
-    @BindView(R.id.layout_locations) RelativeLayout layoutLocations;
-    @BindView(R.id.layout_missing_network) ConstraintLayout layoutMissingNetwork;
-    @BindView(R.id.toolbar_locations) Toolbar toolbar;
+    @BindView(R.id.recyclerview) RecyclerView mRecyclerView;
+    @BindView(R.id.swipe_refresh) SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.progressBar_loading) ProgressBar mProgressBar;
+    @BindView(R.id.layout_loading) ConstraintLayout mLayoutLoading;
+    @BindView(R.id.layout_locations) RelativeLayout mLayoutLocations;
+    @BindView(R.id.layout_missing_network) ConstraintLayout mLayoutMissingNetwork;
+    @BindView(R.id.toolbar_locations) Toolbar mToolbar;
 
     private static int LOADING_SCREEN_TIME = 2000;
 
@@ -56,9 +56,9 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
         presenter = new LocationActivityPresenter();
         presenter.setView(this);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new LocationsRecyclerViewAdapter(presenter.getLocations()));
-        recyclerView.addItemDecoration(new SpacesItemDecoration(getResources()
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(new LocationsRecyclerViewAdapter(presenter.getLocations()));
+        mRecyclerView.addItemDecoration(new SpacesItemDecoration(getResources()
                 .getInteger(R.integer.viewholder_forecast_margin), SpacesItemDecoration.VERTICAL));
 
         presenter.downloadData();
@@ -68,26 +68,26 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
     }
 
     private void configureSwipeRefreshLayout() {
-        swipeRefreshLayout.setOnRefreshListener(() -> {
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
             presenter.downloadData();
-            if(swipeRefreshLayout.isRefreshing()) {
-                swipeRefreshLayout.setRefreshing(false);
+            if(mSwipeRefreshLayout.isRefreshing()) {
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }
 
     private void configureSplashScreen() {
-        new Handler().postDelayed(() -> layoutLoading.setVisibility(View.GONE), LOADING_SCREEN_TIME);
+        new Handler().postDelayed(() -> mLayoutLoading.setVisibility(View.GONE), LOADING_SCREEN_TIME);
     }
 
     private void configureToolbar() {
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(R.string.location_activity_header);
     }
 
     @Override
     public void notifyDataSetChanged() {
-        recyclerView.getAdapter().notifyDataSetChanged();
+        mRecyclerView.getAdapter().notifyDataSetChanged();
     }
 
     @Override
@@ -102,9 +102,9 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
 
     @Override
     public void showNoInternetView() {
-        if(layoutLocations.getVisibility() == View.VISIBLE) {
-            layoutLocations.setVisibility(View.GONE);
-            layoutMissingNetwork.setVisibility(View.VISIBLE);
+        if(mLayoutLocations.getVisibility() == View.VISIBLE) {
+            mLayoutLocations.setVisibility(View.GONE);
+            mLayoutMissingNetwork.setVisibility(View.VISIBLE);
         }
     }
 }
