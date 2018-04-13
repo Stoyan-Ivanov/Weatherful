@@ -18,17 +18,18 @@ import io.reactivex.Observable;
  */
 @Singleton
 public class DataManager {
-
     private static final String URL_PREFIX = "https:";
     private final NetworkManager mNetworkManager;
+    private final LocationsProvider mLocationprovider;
 
     @Inject
-    public DataManager(final NetworkManager networkManager){
+    public DataManager(final NetworkManager networkManager, final LocationsProvider locationprovider){
         mNetworkManager = networkManager;
+        mLocationprovider = locationprovider;
     }
 
     public Observable<ArrayList<Location>> getLocationDataObservable() {
-        return Observable.just(LocationsProvider.getInstance().getLocations())
+        return Observable.just(mLocationprovider.getLocations())
                 .flatMapIterable(locations -> locations)
                 .flatMap(this::downloadLocationImage)
                 .flatMap(this::downloadForecastSummary)
@@ -49,7 +50,7 @@ public class DataManager {
                     .map(Picture::getThumbnailUrl)
                     .map(s -> {
                         location.setImageUrl(URL_PREFIX + s);
-                        LocationsProvider.getInstance().updateLocation(location);
+                        mLocationprovider.updateLocation(location);
                         return location;
                     }).toObservable();
         }

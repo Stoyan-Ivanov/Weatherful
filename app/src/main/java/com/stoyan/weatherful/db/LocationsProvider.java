@@ -6,6 +6,9 @@ import com.stoyan.weatherful.WeatherfulApplication;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.paperdb.Paper;
 
 import static io.paperdb.Paper.book;
@@ -14,18 +17,12 @@ import static io.paperdb.Paper.book;
  * Created by Stoyan on 27.1.2018 г..
  */
 
+@Singleton
 public class LocationsProvider implements LocationsProviderContract {
-    private static LocationsProvider instance;
 
-    private LocationsProvider() {
+    @Inject
+    public LocationsProvider() {
         Paper.init(WeatherfulApplication.getStaticContext());
-    }
-
-    public static LocationsProvider getInstance() {
-        if(instance == null) {
-            instance = new LocationsProvider();
-        }
-        return instance;
     }
 
     @Override

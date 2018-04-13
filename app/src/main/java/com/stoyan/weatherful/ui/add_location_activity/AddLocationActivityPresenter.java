@@ -12,11 +12,14 @@ import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
 import java.io.IOException;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by Stoyan on 28.1.2018 г..
  */
 
 public class AddLocationActivityPresenter extends BasePresenter<AddLocationActivityContract> {
+    @Inject LocationsProvider mLocationProvider;
 
     @Override
     protected void inject() {
@@ -49,7 +52,7 @@ public class AddLocationActivityPresenter extends BasePresenter<AddLocationActiv
     }
 
     private void prepareLocationForSaving(Location location) {
-        if(LocationsProvider.getInstance().saveLocation(location)) {
+        if(mLocationProvider.saveLocation(location)) {
             WeatherfulApplication.showToast(WeatherfulApplication.getStringFromId(R.string.successful_adding));
             view.startNewLocationsActivity();
         }

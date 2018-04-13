@@ -12,6 +12,8 @@ import com.stoyan.weatherful.WeatherfulApplication;
 import com.stoyan.weatherful.ui.forecast_activity.ForecastActivity;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.BaseViewHolder;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 
 /**
@@ -25,12 +27,12 @@ public class LocationViewHolder extends BaseViewHolder {
     @BindView(R.id.tv_location_summary) TextView tvForecastSummary;
     @BindView(R.id.tv_location_temperature) TextView tvTemperature;
 
+    @Inject LocationsProvider mLocationProvider;
     private LocationsRecyclerViewAdapter adapter;
 
     public LocationViewHolder(View itemView, LocationsRecyclerViewAdapter adapter) {
         super(itemView);
         this.adapter = adapter;
-        itemView.getBackground().setAlpha(50);
     }
 
     public void bind(final Location location) {
@@ -47,7 +49,7 @@ public class LocationViewHolder extends BaseViewHolder {
         itemView.setOnClickListener(view -> ForecastActivity.getIntent(context, location));
 
         itemView.setOnLongClickListener(view -> {
-            LocationsProvider.getInstance().deleteLocation(location);
+            mLocationProvider.deleteLocation(location);
             removeItem();
             return false;
         });
