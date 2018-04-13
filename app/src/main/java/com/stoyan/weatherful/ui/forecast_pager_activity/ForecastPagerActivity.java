@@ -65,6 +65,7 @@ public class ForecastPagerActivity extends BaseActivity  {
         viewPager.setCurrentItem(presenter.getDefaultPosition());
         viewPager.setOffscreenPageLimit(presenter.getOffScreenLimit());
         pageIndicatorView.setCount(presenter.getFragments().size());
+        pageIndicatorView.setSelected(presenter.getDefaultPosition());
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
