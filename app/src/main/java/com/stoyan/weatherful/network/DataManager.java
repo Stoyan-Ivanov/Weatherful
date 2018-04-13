@@ -1,28 +1,30 @@
 package com.stoyan.weatherful.network;
 
-import com.stoyan.weatherful.rx.RxUtils;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.db.LocationsProvider;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.network.models.image_response_models.Picture;
+import com.stoyan.weatherful.rx.RxUtils;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 
 /**
  * Created by stoyan.ivanov2 on 3/28/2018.
  */
-
+@Singleton
 public class DataManager {
-    private static DataManager instance;
-    private static final String URL_PREFIX = "https:";
 
-    public static DataManager getInstance() {
-        if(instance == null) {
-            instance = new DataManager();
-        }
-        return instance;
+    private static final String URL_PREFIX = "https:";
+    private final NetworkManager mNetworkManager;
+
+    @Inject
+    public DataManager(final NetworkManager networkManager){
+        mNetworkManager = networkManager;
     }
 
     public Observable<ArrayList<Location>> getLocationDataObservable() {
@@ -37,8 +39,7 @@ public class DataManager {
 
     private Observable<Location> downloadLocationImage(Location location) {
         if(location.getImageUrl() == null) {
-           return NetworkManager
-                    .getInstance()
+           return mNetworkManager
                     .getQwantAPI()
                     .getLocationImage(location.toString())
                     .compose(RxUtils.applySchedulers())
@@ -56,8 +57,7 @@ public class DataManager {
     }
 
     private Observable<Location> downloadForecastSummary(Location location) {
-        return NetworkManager
-                .getInstance()
+        return mNetworkManager
                 .getWeatherfulAPI()
                 .getForecastSummaryResponse(location.getLatitude(), location.getLongitude())
                 .compose(RxUtils.applySchedulers())
@@ -68,8 +68,7 @@ public class DataManager {
     }
 
     public Observable<ArrayList<Data>> getWeeklyForecastObservable(Location location) {
-        return NetworkManager
-                .getInstance()
+        return mNetworkManager
                 .getWeatherfulAPI()
                 .getFullForecastResponse(location.getLatitude(), location.getLongitude())
                 .compose(RxUtils.applySchedulers())

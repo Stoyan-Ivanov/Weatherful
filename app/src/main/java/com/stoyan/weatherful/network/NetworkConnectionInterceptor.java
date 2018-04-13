@@ -12,15 +12,20 @@ import okhttp3.Response;
 
 public abstract class NetworkConnectionInterceptor implements Interceptor {
 
+    //@Inject NetworkManager mNetworkManager;
+
     public abstract void onInternetUnavailable();
+
+    public NetworkConnectionInterceptor(){
+    }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
 
-        if(!NetworkManager.getInstance().isNetworkAvailable()) {
-            onInternetUnavailable();
-        }
+//        if (mNetworkManager.isNetworkAvailable()) {
+//            onInternetUnavailable();
+//        }
         return chain.proceed(request);
     }
 }

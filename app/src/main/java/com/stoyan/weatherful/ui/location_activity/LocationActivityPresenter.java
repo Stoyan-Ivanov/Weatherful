@@ -9,6 +9,8 @@ import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import io.reactivex.functions.Consumer;
 
 
@@ -19,11 +21,18 @@ import io.reactivex.functions.Consumer;
 public class LocationActivityPresenter extends BasePresenter<LocationActivityContract> {
     private ArrayList<Location> locations;
 
+    @Inject DataManager mDataManager;
+
+    @Override
+    protected void inject() {
+        getPresenterComponent().inject(this);
+    }
+
     private void subscribeToEventBus() {
         addDisposable(RxBus.getInstance().toObservable()
                 .compose(RxUtils.applySchedulers())
                 .subscribe(event -> {
-                    if(event instanceof NoInternetAvailableEvent) {
+                    if (event instanceof NoInternetAvailableEvent) {
                         view.showNoInternetView();
                     }
                 }));
@@ -35,7 +44,7 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
 
     public void downloadData() {
         subscribeToEventBus();
-        addDisposable(DataManager.getInstance().getLocationDataObservable()
+        addDisposable(mDataManager.getLocationDataObservable()
                 .subscribe(getLocationConsumer(), getErrorConsumer())
         );
     }

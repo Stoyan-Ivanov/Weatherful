@@ -14,6 +14,8 @@ import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import io.reactivex.functions.Consumer;
 
 /**
@@ -23,6 +25,13 @@ import io.reactivex.functions.Consumer;
 public class ForecastActivityPresenter extends BasePresenter<ForecastActivityContract>{
     private Location location;
     private ArrayList<Data> weeklyForecast;
+
+    @Inject DataManager mDataManager;
+
+    @Override
+    protected void inject() {
+        getPresenterComponent().inject(this);
+    }
 
     private void subscribeToEventBus() {
         addDisposable(RxBus.getInstance().toObservable()
@@ -52,7 +61,7 @@ public class ForecastActivityPresenter extends BasePresenter<ForecastActivityCon
 
     public void downloadWeeklyForecast() {
         subscribeToEventBus();
-        DataManager.getInstance().getWeeklyForecastObservable(location)
+        mDataManager.getWeeklyForecastObservable(location)
                 .subscribe(getWeeklyForecastConsumer(), getErrorConsumer());
     }
 

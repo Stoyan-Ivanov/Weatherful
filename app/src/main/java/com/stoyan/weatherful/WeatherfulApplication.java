@@ -14,7 +14,7 @@ import com.stoyan.weatherful.di.DaggerAppComponent;
  */
 
 public class WeatherfulApplication extends Application  {
-    WeatherfulApplication application;
+    private static WeatherfulApplication application;
     private static Context applicationContext;
     AppComponent appComponent;
 
@@ -22,7 +22,12 @@ public class WeatherfulApplication extends Application  {
     public void onCreate() {
         super.onCreate();
         //applicationContext = application.getApplicationContext();
+        application = this;
         applicationContext = getBaseContext();
+    }
+
+    public static WeatherfulApplication getInstance(){
+        return application;
     }
 
     public static void showToast(String text) {
