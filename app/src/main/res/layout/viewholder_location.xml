@@ -61,9 +61,11 @@
             android:layout_height="wrap_content"
 
             android:layout_margin="@dimen/tv_location_summary_margin"
-            android:gravity="center"
 
+
+            android:gravity="center"
             android:textSize="@dimen/small_text"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_location"
             app:layout_constraintTop_toBottomOf="@+id/tv_location_temperature" />

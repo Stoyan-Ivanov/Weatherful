@@ -9,21 +9,20 @@ import com.stoyan.weatherful.di.AppComponent;
 import com.stoyan.weatherful.di.AppModule;
 import com.stoyan.weatherful.di.DaggerAppComponent;
 
-import javax.inject.Inject;
-
 /**
  * Created by Stoyan on 27.1.2018 г..
  */
 
 public class WeatherfulApplication extends Application  {
-    @Inject WeatherfulApplication application;
+    WeatherfulApplication application;
     private static Context applicationContext;
     AppComponent appComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        applicationContext = application.getApplicationContext();
+        //applicationContext = application.getApplicationContext();
+        applicationContext = getBaseContext();
     }
 
     public static void showToast(String text) {
