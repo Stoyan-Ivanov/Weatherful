@@ -3,6 +3,7 @@ package com.stoyan.weatherful.ui.forecast_pager_activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import com.stoyan.weatherful.Constants;
+import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
 import com.stoyan.weatherful.ui.day_forecast_fragment.DayForecastFragment;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
@@ -13,11 +14,16 @@ import java.util.ArrayList;
  * Created by Stoyan on 28.1.2018 г..
  */
 
-public class ForecastPagerActivityPresenter {
+public class ForecastPagerActivityPresenter extends BasePresenter {
     private ArrayList<Fragment> fragments;
     private ArrayList<Data> data;
     private Location location;
     private int defaultPosition;
+
+    @Override
+    protected void inject() {
+        getPresenterComponent().inject(this);
+    }
 
     private void getExtras(Intent intent) {
         data = intent.getParcelableArrayListExtra(Constants.EXTRA_DATA);

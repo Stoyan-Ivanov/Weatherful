@@ -26,6 +26,10 @@ public class DayForecastFragmentPresenter extends BasePresenter<BaseViewContract
     private final int PERCENT_MULTIPLIER = 100;
     private final int TIME_MULTIPLIER = 1000;
 
+    @Override
+    protected void inject() {
+        getPresenterComponent().inject(this);
+    }
 
     public DayForecastFragmentPresenter(final Bundle arguments, BaseViewContract view) {
         getExtras(arguments);

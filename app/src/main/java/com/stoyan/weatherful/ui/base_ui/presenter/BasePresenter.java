@@ -11,7 +11,7 @@ import io.reactivex.disposables.Disposable;
  * Created by stoyan.ivanov2 on 3/27/2018.
  */
 
-public class BasePresenter<V extends BaseViewContract> implements BasePresenterContract {
+public abstract class BasePresenter<V extends BaseViewContract> implements BasePresenterContract {
     protected V view;
     private CompositeDisposable disposables;
 
@@ -21,8 +21,7 @@ public class BasePresenter<V extends BaseViewContract> implements BasePresenterC
         inject();
     }
 
-    protected void inject() {
-    }
+    protected abstract void inject();
 
     public void addDisposable(Disposable disposable) {
         disposables.add(disposable);

@@ -4,10 +4,10 @@ import android.location.Address;
 import android.location.Geocoder;
 
 import com.stoyan.weatherful.R;
-import com.stoyan.weatherful.db.LocationsProvider;
-import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.WeatherfulApplication;
-import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenterContract;
+import com.stoyan.weatherful.db.Location;
+import com.stoyan.weatherful.db.LocationsProvider;
+import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,11 +16,11 @@ import java.util.List;
  * Created by Stoyan on 28.1.2018 г..
  */
 
-public class AddLocationActivityPresenter implements BasePresenterContract {
-    private AddLocationActivityContract view;
+public class AddLocationActivityPresenter extends BasePresenter<AddLocationActivityContract> {
 
-    public AddLocationActivityPresenter(AddLocationActivityContract view) {
-        this.view = view;
+    @Override
+    protected void inject() {
+        getPresenterComponent().inject(this);
     }
 
     public void addNewLocation(String cityName, String countryName) {
@@ -53,7 +53,6 @@ public class AddLocationActivityPresenter implements BasePresenterContract {
             WeatherfulApplication.showToast(WeatherfulApplication.getStringFromId(R.string.successful_adding));
             view.startNewLocationsActivity();
         }
-
     }
 
     private boolean checkIfDataIsCorrect(String cityName, String countryName) {
@@ -62,10 +61,5 @@ public class AddLocationActivityPresenter implements BasePresenterContract {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public void onViewDestroy() {
-        view = null;
     }
 }
