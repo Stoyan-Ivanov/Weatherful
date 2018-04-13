@@ -6,7 +6,7 @@ import android.location.Geocoder;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.WeatherfulApplication;
 import com.stoyan.weatherful.db.Location;
-import com.stoyan.weatherful.db.LocationsProvider;
+import com.stoyan.weatherful.network.DataManager;
 import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
 
 import java.io.IOException;
@@ -19,7 +19,7 @@ import javax.inject.Inject;
  */
 
 public class AddLocationActivityPresenter extends BasePresenter<AddLocationActivityContract> {
-    @Inject LocationsProvider mLocationProvider;
+    @Inject DataManager mDataManager;
 
     @Override
     protected void inject() {
@@ -52,14 +52,16 @@ public class AddLocationActivityPresenter extends BasePresenter<AddLocationActiv
     }
 
     private void prepareLocationForSaving(Location location) {
-        if(mLocationProvider.saveLocation(location)) {
+        if(mDataManager.saveLocation(location)) {
             WeatherfulApplication.showToast(WeatherfulApplication.getStringFromId(R.string.successful_adding));
             view.startNewLocationsActivity();
         }
     }
 
     private boolean checkIfDataIsCorrect(String cityName, String countryName) {
-        if(cityName.equals("") || countryName.equals("")) {
+        final String EMPTY_STRING = "";
+
+        if(cityName.equals(EMPTY_STRING) || countryName.equals(EMPTY_STRING)) {
             WeatherfulApplication.showToast(WeatherfulApplication.getStringFromId(R.string.invalid_input));
             return false;
         }

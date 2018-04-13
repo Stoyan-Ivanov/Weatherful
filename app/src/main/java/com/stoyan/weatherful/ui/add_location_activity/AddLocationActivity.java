@@ -16,9 +16,9 @@ import butterknife.OnClick;
 
 public class AddLocationActivity extends BaseActivity<AddLocationActivityPresenter> implements AddLocationActivityContract {
 
-    @BindView(R.id.et_city) EditText etCityName;
-    @BindView(R.id.et_country) EditText etCountryName;
-    @BindView(R.id.toolbar_add) Toolbar titleBar;
+    @BindView(R.id.et_city) EditText mEtCityName;
+    @BindView(R.id.et_country) EditText mEtCountryName;
+    @BindView(R.id.toolbar_add) Toolbar mTitleBar;
 
     private AddLocationActivityPresenter presenter;
 
@@ -28,8 +28,8 @@ public class AddLocationActivity extends BaseActivity<AddLocationActivityPresent
 
     @OnClick(R.id.btn_done_adding)
         void addLocation() {
-        presenter.addNewLocation(etCityName.getText().toString(),
-                etCountryName.getText().toString());
+        presenter.addNewLocation(mEtCityName.getText().toString(),
+                mEtCountryName.getText().toString());
     }
 
     @Override
@@ -40,10 +40,10 @@ public class AddLocationActivity extends BaseActivity<AddLocationActivityPresent
         presenter = new AddLocationActivityPresenter();
         presenter.setView(this);
 
-        setSupportActionBar(titleBar);
+        setSupportActionBar(mTitleBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        titleBar.setNavigationOnClickListener(v -> finish());
+        mTitleBar.setNavigationOnClickListener(v -> finish());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getSupportActionBar().setTitle(getString(R.string.add_location_activity_header));
