@@ -89,7 +89,7 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
 
     @Override
     public void showError(Throwable throwable) {
-        Log.d("SII", "showError: " + throwable.getMessage());
+        Log.d("SII", "showError: Location Activity" + throwable.getMessage());
     }
 
     @Override

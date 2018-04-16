@@ -81,9 +81,11 @@ public class LocationsProvider implements LocationsProviderContract {
     }
 
     public void deleteLocation(Location location) {
-        Paper.book().delete(location.getLocationName() + location.getCountry());
-        WeatherfulApplication.showToast(
-                WeatherfulApplication.getStringFromId(R.string.successful_deleting));
+        if(checkIfLocationExists(location)) {
+            Paper.book().delete(location.getLocationName() + location.getCountry());
+            WeatherfulApplication.showToast(
+                    WeatherfulApplication.getStringFromId(R.string.successful_deleting));
+        }
     }
 
     private boolean checkIfLocationExists(Location location) {

@@ -13,7 +13,7 @@ public class Location implements Parcelable {
     private String mLocationName;
     private String mCountry;
     private Coordinates mCoordinates;
-    private String mImageUrl;
+    private Image mImage;
     private ForecastSummaryResponse mForecastSummary;
 
     public Location(String locationName, String country, double latitude, double longitude) {
@@ -23,16 +23,16 @@ public class Location implements Parcelable {
     }
 
     public Location(String locationName, String country, double latitude, double longitude
-            , String imageUrl) {
+            , String thumbnailUrl, String fullImageUrl) {
 
         this(locationName, country, latitude, longitude);
-        this.mImageUrl = imageUrl;
+        this.mImage = new Image(thumbnailUrl, fullImageUrl);
     }
 
     public Location(String locationName, String country, double latitude, double longitude
-            , String imageUrl, ForecastSummaryResponse forecastSummary) {
+            , String thumbnailUrl, String fullImageUrl, ForecastSummaryResponse forecastSummary) {
 
-        this(locationName, country, latitude, longitude, imageUrl);
+        this(locationName, country, latitude, longitude, thumbnailUrl, fullImageUrl);
         this.mForecastSummary = forecastSummary;
     }
 
@@ -53,12 +53,26 @@ public class Location implements Parcelable {
         return mCoordinates.getLongitude();
     }
 
-    public String getImageUrl() {
-        return mImageUrl;
+    public String getThumbnailUrl() {
+        return mImage == null? null: mImage.getThumbnailUrl();
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.mImageUrl = imageUrl;
+    public void setThumbnailUrl(String thumbnailUrl) {
+        if(mImage == null) {
+            mImage = new Image();
+        }
+        mImage.setThumbnailUrl(thumbnailUrl);
+    }
+
+    public String getFullImageUrl() {
+        return mImage == null? null: mImage.getFullImageUrl();
+    }
+
+    public void setFullImageUrl(String fullImageUrl) {
+        if(mImage == null) {
+            mImage = new Image();
+        }
+        mImage.setFullImageUrl(fullImageUrl);
     }
 
     public ForecastSummaryResponse getForecastSummary(){
@@ -78,7 +92,7 @@ public class Location implements Parcelable {
         mLocationName = in.readString();
         mCountry = in.readString();
         mCoordinates = (Coordinates) in.readValue(Coordinates.class.getClassLoader());
-        mImageUrl = in.readString();
+        mImage = (Image) in.readValue(Image.class.getClassLoader());;
     }
 
     @Override
@@ -91,7 +105,7 @@ public class Location implements Parcelable {
         dest.writeString(mLocationName);
         dest.writeString(mCountry);
         dest.writeValue(mCoordinates);
-        dest.writeString(mImageUrl);
+        dest.writeValue(mImage);
     }
 
     @SuppressWarnings("unused")

@@ -10,9 +10,11 @@ public class Picture {
 
     @SerializedName("thumbnail")
     private String thumbnailUrl;
+    @SerializedName("media_fullsize")
+    private String fullSizeImageUrl;
 
-    public Picture(String thumbnailUrl ) {
-        this.thumbnailUrl = thumbnailUrl;
+    public String getFullSizeImageUrl() {
+        return fullSizeImageUrl;
     }
 
     public String getThumbnailUrl() {

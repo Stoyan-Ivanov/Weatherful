@@ -6,13 +6,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.stoyan.weatherful.R;
-import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.WeatherfulApplication;
-import com.stoyan.weatherful.network.DataManager;
+import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.ui.forecast_activity.ForecastActivity;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.BaseViewHolder;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 
@@ -27,7 +24,6 @@ public class LocationViewHolder extends BaseViewHolder {
     @BindView(R.id.tv_location_summary) TextView tvForecastSummary;
     @BindView(R.id.tv_location_temperature) TextView tvTemperature;
 
-    @Inject DataManager mDataManager;
     private LocationsRecyclerViewAdapter mAdapter;
     private final int FIRST = 0;
 
@@ -39,7 +35,7 @@ public class LocationViewHolder extends BaseViewHolder {
     public void bind(final Location location) {
 
         tvLocationName.setText(location.getLocationName());
-        setLocationPicture(location.getImageUrl());
+        setLocationPicture(location.getThumbnailUrl());
         setForecastSummary(location.getForecastSummary().getHourly().getSummary());
         setTemperature(location.getForecastSummary().getHourly().getData().get(FIRST).getTemperature());
 
@@ -50,14 +46,9 @@ public class LocationViewHolder extends BaseViewHolder {
         itemView.setOnClickListener(view -> ForecastActivity.getIntent(mContext, location));
 
         itemView.setOnLongClickListener(view -> {
-            mDataManager.deleteLocation(location);
-            removeItem();
+            mAdapter.removeItem(getAdapterPosition(), location);
             return false;
         });
-    }
-
-    private void removeItem() {
-        mAdapter.removeItem(getAdapterPosition());
     }
 
     public void setLocationPicture(String url) {

@@ -5,7 +5,6 @@ import android.util.Log;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.db.LocationsProvider;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
-import com.stoyan.weatherful.network.models.image_response_models.Picture;
 import com.stoyan.weatherful.rx.RxUtils;
 
 import java.util.ArrayList;
@@ -25,13 +24,12 @@ public class DataManager {
     private final LocationsProvider mLocationProvider;
 
     @Inject
-    public DataManager(final NetworkManager networkManager, final LocationsProvider locationsProvider){
-        mNetworkManager = networkManager;
-        mLocationProvider = locationsProvider;
+    public DataManager(NetworkManager networkManager, LocationsProvider locationProvider) {
+        this.mNetworkManager = networkManager;
+        this.mLocationProvider = locationProvider;
     }
 
     public Observable<ArrayList<Location>> getLocationDataObservable() {
-        Log.d("SII", "getLocationDataObservable: ");
         return Observable.just(mLocationProvider.getLocations())
                 .flatMapIterable(locations -> locations)
                 .flatMap(this::downloadLocationImage)
@@ -42,17 +40,17 @@ public class DataManager {
     }
 
     private Observable<Location> downloadLocationImage(Location location) {
-        if(location.getImageUrl() == null) {
+        if(location.getThumbnailUrl() == null) {
            return mNetworkManager
                     .getQwantAPI()
                     .getLocationImage(location.toString())
                     .compose(RxUtils.applySchedulers())
                     .map(imageResponse -> imageResponse.getData().getResult().getPictures())
                     .flatMapIterable(pictures -> pictures)
-                    .first(new Picture(""))
-                    .map(Picture::getThumbnailUrl)
-                    .map(s -> {
-                        location.setImageUrl(URL_PREFIX + s);
+                    .firstElement()
+                    .map(picture -> {
+                        location.setThumbnailUrl(URL_PREFIX + picture.getThumbnailUrl());
+                        location.setFullImageUrl(URL_PREFIX + picture.getFullSizeImageUrl());
                         updateLocation(location);
                         return location;
                     }).toObservable();
@@ -91,6 +89,7 @@ public class DataManager {
     }
 
     public void updateLocation(Location location) {
+        Log.d("SII", "updateLocation: " + mLocationProvider);
         mLocationProvider.updateLocation(location);
     }
 }

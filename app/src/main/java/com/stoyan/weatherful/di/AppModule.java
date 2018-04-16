@@ -45,9 +45,4 @@ public class AppModule {
             }
         };
     }
-
-    @Provides
-    RxBus provideRxBus() {
-        return new RxBus();
-    }
 }
