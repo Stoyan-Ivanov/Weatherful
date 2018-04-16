@@ -21,7 +21,6 @@ public class LocationViewHolder extends BaseViewHolder {
 
     @BindView(R.id.iv_location) ImageView locationPicture;
     @BindView(R.id.tv_location_name) TextView tvLocationName;
-    @BindView(R.id.tv_location_summary) TextView tvForecastSummary;
     @BindView(R.id.tv_location_temperature) TextView tvTemperature;
 
     private LocationsRecyclerViewAdapter mAdapter;
@@ -38,7 +37,6 @@ public class LocationViewHolder extends BaseViewHolder {
 
         tvLocationName.setText(location.getLocationName());
         setLocationPicture(location.getThumbnailUrl());
-        setForecastSummary(location.getForecastSummary().getHourly().getSummary());
         setTemperature(location);
 
         setOnViewHolderClickListeners(location);
@@ -60,14 +58,6 @@ public class LocationViewHolder extends BaseViewHolder {
                     .centerCrop()
                     .placeholder(R.drawable.cityscape)
                     .into(locationPicture);
-        }
-    }
-
-    public void setForecastSummary(String summary) {
-        if (summary != null) {
-            tvForecastSummary.setText(summary);
-        } else {
-            throw new NullPointerException("Provide valid summary!");
         }
     }
 

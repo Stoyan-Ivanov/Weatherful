@@ -28,7 +28,7 @@ public class LocationsRecyclerViewAdapter extends RecyclerView.Adapter<LocationV
     @Override
     public LocationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.viewholder_location, parent, false);
+                .inflate(R.layout.viewholder_location_horizontal, parent, false);
 
         return new LocationViewHolder(view, this);
     }

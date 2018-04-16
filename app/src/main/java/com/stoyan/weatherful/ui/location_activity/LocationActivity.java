@@ -11,9 +11,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
 import com.stoyan.weatherful.ui.base_ui.activity.BaseActivity;
@@ -30,9 +32,14 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.progressBar_loading) ProgressBar mProgressBar;
     @BindView(R.id.layout_loading) ConstraintLayout mLayoutLoading;
-    @BindView(R.id.layout_locations) RelativeLayout mLayoutLocations;
+    @BindView(R.id.layout_locations) ConstraintLayout mLayoutLocations;
     @BindView(R.id.layout_missing_network) ConstraintLayout mLayoutMissingNetwork;
     @BindView(R.id.toolbar_locations) Toolbar mToolbar;
+
+    @BindView(R.id.iv_main_location) ImageView mMainLocationImage;
+    @BindView(R.id.tv_main_location_name) TextView mTvMainLocationName;
+    @BindView(R.id.tv_main_location_temperature) TextView mTvMainLocationTemperature;
+    @BindView(R.id.tv_main_location_summary) TextView mTvMainLocationSummary;
 
     private static int LOADING_SCREEN_TIME = 2000;
 
@@ -53,10 +60,10 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
         presenter = new LocationActivityPresenter();
         presenter.setView(this);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mRecyclerView.setAdapter(new LocationsRecyclerViewAdapter(presenter));
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(getResources()
-                .getInteger(R.integer.viewholder_forecast_margin), SpacesItemDecoration.VERTICAL));
+                .getInteger(R.integer.viewholder_forecast_margin), SpacesItemDecoration.HORIZONTAL));
 
         presenter.downloadData();
         configureSplashScreen();
@@ -103,5 +110,31 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
             mLayoutLocations.setVisibility(View.GONE);
             mLayoutMissingNetwork.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void loadMainLocation() {
+        loadMainLocationName(presenter.getMainLocationName());
+        loadMainLocationTemperature(presenter.getMainLocationTemperature());
+        loadMainLocationForecastSummary(presenter.getMainLocationForecastSummary());
+        loadMainLocationImage(presenter.getMainLocationImageUrl());
+    }
+
+    private void loadMainLocationImage(String imageUrl) {
+        Glide.with(this)
+                .load(imageUrl)
+                .centerCrop()
+                .into(mMainLocationImage);
+    }
+
+    private void loadMainLocationTemperature(int temperature) {
+        mTvMainLocationTemperature.setText(getString(R.string.single_temperature_field, temperature));
+    }
+
+    private void loadMainLocationName(String locationName) {
+        mTvMainLocationName.setText(locationName);
+    }
+
+    private void loadMainLocationForecastSummary(String forecastSummary) {
+        mTvMainLocationSummary.setText(forecastSummary);
     }
 }

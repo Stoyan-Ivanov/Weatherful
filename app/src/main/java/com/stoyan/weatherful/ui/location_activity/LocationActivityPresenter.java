@@ -1,7 +1,5 @@
 package com.stoyan.weatherful.ui.location_activity;
 
-import android.util.Log;
-
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.DataManager;
 import com.stoyan.weatherful.rx.RxBus;
@@ -22,6 +20,7 @@ import io.reactivex.functions.Consumer;
 
 public class LocationActivityPresenter extends BasePresenter<LocationActivityContract> {
     private ArrayList<Location> mLocations;
+    private Location mMainLocation;
 
     @Inject RxBus mRxBus;
     @Inject DataManager mDataManager;
@@ -56,6 +55,7 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
         return locations -> {
             LocationActivityPresenter.this.mLocations.clear();
             LocationActivityPresenter.this.mLocations.addAll(locations);
+            view.loadMainLocation();
             view.notifyDataSetChanged();
         };
     }
@@ -71,5 +71,21 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
 
     public void deleteLocation(Location location) {
         mDataManager.deleteLocation(location);
+    }
+
+    public String getMainLocationName() {
+        return mLocations.get(0).getLocationName();
+    }
+
+    public int getMainLocationTemperature() {
+        return (int) mLocations.get(0).getForecastSummary().getHourly().getData().get(0).getTemperature();
+    }
+
+    public String getMainLocationForecastSummary() {
+        return mLocations.get(0).getForecastSummary().getHourly().getSummary();
+    }
+
+    public String getMainLocationImageUrl() {
+        return mLocations.get(0).getThumbnailUrl();
     }
 }
