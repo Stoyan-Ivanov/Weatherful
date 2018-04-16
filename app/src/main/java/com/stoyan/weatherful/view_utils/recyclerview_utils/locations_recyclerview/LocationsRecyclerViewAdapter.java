@@ -7,12 +7,9 @@ import android.view.ViewGroup;
 
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.Location;
-import com.stoyan.weatherful.network.DataManager;
-
+import com.stoyan.weatherful.ui.location_activity.LocationActivityPresenter;
 
 import java.util.ArrayList;
-
-import javax.inject.Inject;
 
 
 /**
@@ -21,10 +18,11 @@ import javax.inject.Inject;
 
 public class LocationsRecyclerViewAdapter extends RecyclerView.Adapter<LocationViewHolder> {
     private ArrayList<Location> mLocations = new ArrayList<>();
-    @Inject DataManager mDataManager;
+    private LocationActivityPresenter mPresenter;
 
-    public LocationsRecyclerViewAdapter(ArrayList<Location> locations) {
-        this.mLocations = locations;
+    public LocationsRecyclerViewAdapter(LocationActivityPresenter presenter) {
+        this.mPresenter = presenter;
+        this.mLocations = presenter.getLocations();
     }
 
     @Override
@@ -46,8 +44,7 @@ public class LocationsRecyclerViewAdapter extends RecyclerView.Adapter<LocationV
     }
 
     public void removeItem(int position, Location location) {
-        mDataManager.deleteLocation(location);
-
+        mPresenter.deleteLocation(location);
         mLocations.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, mLocations.size());

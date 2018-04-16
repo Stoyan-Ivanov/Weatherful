@@ -1,7 +1,5 @@
 package com.stoyan.weatherful.network;
 
-import android.util.Log;
-
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.db.LocationsProvider;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
@@ -89,7 +87,6 @@ public class DataManager {
     }
 
     public void updateLocation(Location location) {
-        Log.d("SII", "updateLocation: " + mLocationProvider);
         mLocationProvider.updateLocation(location);
     }
 }

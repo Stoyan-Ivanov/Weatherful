@@ -54,7 +54,7 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
         presenter.setView(this);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(new LocationsRecyclerViewAdapter(presenter.getLocations()));
+        mRecyclerView.setAdapter(new LocationsRecyclerViewAdapter(presenter));
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(getResources()
                 .getInteger(R.integer.viewholder_forecast_margin), SpacesItemDecoration.VERTICAL));
 

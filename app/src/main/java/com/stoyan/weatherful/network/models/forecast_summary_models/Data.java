@@ -10,13 +10,13 @@ public class Data {
     @SerializedName("summary")
     private String summary;
     @SerializedName("temperature")
-    private String temperature;
+    private float temperature;
 
     public String getSummary() {
         return summary;
     }
 
-    public String getTemperature() {
+    public float getTemperature() {
         return temperature;
     }
 }

@@ -1,5 +1,7 @@
 package com.stoyan.weatherful.ui.location_activity;
 
+import android.util.Log;
+
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.DataManager;
 import com.stoyan.weatherful.rx.RxBus;
@@ -65,5 +67,9 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
     public ArrayList<Location> getLocations() {
         mLocations = new ArrayList<>();
         return mLocations;
+    }
+
+    public void deleteLocation(Location location) {
+        mDataManager.deleteLocation(location);
     }
 }
