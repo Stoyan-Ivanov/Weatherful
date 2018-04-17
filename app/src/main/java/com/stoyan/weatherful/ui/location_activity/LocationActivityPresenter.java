@@ -104,7 +104,7 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
     }
 
     public String getMainLocationImageUrl() {
-        return mCurrentLocation.getThumbnailUrl();
+        return mCurrentLocation.getFullImageUrl();
     }
 
     public void onCurrentLocationClicked() {

@@ -32,6 +32,8 @@ public class DataManager {
                 .flatMapIterable(locations -> locations)
                 .flatMap(this::downloadLocationImage)
                 .flatMap(this::downloadForecastSummary)
+                .map(location -> {updateLocation(location);
+                            return location;})
                 .toList()
                 .map(ArrayList::new)
                 .toObservable();
