@@ -1,5 +1,6 @@
 package com.stoyan.weatherful.ui.location_activity;
 
+import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.ui.base_ui.contract.BaseViewContract;
 
 /**
@@ -12,4 +13,6 @@ public interface LocationActivityContract extends BaseViewContract {
     void startNewActivity();
     void showNoInternetView();
     void loadMainLocation();
+
+    void startNewForecastActivity(Location location);
 }

@@ -30,10 +30,10 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> im
     @BindView(R.id.layout_weekly_forecast) RelativeLayout mLayoutWeeklyForecast;
     @BindView(R.id.toolbar_collapsed) Toolbar mToolbar;
 
-    public static void getIntent(Context context, Location location) {
-        Intent starter = new Intent(context, ForecastActivity.class);
-        starter.putExtra(Constants.EXTRA_LOCATION, location);
-        context.startActivity(starter);
+    public static Intent getIntent(Context context, Location location) {
+        Intent intent = new Intent(context, ForecastActivity.class);
+        intent.putExtra(Constants.EXTRA_LOCATION, location);
+        return intent;
     }
 
     @Override

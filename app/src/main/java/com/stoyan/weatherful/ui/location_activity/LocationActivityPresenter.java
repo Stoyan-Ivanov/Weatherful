@@ -1,5 +1,8 @@
 package com.stoyan.weatherful.ui.location_activity;
 
+import android.util.Log;
+
+import com.stoyan.weatherful.LocationTracker;
 import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.network.DataManager;
 import com.stoyan.weatherful.rx.RxBus;
@@ -20,7 +23,7 @@ import io.reactivex.functions.Consumer;
 
 public class LocationActivityPresenter extends BasePresenter<LocationActivityContract> {
     private ArrayList<Location> mLocations;
-    private Location mMainLocation;
+    private Location mCurrentLocation;
 
     @Inject RxBus mRxBus;
     @Inject DataManager mDataManager;
@@ -55,7 +58,6 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
         return locations -> {
             LocationActivityPresenter.this.mLocations.clear();
             LocationActivityPresenter.this.mLocations.addAll(locations);
-            view.loadMainLocation();
             view.notifyDataSetChanged();
         };
     }
@@ -69,23 +71,43 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
         return mLocations;
     }
 
+    public void getCurrentLocation() {
+        LocationTracker locationTracker = new LocationTracker();
+        mCurrentLocation =  locationTracker.getCurrentLocation();
+        addDisposable(mDataManager.getCurrentLocationDataObservable(mCurrentLocation)
+                .subscribe(getCurrentLocationConsumer(), getErrorConsumer())
+        );
+    }
+
+    private Consumer<Location> getCurrentLocationConsumer() {
+        return location -> {
+            LocationActivityPresenter.this.mCurrentLocation = location;
+            Log.d("SII", "getCurrentLocation: " + mCurrentLocation.getFullImageUrl());
+            view.loadMainLocation();
+        };
+    }
+
     public void deleteLocation(Location location) {
         mDataManager.deleteLocation(location);
     }
 
-    public String getMainLocationName() {
-        return mLocations.get(0).getLocationName();
+    public String getCurrentLocationName() {
+        return mCurrentLocation.getLocationName();
     }
 
-    public int getMainLocationTemperature() {
-        return (int) mLocations.get(0).getForecastSummary().getHourly().getData().get(0).getTemperature();
+    public int getCurrentLocationTemperature() {
+        return (int) mCurrentLocation.getForecastSummary().getHourly().getData().get(0).getTemperature();
     }
 
     public String getMainLocationForecastSummary() {
-        return mLocations.get(0).getForecastSummary().getHourly().getSummary();
+        return mCurrentLocation.getForecastSummary().getHourly().getSummary();
     }
 
     public String getMainLocationImageUrl() {
-        return mLocations.get(0).getThumbnailUrl();
+        return mCurrentLocation.getThumbnailUrl();
+    }
+
+    public void onCurrentLocationClicked() {
+        view.startNewForecastActivity(mCurrentLocation);
     }
 }

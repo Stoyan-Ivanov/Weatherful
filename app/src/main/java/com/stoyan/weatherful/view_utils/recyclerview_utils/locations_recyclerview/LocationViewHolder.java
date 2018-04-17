@@ -43,7 +43,7 @@ public class LocationViewHolder extends BaseViewHolder {
     }
 
     private void setOnViewHolderClickListeners(final Location location) {
-        itemView.setOnClickListener(view -> ForecastActivity.getIntent(mContext, location));
+        itemView.setOnClickListener(view -> mContext.startActivity(ForecastActivity.getIntent(mContext, location)));
 
         itemView.setOnLongClickListener(view -> {
             mAdapter.removeItem(getAdapterPosition(), location);

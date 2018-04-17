@@ -17,8 +17,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.stoyan.weatherful.R;
+import com.stoyan.weatherful.db.Location;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
 import com.stoyan.weatherful.ui.base_ui.activity.BaseActivity;
+import com.stoyan.weatherful.ui.forecast_activity.ForecastActivity;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.decorations.SpacesItemDecoration;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationsRecyclerViewAdapter;
 
@@ -47,6 +49,11 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
         return new Intent(context, LocationActivity.class);
     }
 
+    @OnClick(R.id.iv_main_location)
+    void onCurrentLocationClick() {
+        presenter.onCurrentLocationClicked();
+    }
+
     @OnClick(R.id.fab_add)
     void fabOnClick() {
         presenter.fabOnClick();
@@ -65,6 +72,7 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(getResources()
                 .getInteger(R.integer.viewholder_forecast_margin), SpacesItemDecoration.HORIZONTAL));
 
+        presenter.getCurrentLocation();
         presenter.downloadData();
         configureSplashScreen();
         configureToolbar();
@@ -113,10 +121,15 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
     }
 
     public void loadMainLocation() {
-        loadMainLocationName(presenter.getMainLocationName());
-        loadMainLocationTemperature(presenter.getMainLocationTemperature());
+        loadMainLocationName(presenter.getCurrentLocationName());
+        loadMainLocationTemperature(presenter.getCurrentLocationTemperature());
         loadMainLocationForecastSummary(presenter.getMainLocationForecastSummary());
         loadMainLocationImage(presenter.getMainLocationImageUrl());
+    }
+
+    @Override
+    public void startNewForecastActivity(Location location) {
+        startActivity(ForecastActivity.getIntent(this, location));
     }
 
     private void loadMainLocationImage(String imageUrl) {
