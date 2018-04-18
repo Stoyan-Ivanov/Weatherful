@@ -4,18 +4,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/viewholder_forecast_width"
-    android:layout_height="@dimen/viewholder_forecast_height"
+    android:layout_height="match_parent"
     android:elevation="@dimen/card_elevation"
     android:background="@drawable/forecast_viewholder_background">
 
     <TextView
         android:id="@+id/tv_date"
-        android:layout_width="@dimen/zero_width"
+        android:layout_width="@dimen/zero_dimension"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/tv_date_margin_start"
         android:layout_marginEnd="@dimen/tv_date_margin_end"
         android:layout_marginTop="@dimen/tv_date_margin_top"
         android:gravity="center"
+        android:textSize="@dimen/small_text"
         app:layout_constraintBottom_toTopOf="@+id/iv_weather_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,12 +39,14 @@
 
     <TextView
         android:id="@+id/tv_temperature"
-        android:layout_width="@dimen/zero_width"
+        android:layout_width="@dimen/zero_dimension"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/tv_temperature_margin_start"
         android:layout_marginEnd="@dimen/tv_temperature_margin_end"
+        android:layout_marginTop="@dimen/tv_temperature_margin_top"
 
         android:gravity="center_horizontal"
+        android:textSize="@dimen/small_text"
         app:layout_constraintBottom_toTopOf="@id/tv_chances_of_rain"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +55,7 @@
 
     <TextView
         android:id="@+id/tv_chances_of_rain"
-        android:layout_width="@dimen/zero_width"
+        android:layout_width="@dimen/zero_dimension"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/tv_chances_of_rain_margin_bottom"
         android:layout_marginEnd="@dimen/tv_chances_of_rain_margin_end"
@@ -60,7 +63,8 @@
         android:layout_marginTop="@dimen/tv_chances_of_rain_margin_top"
         android:drawableStart="@drawable/ic_rain_drop"
         android:drawablePadding="@dimen/tv_chances_of_rain_padding_drawable"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_temperature"
+        android:textSize="@dimen/small_text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_temperature"

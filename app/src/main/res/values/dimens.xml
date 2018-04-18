@@ -4,7 +4,7 @@
     <dimen name="fab_elevation">6dp</dimen>
     <dimen name="card_elevation">2dp</dimen>
     <dimen name="drawable_padding">8dp</dimen>
-    <dimen name="zero_width">0dp</dimen>
+    <dimen name="zero_dimension">0dp</dimen>
 
     <!-- text size -->
     <dimen name="small_text">20sp</dimen>
@@ -52,7 +52,7 @@
     <dimen name="fab_add_margin_bottom">40dp</dimen>
 
     <!-- weekly forecast screen -->
-    <dimen name="iv_weekly_forecast_location_height">384dp</dimen>
+    <dimen name="iv_weekly_forecast_location_height">272dp</dimen>
     <dimen name="rv_forecast_margin_top">24dp</dimen>
 
     <!-- add location screen -->
@@ -95,16 +95,17 @@
 
     <dimen name="tv_date_margin_start">8dp</dimen>
     <dimen name="tv_date_margin_end">8dp</dimen>
-    <dimen name="tv_date_margin_top">4dp</dimen>
+    <dimen name="tv_date_margin_top">8dp</dimen>
     
     <dimen name="iv_weather_icon_width">80dp</dimen>
     <dimen name="iv_weather_icon_height">80dp</dimen>
     <dimen name="iv_weather_icon_margin_start">8dp</dimen>
     <dimen name="iv_weather_icon_margin_end">8dp</dimen>
-    <dimen name="iv_weather_icon_margin_top">4dp</dimen>
+    <dimen name="iv_weather_icon_margin_top">8dp</dimen>
 
     <dimen name="tv_temperature_margin_start">8dp</dimen>
     <dimen name="tv_temperature_margin_end">8dp</dimen>
+    <dimen name="tv_temperature_margin_top">8dp</dimen>
 
     <dimen name="tv_chances_of_rain_margin_start">56dp</dimen>
     <dimen name="tv_chances_of_rain_margin_end">24dp</dimen>
@@ -116,16 +117,14 @@
     <dimen name="iv_fragment_weather_image_width">248dp</dimen>
     <dimen name="iv_fragment_weather_image_height">160dp</dimen>
 
-    <dimen name="tv_fragment_date_margin_top">28dp</dimen>
-
     <dimen name="tv_fragment_forecast_summary_margin_bottom">8dp</dimen>
 
-    <dimen name="tv_fragment_temp_margin_bottom">24dp</dimen>
+    <dimen name="tv_fragment_temp_margin_bottom">16dp</dimen>
     <dimen name="tv_fragment_temp_margin_end">8dp</dimen>
 
     <dimen name="tv_fragment_rain_chance_margin_start">8dp</dimen>
 
-    <dimen name="tv_fragment_wind_speed_margin_bottom">24dp</dimen>
+    <dimen name="tv_fragment_wind_speed_margin_bottom">16dp</dimen>
     <dimen name="tv_fragment_wind_speed_margin_end">8dp</dimen>
 
     <dimen name="tv_fragment_humidity_margin_start">8dp</dimen>
@@ -133,8 +132,8 @@
     <dimen name="tv_fragment_sunrise_margin_end">8dp</dimen>
 
     <dimen name="tv_fragment_sunset_margin_start">8dp</dimen>
-    <dimen name="tv_fragment_sunset_margin_bottom">80dp</dimen>
-    <dimen name="tv_fragment_sunset_margin_top">24dp</dimen>
+    <dimen name="tv_fragment_sunset_margin_top">16dp</dimen>
+    <dimen name="tv_fragment_sunrise_margin_bottom">72dp</dimen>
 
     <!-- forecast pager -->
     <dimen name="pageIndicatorView_margin_bottom">42dp</dimen>

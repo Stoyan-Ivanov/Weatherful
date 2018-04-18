@@ -24,9 +24,9 @@ import java.util.Locale;
  */
 
 public class LocationTracker implements LocationListener{
-    LocationManager mLocationManager;
-    Context mContext;
-    com.stoyan.weatherful.db.Location currentLocation;
+    private LocationManager mLocationManager;
+    private Context mContext;
+    private com.stoyan.weatherful.db.Location currentLocation;
 
     public LocationTracker() {
         mContext = WeatherfulApplication.getStaticContext();

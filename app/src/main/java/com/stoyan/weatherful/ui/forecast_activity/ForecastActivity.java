@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.stoyan.weatherful.Constants;
@@ -27,8 +27,9 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> im
     @BindView(R.id.rv_forecast) RecyclerView mRecyclerView;
     @BindView(R.id.iv_weekly_forecast_location) ImageView mLocationPicture;
     @BindView(R.id.layout_missing_network) ConstraintLayout mLayoutMissingInternet;
-    @BindView(R.id.layout_weekly_forecast) RelativeLayout mLayoutWeeklyForecast;
+    @BindView(R.id.layout_weekly_forecast) ConstraintLayout mLayoutWeeklyForecast;
     @BindView(R.id.toolbar_collapsed) Toolbar mToolbar;
+    @BindView(R.id.tv_location_name) TextView mTvLocationName;
 
     public static Intent getIntent(Context context, Location location) {
         Intent intent = new Intent(context, ForecastActivity.class);
@@ -49,14 +50,17 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> im
         configureToolbar();
         configureRecyclerView();
         loadLocationImage();
+        mTvLocationName.setText(presenter.getHeader());
     }
 
     private void configureToolbar() {
+        final String EMPTY_STRING = "";
+
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationOnClickListener(v -> finish());
-        getSupportActionBar().setTitle(presenter.getHeader());
+        getSupportActionBar().setTitle(EMPTY_STRING);
     }
 
     private void loadLocationImage() {

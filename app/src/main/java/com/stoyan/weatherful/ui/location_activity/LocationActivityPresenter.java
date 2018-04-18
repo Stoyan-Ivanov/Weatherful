@@ -74,9 +74,9 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
     public void getCurrentLocation() {
         LocationTracker locationTracker = new LocationTracker();
         mCurrentLocation =  locationTracker.getCurrentLocation();
-//        addDisposable(mDataManager.getCurrentLocationDataObservable(mCurrentLocation)
-//                .subscribe(getCurrentLocationConsumer(), getErrorConsumer())
-//        );
+        addDisposable(mDataManager.getCurrentLocationDataObservable(mCurrentLocation)
+                .subscribe(getCurrentLocationConsumer(), getErrorConsumer())
+        );
     }
 
     private Consumer<Location> getCurrentLocationConsumer() {

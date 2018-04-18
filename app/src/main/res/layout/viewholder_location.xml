@@ -27,7 +27,7 @@
 
         <TextView
             android:id="@+id/tv_location_name"
-            android:layout_width="@dimen/zero_width"
+            android:layout_width="@dimen/zero_dimension"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/tv_location_name_margin"
 
@@ -42,7 +42,7 @@
 
         <TextView
             android:id="@+id/tv_location_temperature"
-            android:layout_width="@dimen/zero_width"
+            android:layout_width="@dimen/zero_dimension"
             android:layout_height="wrap_content"
 
             android:layout_margin="@dimen/tv_location_temperature_margin"
@@ -57,7 +57,7 @@
 
         <TextView
             android:id="@+id/tv_location_summary"
-            android:layout_width="@dimen/zero_width"
+            android:layout_width="@dimen/zero_dimension"
             android:layout_height="wrap_content"
 
             android:layout_margin="@dimen/tv_location_summary_margin"

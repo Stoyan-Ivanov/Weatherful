@@ -31,7 +31,7 @@
 
     <TextView
         android:id="@+id/tv_app_name_loading"
-        android:layout_width="@dimen/zero_width"
+        android:layout_width="@dimen/zero_dimension"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/app_name_loading_margin"
         android:fontFamily="sans-serif-condensed"
