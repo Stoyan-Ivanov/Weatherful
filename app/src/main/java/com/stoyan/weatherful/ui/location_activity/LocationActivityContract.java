@@ -12,7 +12,6 @@ public interface LocationActivityContract extends BaseViewContract {
     void showError(Throwable throwable);
     void startNewActivity();
     void showNoInternetView();
-    void loadMainLocation();
-
+    void loadCurrentLocation();
     void startNewForecastActivity(Location location);
 }

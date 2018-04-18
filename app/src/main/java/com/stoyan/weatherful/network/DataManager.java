@@ -51,7 +51,6 @@ public class DataManager {
                     .map(picture -> {
                         location.setThumbnailUrl(URL_PREFIX + picture.getThumbnailUrl());
                         location.setFullImageUrl(URL_PREFIX + picture.getFullSizeImageUrl());
-                        //updateLocation(location);
                         return location;
                     }).toObservable();
         }

@@ -120,34 +120,34 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
         }
     }
 
-    public void loadMainLocation() {
-        loadMainLocationName(presenter.getCurrentLocationName());
-        loadMainLocationTemperature(presenter.getCurrentLocationTemperature());
-        loadMainLocationForecastSummary(presenter.getMainLocationForecastSummary());
-        loadMainLocationImage(presenter.getMainLocationImageUrl());
+    public void loadCurrentLocation() {
+        loadCurrentLocationName(presenter.getCurrentLocationName());
+        loadCurrentLocationTemperature(presenter.getCurrentLocationTemperature());
+        loadCurrentLocationForecastSummary(presenter.getMainLocationForecastSummary());
+        loadCurrentLocationImage(presenter.getMainLocationImageUrl());
     }
 
-    @Override
-    public void startNewForecastActivity(Location location) {
-        startActivity(ForecastActivity.getIntent(this, location));
-    }
-
-    private void loadMainLocationImage(String imageUrl) {
+    private void loadCurrentLocationImage(String imageUrl) {
         Glide.with(this)
                 .load(imageUrl)
                 .centerCrop()
                 .into(mMainLocationImage);
     }
 
-    private void loadMainLocationTemperature(int temperature) {
+    private void loadCurrentLocationTemperature(int temperature) {
         mTvMainLocationTemperature.setText(getString(R.string.single_temperature_field, temperature));
     }
 
-    private void loadMainLocationName(String locationName) {
+    private void loadCurrentLocationName(String locationName) {
         mTvMainLocationName.setText(locationName);
     }
 
-    private void loadMainLocationForecastSummary(String forecastSummary) {
+    private void loadCurrentLocationForecastSummary(String forecastSummary) {
         mTvMainLocationSummary.setText(forecastSummary);
+    }
+
+    @Override
+    public void startNewForecastActivity(Location location) {
+        startActivity(ForecastActivity.getIntent(this, location));
     }
 }

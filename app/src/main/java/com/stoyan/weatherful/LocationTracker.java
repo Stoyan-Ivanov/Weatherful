@@ -44,37 +44,30 @@ public class LocationTracker implements LocationListener{
 
         } else {
             if(isNetworkEnabled) {
-                if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED &&
-                        ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION)
-                                != PackageManager.PERMISSION_GRANTED) {
-
-                    WeatherfulApplication.showToast("Location service is disabled!");
-                    // showSettingsAlert();
-                    return null;
-                }
-                mLocationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, this, null);
-                Location location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                getLocationNameAndCountry(location.getLatitude(), location.getLongitude());
+                checkIfPermissionsAreGranted(LocationManager.NETWORK_PROVIDER);
                 return  currentLocation;
             }
 
             if (isGPSEnabled) {
-                if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED &&
-                        ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION)
-                                != PackageManager.PERMISSION_GRANTED) {
-
-                    WeatherfulApplication.showToast("Location service is disabled!");
-                    // showSettingsAlert();
-                    return null;
-                }
-                mLocationManager.requestSingleUpdate(LocationManager.PASSIVE_PROVIDER, this, null);
-                Location location = mLocationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-                getLocationNameAndCountry(location.getLatitude(), location.getLongitude());
+                checkIfPermissionsAreGranted(LocationManager.GPS_PROVIDER);
             }
         }
         return currentLocation;
+    }
+
+    private void checkIfPermissionsAreGranted(String provider) {
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+            WeatherfulApplication.showToast("Location service is disabled!");
+            // showSettingsAlert();
+            return;
+        }
+        mLocationManager.requestSingleUpdate(provider, this, null);
+        Location location = mLocationManager.getLastKnownLocation(provider);
+        getLocationNameAndCountry(location.getLatitude(), location.getLongitude());
     }
 
     private void getLocationNameAndCountry(double latitude, double longitude) {
@@ -98,13 +91,9 @@ public class LocationTracker implements LocationListener{
     public void showSettingsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
-        // Setting Dialog Title
-        alertDialog.setTitle("GPS is settings");
-
-        // Setting Dialog Message
+        alertDialog.setTitle("GPS settings");
         alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
 
-        // On pressing Settings button
         alertDialog.setPositiveButton("Settings",
                 (dialog, which) -> {
                     Intent intent = new Intent(
@@ -112,7 +101,6 @@ public class LocationTracker implements LocationListener{
                     mContext.startActivity(intent);
                 });
 
-        // on pressing cancel button
         alertDialog.setNegativeButton("Cancel",
                 (dialog, which) -> dialog.cancel());
 
