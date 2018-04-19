@@ -3,17 +3,15 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="200dp"
+    android:layout_width="@dimen/viewholder_location_width"
     android:layout_height="match_parent"
 
-    app:cardCornerRadius="10dp"
+    app:cardCornerRadius="@dimen/card_corner_radius"
     android:background="@drawable/location_viewholder_stroke">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/iv_location"
@@ -38,8 +36,8 @@
             android:id="@+id/tv_location_name"
             android:layout_width="@dimen/zero_dimension"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="@dimen/tv_location_name_margin_end"
+            android:layout_marginStart="@dimen/tv_location_name_margin_start"
             android:textSize="@dimen/large_text"
             android:gravity="center"
             android:textColor="@color/white"
@@ -51,9 +49,9 @@
             android:id="@+id/tv_location_temperature"
             android:layout_width="@dimen/zero_dimension"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginBottom="@dimen/tv_location_temperature_margin_bottom"
+            android:layout_marginEnd="@dimen/tv_location_temperature_margin_end"
+            android:layout_marginStart="@dimen/tv_location_temperature_margin_start"
             android:textSize="@dimen/medium_text"
             android:gravity="center"
             android:textColor="@color/white"

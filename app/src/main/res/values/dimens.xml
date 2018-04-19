@@ -5,6 +5,7 @@
     <dimen name="card_elevation">2dp</dimen>
     <dimen name="drawable_padding">8dp</dimen>
     <dimen name="zero_dimension">0dp</dimen>
+    <dimen name="card_corner_radius">10dp</dimen>
 
     <!-- text size -->
     <dimen name="small_text">20sp</dimen>
@@ -77,17 +78,15 @@
     <dimen name="btn_done_adding_margin_end">36dp</dimen>
     <dimen name="btn_done_adding_margin_bottom">24dp</dimen>
 
-    <!-- viewholder location -->
-    <dimen name="viewholder_location_height">160dp</dimen>
-    <dimen name="viewholder_location_card_radius">2dp</dimen>
+    <!-- viewholder horizontal location -->
+    <dimen name="viewholder_location_width">180dp</dimen>
 
-    <dimen name="iv_location_width">146dp</dimen>
-    <dimen name="iv_location_height">136dp</dimen>
-    <dimen name="iv_location_margin">16dp</dimen>
+    <dimen name="tv_location_name_margin_start">8dp</dimen>
+    <dimen name="tv_location_name_margin_end">8dp</dimen>
 
-    <dimen name="tv_location_name_margin">16dp</dimen>
-    <dimen name="tv_location_temperature_margin">16dp</dimen>
-    <dimen name="tv_location_summary_margin">16dp</dimen>
+    <dimen name="tv_location_temperature_margin_start">8dp</dimen>
+    <dimen name="tv_location_temperature_margin_end">8dp</dimen>
+    <dimen name="tv_location_temperature_margin_bottom">8dp</dimen>
 
     <!-- viewholder horizontal forecast -->
     <dimen name="viewholder_forecast_width">160dp</dimen>

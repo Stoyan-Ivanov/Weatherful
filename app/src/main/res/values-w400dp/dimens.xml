@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- weekly forecast screen -->
+    <dimen name="iv_weekly_forecast_location_height">352dp</dimen>
+
+    <!-- viewholder horizontal location -->
+    <dimen name="viewholder_location_width">200dp</dimen>
+</resources>
