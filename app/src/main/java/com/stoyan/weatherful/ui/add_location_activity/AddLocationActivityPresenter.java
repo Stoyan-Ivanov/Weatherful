@@ -5,7 +5,7 @@ import android.location.Geocoder;
 
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.WeatherfulApplication;
-import com.stoyan.weatherful.db.Location;
+import com.stoyan.weatherful.db.models.Location;
 import com.stoyan.weatherful.network.DataManager;
 import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
 

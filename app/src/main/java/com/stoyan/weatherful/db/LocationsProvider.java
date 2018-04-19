@@ -1,17 +1,12 @@
 package com.stoyan.weatherful.db;
 
-import android.util.Log;
-
-import com.stoyan.weatherful.R;
-import com.stoyan.weatherful.WeatherfulApplication;
+import com.stoyan.weatherful.db.models.Location;
+import com.stoyan.weatherful.db.room.LocationsDatabase;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import io.paperdb.Paper;
 
 import static io.paperdb.Paper.book;
 
@@ -21,27 +16,35 @@ import static io.paperdb.Paper.book;
 
 @Singleton
 public class LocationsProvider implements LocationsProviderContract {
+    private LocationsDatabase mLocationsDatabase;
 
     @Inject
-    public LocationsProvider() {}
+    public LocationsProvider() {
+        mLocationsDatabase = LocationsDatabase.getInstance();
+    }
 
     @Override
     public ArrayList<Location> getLocations() {
+        ArrayList<Location>  locations = mLocationsDatabase.locationDA0().getAllLocations();
 
-        ArrayList<Location> locations = new ArrayList<>();
-
-        List<String> allKeys= Paper.book().getAllKeys();
-
-        if(!allKeys.isEmpty()) {
-            for (String key : allKeys) {
-                locations.add(Paper.book().read(key));
-            }
-        } else {
-            locations = initDatabase();
+        if(locations.isEmpty()) {
+            initDatabase();
         }
 
-        Log.d("SII", "getLocations: " + locations.toString());
         return locations;
+
+//        List<String> allKeys= Paper.book().getAllKeys();
+//
+//        if(!allKeys.isEmpty()) {
+//            for (String key : allKeys) {
+//                locations.add(Paper.book().read(key));
+//            }
+//        } else {
+//            locations = initDatabase();
+//        }
+//
+//        Log.d("SII", "getLocations: " + locations.toString());
+//        return locations;
     }
 
     private ArrayList<Location> initDatabase() {
@@ -60,32 +63,40 @@ public class LocationsProvider implements LocationsProviderContract {
 
     @Override
     public boolean saveLocation(Location location) {
-        if(!checkIfLocationExists(location)) {
-            writeToDatabase(location);
-            return true;
-        } else {
-            WeatherfulApplication.showToast(
-                    WeatherfulApplication.getStringFromId(R.string.duplication_when_adding));
-            return false;
-        }
+        mLocationsDatabase.locationDA0().insert(location);
+        return true;
+
+
+
+//        if(!checkIfLocationExists(location)) {
+//            writeToDatabase(location);
+//            return true;
+//        } else {
+//            WeatherfulApplication.showToast(
+//                    WeatherfulApplication.getStringFromId(R.string.duplication_when_adding));
+//            return false;
+//        }
     }
 
     public void updateLocation(Location location) {
         if(location != null) {
-            writeToDatabase(location);
+            mLocationsDatabase.locationDA0().update(location);
         }
     }
 
-    private void writeToDatabase(Location location) {
-        book().write(location.getLocationName() + location.getCountry(), location);
-    }
+//    private void writeToDatabase(Location location) {
+//        book().write(location.getLocationName() + location.getCountry(), location);
+//    }
 
     public void deleteLocation(Location location) {
-        if(checkIfLocationExists(location)) {
-            Paper.book().delete(location.getLocationName() + location.getCountry());
-            WeatherfulApplication.showToast(
-                    WeatherfulApplication.getStringFromId(R.string.successful_deleting));
-        }
+
+        mLocationsDatabase.locationDA0().delete(location);
+
+//        if(checkIfLocationExists(location)) {
+//            Paper.book().delete(location.getLocationName() + location.getCountry());
+//            WeatherfulApplication.showToast(
+//                    WeatherfulApplication.getStringFromId(R.string.successful_deleting));
+//        }
     }
 
     private boolean checkIfLocationExists(Location location) {

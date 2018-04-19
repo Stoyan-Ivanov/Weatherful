@@ -1,24 +1,41 @@
-package com.stoyan.weatherful.db;
+package com.stoyan.weatherful.db.models;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.esotericsoftware.kryo.NotNull;
 import com.stoyan.weatherful.network.models.forecast_summary_models.ForecastSummaryResponse;
 
 /**
  * Created by Stoyan on 27.1.2018 г..
  */
 
+@Entity(tableName = "locations")
 public class Location implements Parcelable {
-    private String mId;
+    @PrimaryKey()
+    @NotNull
+    @ColumnInfo(name = "locationId")
+    private int mId;
+
+    @ColumnInfo(name = "locationName")
     private String mLocationName;
+
+    @ColumnInfo(name = "country")
     private String mCountry;
+
+    @ColumnInfo(name = "locationCoordinates")
     private Coordinates mCoordinates;
+
+    @ColumnInfo(name = "locationImage")
     private Image mImage;
+
+    @ColumnInfo(name = "forecastSummary")
     private ForecastSummaryResponse mForecastSummary;
 
     public Location(String locationName, String country, double latitude, double longitude) {
-        this.mId = locationName + country;
         this.mLocationName = locationName;
         this.mCountry = country;
         this.mCoordinates = new Coordinates(latitude, longitude);
@@ -38,6 +55,17 @@ public class Location implements Parcelable {
         this.mForecastSummary = forecastSummary;
     }
 
+    public int getId() {
+        return mId;
+    }
+
+    public Coordinates getCoordinates() {
+        return mCoordinates;
+    }
+
+    public Image getImage() {
+        return mImage;
+    }
 
     public String getLocationName() {
         return mLocationName;
@@ -83,6 +111,26 @@ public class Location implements Parcelable {
 
     public void setForecastSummary(ForecastSummaryResponse forecastSummary) {
         this.mForecastSummary = forecastSummary;
+    }
+
+    public void setId(int mId) {
+        this.mId = mId;
+    }
+
+    public void setLocationName(String mLocationName) {
+        this.mLocationName = mLocationName;
+    }
+
+    public void setCountry(String mCountry) {
+        this.mCountry = mCountry;
+    }
+
+    public void setCoordinates(Coordinates mCoordinates) {
+        this.mCoordinates = mCoordinates;
+    }
+
+    public void setImage(Image mImage) {
+        this.mImage = mImage;
     }
 
     @Override

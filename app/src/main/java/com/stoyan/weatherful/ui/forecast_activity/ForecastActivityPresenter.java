@@ -4,7 +4,7 @@ package com.stoyan.weatherful.ui.forecast_activity;
 import android.content.Intent;
 
 import com.stoyan.weatherful.Constants;
-import com.stoyan.weatherful.db.Location;
+import com.stoyan.weatherful.db.models.Location;
 import com.stoyan.weatherful.network.DataManager;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.rx.RxBus;

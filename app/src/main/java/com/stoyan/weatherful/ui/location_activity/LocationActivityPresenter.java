@@ -3,7 +3,7 @@ package com.stoyan.weatherful.ui.location_activity;
 import android.util.Log;
 
 import com.stoyan.weatherful.LocationTracker;
-import com.stoyan.weatherful.db.Location;
+import com.stoyan.weatherful.db.models.Location;
 import com.stoyan.weatherful.network.DataManager;
 import com.stoyan.weatherful.rx.RxBus;
 import com.stoyan.weatherful.rx.RxUtils;

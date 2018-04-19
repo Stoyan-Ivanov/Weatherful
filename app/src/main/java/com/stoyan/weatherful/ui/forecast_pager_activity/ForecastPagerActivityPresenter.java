@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
 import com.stoyan.weatherful.ui.day_forecast_fragment.DayForecastFragment;
-import com.stoyan.weatherful.db.Location;
+import com.stoyan.weatherful.db.models.Location;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 
 import java.util.ArrayList;

@@ -26,14 +26,14 @@ import java.util.Locale;
 public class LocationTracker implements LocationListener{
     private LocationManager mLocationManager;
     private Context mContext;
-    private com.stoyan.weatherful.db.Location currentLocation;
+    private com.stoyan.weatherful.db.models.Location currentLocation;
 
     public LocationTracker() {
         mContext = WeatherfulApplication.getStaticContext();
         mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
     }
 
-    public com.stoyan.weatherful.db.Location getCurrentLocation() {
+    public com.stoyan.weatherful.db.models.Location getCurrentLocation() {
         boolean isGPSEnabled;
         boolean isNetworkEnabled;
 
@@ -80,7 +80,7 @@ public class LocationTracker implements LocationListener{
                 String cityName = addresses.get(0).getLocality();
                 String countryName = addresses.get(0).getCountryName();
 
-                currentLocation = new com.stoyan.weatherful.db.Location(cityName, countryName, latitude, longitude);
+                currentLocation = new com.stoyan.weatherful.db.models.Location(cityName, countryName, latitude, longitude);
 
             } catch (IOException mE) {
                 mE.printStackTrace();

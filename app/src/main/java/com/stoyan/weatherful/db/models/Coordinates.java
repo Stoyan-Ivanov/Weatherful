@@ -1,4 +1,4 @@
-package com.stoyan.weatherful.db;
+package com.stoyan.weatherful.db.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;

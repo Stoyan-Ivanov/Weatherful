@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.stoyan.weatherful.R;
-import com.stoyan.weatherful.db.Location;
+import com.stoyan.weatherful.db.models.Location;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.ui.forecast_pager_activity.ForecastPagerActivity;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.BaseViewHolder;
