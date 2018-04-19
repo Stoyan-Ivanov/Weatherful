@@ -10,6 +10,7 @@ import com.stoyan.weatherful.network.models.forecast_summary_models.ForecastSumm
  */
 
 public class Location implements Parcelable {
+    private String mId;
     private String mLocationName;
     private String mCountry;
     private Coordinates mCoordinates;
@@ -17,6 +18,7 @@ public class Location implements Parcelable {
     private ForecastSummaryResponse mForecastSummary;
 
     public Location(String locationName, String country, double latitude, double longitude) {
+        this.mId = locationName + country;
         this.mLocationName = locationName;
         this.mCountry = country;
         this.mCoordinates = new Coordinates(latitude, longitude);

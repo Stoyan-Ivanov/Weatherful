@@ -67,6 +67,8 @@ public class LocationTracker implements LocationListener{
         }
         mLocationManager.requestSingleUpdate(provider, this, null);
         Location location = mLocationManager.getLastKnownLocation(provider);
+        Log.d("SII", location.getLatitude() + ", " + location.getLongitude());
+
         getLocationNameAndCountry(location.getLatitude(), location.getLongitude());
     }
 
