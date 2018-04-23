@@ -9,6 +9,7 @@ import com.crashlytics.android.Crashlytics;
 import com.stoyan.weatherful.di.AppComponent;
 import com.stoyan.weatherful.di.AppModule;
 import com.stoyan.weatherful.di.DaggerAppComponent;
+import com.stoyan.weatherful.di.RoomModule;
 
 import io.fabric.sdk.android.Fabric;
 import io.paperdb.Paper;
@@ -46,6 +47,7 @@ public class WeatherfulApplication extends Application  {
         if (mAppComponent == null) {
             mAppComponent = DaggerAppComponent.builder()
                     .appModule(new AppModule(this))
+                    .roomModule(new RoomModule(this))
                     .build();
         }
         return mAppComponent;

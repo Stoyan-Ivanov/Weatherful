@@ -1,6 +1,7 @@
 package com.stoyan.weatherful.db;
 
 import com.stoyan.weatherful.db.models.Location;
+import com.stoyan.weatherful.db.room.LocationDAO;
 import com.stoyan.weatherful.db.room.LocationsDatabase;
 
 import java.util.ArrayList;
@@ -16,18 +17,16 @@ import static io.paperdb.Paper.book;
 
 @Singleton
 public class LocationsProvider implements LocationsProviderContract {
-    private LocationsDatabase mLocationsDatabase;
+    private final LocationDAO mDAO;
 
     @Inject
-    public LocationsProvider() {
-        mLocationsDatabase = LocationsDatabase.getInstance();
+    public LocationsProvider(LocationsDatabase locationsDatabase, LocationDAO dao) {
+        this.mDAO = dao;
     }
 
     @Override
     public ArrayList<Location> getLocations() {
-       // ArrayList<Location>  locations = (ArrayList<Location>) LocationsDatabase.getInstance().locationDA0().getAllLocations();
-
-        ArrayList<Location>  locations = new ArrayList<>();
+        ArrayList<Location>  locations = (ArrayList<Location>) mDAO.getAllLocations();
 
         if(locations.isEmpty()) {
             initDatabase();
@@ -65,7 +64,8 @@ public class LocationsProvider implements LocationsProviderContract {
 
     @Override
     public boolean saveLocation(Location location) {
-        LocationsDatabase.getInstance().locationDA0().insert(location);
+
+        mDAO.insert(location);
         return true;
 
 
@@ -82,7 +82,7 @@ public class LocationsProvider implements LocationsProviderContract {
 
     public void updateLocation(Location location) {
         if(location != null) {
-            LocationsDatabase.getInstance().locationDA0().update(location);
+            mDAO.update(location);
         }
     }
 
@@ -92,7 +92,7 @@ public class LocationsProvider implements LocationsProviderContract {
 
     public void deleteLocation(Location location) {
 
-        LocationsDatabase.getInstance().locationDA0().delete(location);
+        mDAO.delete(location);
 
 //        if(checkIfLocationExists(location)) {
 //            Paper.book().delete(location.getLocationName() + location.getCountry());
