@@ -57,7 +57,7 @@ public class ForecastActivityPresenter extends BasePresenter<ForecastActivityCon
     }
 
     public String getImageUrl() {
-        return mLocation.getFullImageUrl();
+        return mLocation.getLocationImageFull();
     }
 
     public void downloadWeeklyForecast() {

@@ -2,20 +2,20 @@ package com.stoyan.weatherful.db.models;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.esotericsoftware.kryo.NotNull;
-import com.stoyan.weatherful.network.models.forecast_summary_models.ForecastSummaryResponse;
 
 /**
  * Created by Stoyan on 27.1.2018 г..
  */
 
-@Entity(tableName = "locations")
+@Entity(tableName = "location")
 public class Location implements Parcelable {
-    @PrimaryKey()
+    @PrimaryKey(autoGenerate = true)
     @NotNull
     @ColumnInfo(name = "locationId")
     private int mId;
@@ -26,111 +26,99 @@ public class Location implements Parcelable {
     @ColumnInfo(name = "country")
     private String mCountry;
 
-    @ColumnInfo(name = "locationCoordinates")
-    private Coordinates mCoordinates;
+    @ColumnInfo(name = "locationLatitude")
+    private double mLatitude;
 
-    @ColumnInfo(name = "locationImage")
-    private Image mImage;
+    @ColumnInfo(name = "locationLongitude")
+    private double mLongitude;
 
-    @ColumnInfo(name = "forecastSummary")
-    private ForecastSummaryResponse mForecastSummary;
+//    @ColumnInfo(name = "locationImage")
+//    private Image mImage;
 
-    public Location(String locationName, String country, double latitude, double longitude) {
-        this.mLocationName = locationName;
-        this.mCountry = country;
-        this.mCoordinates = new Coordinates(latitude, longitude);
+    @ColumnInfo(name = "locationThumbnail")
+    private String mLocationImageThumbnail;
+
+    @ColumnInfo(name = "locationFullImage")
+    private String mLocationImageFull;
+
+    public Location() {
     }
 
-    public Location(String locationName, String country, double latitude, double longitude
-            , String thumbnailUrl, String fullImageUrl) {
+    @Ignore
+    public Location(String mLocationName, String mCountry, double mLatitude, double mLongitude) {
+        this.mLocationName = mLocationName;
+        this.mCountry = mCountry;
+        this.mLatitude = mLatitude;
+        this.mLongitude = mLongitude;
 
-        this(locationName, country, latitude, longitude);
-        this.mImage = new Image(thumbnailUrl, fullImageUrl);
+       // this.mCoordinates = new Coordinates(latitude, longitude);
     }
 
-    public Location(String locationName, String country, double latitude, double longitude
-            , String thumbnailUrl, String fullImageUrl, ForecastSummaryResponse forecastSummary) {
+    @Ignore
+    public Location(String mLocationName, String mCountry, double latitude, double longitude
+            , String mLocationImageThumbnail, String mLocationImageFull) {
 
-        this(locationName, country, latitude, longitude, thumbnailUrl, fullImageUrl);
-        this.mForecastSummary = forecastSummary;
+        this(mLocationName, mCountry, latitude, longitude);
+        this.mLocationImageThumbnail = mLocationImageThumbnail;
+        this.mLocationImageFull = mLocationImageFull;
+
+        //this.mImage = new Image(thumbnailUrl, fullImageUrl);
     }
 
     public int getId() {
         return mId;
     }
 
-    public Coordinates getCoordinates() {
-        return mCoordinates;
-    }
-
-    public Image getImage() {
-        return mImage;
+    public void setId(int mId) {
+        this.mId = mId;
     }
 
     public String getLocationName() {
         return mLocationName;
     }
 
-    public String getCountry() {
-        return mCountry;
-    }
-
-    public double getLatitude() {
-        return mCoordinates.getLatitude();
-    }
-
-    public double getLongitude() {
-        return mCoordinates.getLongitude();
-    }
-
-    public String getThumbnailUrl() {
-        return mImage == null? null: mImage.getThumbnailUrl();
-    }
-
-    public void setThumbnailUrl(String thumbnailUrl) {
-        if(mImage == null) {
-            mImage = new Image();
-        }
-        mImage.setThumbnailUrl(thumbnailUrl);
-    }
-
-    public String getFullImageUrl() {
-        return mImage == null? null: mImage.getFullImageUrl();
-    }
-
-    public void setFullImageUrl(String fullImageUrl) {
-        if(mImage == null) {
-            mImage = new Image();
-        }
-        mImage.setFullImageUrl(fullImageUrl);
-    }
-
-    public ForecastSummaryResponse getForecastSummary(){
-        return mForecastSummary;
-    }
-
-    public void setForecastSummary(ForecastSummaryResponse forecastSummary) {
-        this.mForecastSummary = forecastSummary;
-    }
-
-    public void setId(int mId) {
-        this.mId = mId;
-    }
-
     public void setLocationName(String mLocationName) {
         this.mLocationName = mLocationName;
+    }
+
+    public String getCountry() {
+        return mCountry;
     }
 
     public void setCountry(String mCountry) {
         this.mCountry = mCountry;
     }
 
-    public void setCoordinates(Coordinates mCoordinates) {
-        this.mCoordinates = mCoordinates;
+    public double getLatitude() {
+        return mLatitude;
     }
 
-    public void setImage(Image mImage) {
-        this.mImage = mImage;
+    public void setLatitude(double mLatitude) {
+        this.mLatitude = mLatitude;
+    }
+
+    public double getLongitude() {
+        return mLongitude;
+    }
+
+    public void setLongitude(double mLongitude) {
+        this.mLongitude = mLongitude;
+    }
+
+    public String getLocationImageThumbnail() {
+        return mLocationImageThumbnail;
+    }
+
+    public void setLocationImageThumbnail(String mLocationImageThumbnail) {
+        this.mLocationImageThumbnail = mLocationImageThumbnail;
+    }
+
+    public String getLocationImageFull() {
+        return mLocationImageFull;
+    }
+
+    public void setLocationImageFull(String mLocationImageFull) {
+        this.mLocationImageFull = mLocationImageFull;
     }
 
     @Override
@@ -141,8 +129,12 @@ public class Location implements Parcelable {
     protected Location(Parcel in) {
         mLocationName = in.readString();
         mCountry = in.readString();
-        mCoordinates = (Coordinates) in.readValue(Coordinates.class.getClassLoader());
-        mImage = (Image) in.readValue(Image.class.getClassLoader());;
+        mLatitude = in.readDouble();
+        mLongitude = in.readDouble();
+        mLocationImageThumbnail = in.readString();
+        mLocationImageFull = in.readString();
+//        mCoordinates = (Coordinates) in.readValue(Coordinates.class.getClassLoader());
+//        mImage = (Image) in.readValue(Image.class.getClassLoader());;
     }
 
     @Override
@@ -152,10 +144,15 @@ public class Location implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mId);
         dest.writeString(mLocationName);
         dest.writeString(mCountry);
-        dest.writeValue(mCoordinates);
-        dest.writeValue(mImage);
+//        dest.writeValue(mCoordinates);
+//        dest.writeValue(mImage);
+        dest.writeDouble(mLatitude);
+        dest.writeDouble(mLongitude);
+        dest.writeString(mLocationImageThumbnail);
+        dest.writeString(mLocationImageFull);
     }
 
     @SuppressWarnings("unused")

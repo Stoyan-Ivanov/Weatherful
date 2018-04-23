@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.models.Location;
+import com.stoyan.weatherful.db.models.LocationForecastSummaryWrapper;
 import com.stoyan.weatherful.ui.location_activity.LocationActivityPresenter;
 
 import java.util.ArrayList;
@@ -17,12 +18,12 @@ import java.util.ArrayList;
  */
 
 public class LocationsRecyclerViewAdapter extends RecyclerView.Adapter<LocationViewHolder> {
-    private ArrayList<Location> mLocations = new ArrayList<>();
+    private ArrayList<LocationForecastSummaryWrapper> mLocationForecastSummaryWrappers = new ArrayList<>();
     private LocationActivityPresenter mPresenter;
 
     public LocationsRecyclerViewAdapter(LocationActivityPresenter presenter) {
         this.mPresenter = presenter;
-        this.mLocations = presenter.getLocations();
+        this.mLocationForecastSummaryWrappers = presenter.getLocationForecastWrappers();
     }
 
     @Override
@@ -34,19 +35,18 @@ public class LocationsRecyclerViewAdapter extends RecyclerView.Adapter<LocationV
     }
 
     public void onBindViewHolder(LocationViewHolder holder, int position) {
-        final Location location = mLocations.get(position);
-        holder.bind(location);
+        holder.bind(mLocationForecastSummaryWrappers.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mLocations.size();
+        return mLocationForecastSummaryWrappers.size();
     }
 
     public void removeItem(int position, Location location) {
         mPresenter.deleteLocation(location);
-        mLocations.remove(position);
+        mLocationForecastSummaryWrappers.remove(position);
         notifyItemRemoved(position);
-        notifyItemRangeChanged(position, mLocations.size());
+        notifyItemRangeChanged(position, mLocationForecastSummaryWrappers.size());
     }
 }

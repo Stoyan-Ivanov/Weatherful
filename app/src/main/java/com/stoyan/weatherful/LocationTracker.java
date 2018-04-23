@@ -19,15 +19,20 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Created by stoyan.ivanov2 on 4/17/2018.
  */
 
+@Singleton
 public class LocationTracker implements LocationListener{
     private LocationManager mLocationManager;
     private Context mContext;
     private com.stoyan.weatherful.db.models.Location currentLocation;
 
+    @Inject
     public LocationTracker() {
         mContext = WeatherfulApplication.getStaticContext();
         mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);

@@ -8,6 +8,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.db.models.Location;
+import com.stoyan.weatherful.db.models.LocationForecastSummaryWrapper;
+import com.stoyan.weatherful.network.models.forecast_summary_models.ForecastSummaryResponse;
 import com.stoyan.weatherful.ui.forecast_activity.ForecastActivity;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.BaseViewHolder;
 
@@ -33,13 +35,13 @@ public class LocationViewHolder extends BaseViewHolder {
         this.mContext = itemView.getContext();
     }
 
-    public void bind(final Location location) {
+    public void bind(final LocationForecastSummaryWrapper locationForecastSummaryWrapper) {
 
-        tvLocationName.setText(location.getLocationName());
-        setLocationPicture(location.getThumbnailUrl());
-        setTemperature(location);
+        tvLocationName.setText(locationForecastSummaryWrapper.getLocation().getLocationName());
+        setLocationPicture(locationForecastSummaryWrapper.getLocation().getLocationImageThumbnail());
+        setTemperature(locationForecastSummaryWrapper.getForecastSummaryResponse());
 
-        setOnViewHolderClickListeners(location);
+        setOnViewHolderClickListeners(locationForecastSummaryWrapper.getLocation());
     }
 
     private void setOnViewHolderClickListeners(final Location location) {
@@ -61,8 +63,8 @@ public class LocationViewHolder extends BaseViewHolder {
         }
     }
 
-    public void setTemperature(Location location) {
-        float temperature = location.getForecastSummary().getHourly().getData().get(FIRST).getTemperature();
+    public void setTemperature(ForecastSummaryResponse forecastSummaryResponse) {
+        float temperature = forecastSummaryResponse.getHourly().getData().get(FIRST).getTemperature();
         tvTemperature.setText(mContext.getString(R.string.single_temperature_field, (int) temperature));
     }
 }

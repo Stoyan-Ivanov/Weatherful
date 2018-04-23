@@ -25,7 +25,9 @@ public class LocationsProvider implements LocationsProviderContract {
 
     @Override
     public ArrayList<Location> getLocations() {
-        ArrayList<Location>  locations = mLocationsDatabase.locationDA0().getAllLocations();
+       // ArrayList<Location>  locations = (ArrayList<Location>) LocationsDatabase.getInstance().locationDA0().getAllLocations();
+
+        ArrayList<Location>  locations = new ArrayList<>();
 
         if(locations.isEmpty()) {
             initDatabase();
@@ -43,7 +45,7 @@ public class LocationsProvider implements LocationsProviderContract {
 //            locations = initDatabase();
 //        }
 //
-//        Log.d("SII", "getLocations: " + locations.toString());
+//        Log.d("SII", "getLocationForecastWrappers: " + locations.toString());
 //        return locations;
     }
 
@@ -63,7 +65,7 @@ public class LocationsProvider implements LocationsProviderContract {
 
     @Override
     public boolean saveLocation(Location location) {
-        mLocationsDatabase.locationDA0().insert(location);
+        LocationsDatabase.getInstance().locationDA0().insert(location);
         return true;
 
 
@@ -80,7 +82,7 @@ public class LocationsProvider implements LocationsProviderContract {
 
     public void updateLocation(Location location) {
         if(location != null) {
-            mLocationsDatabase.locationDA0().update(location);
+            LocationsDatabase.getInstance().locationDA0().update(location);
         }
     }
 
@@ -90,7 +92,7 @@ public class LocationsProvider implements LocationsProviderContract {
 
     public void deleteLocation(Location location) {
 
-        mLocationsDatabase.locationDA0().delete(location);
+        LocationsDatabase.getInstance().locationDA0().delete(location);
 
 //        if(checkIfLocationExists(location)) {
 //            Paper.book().delete(location.getLocationName() + location.getCountry());

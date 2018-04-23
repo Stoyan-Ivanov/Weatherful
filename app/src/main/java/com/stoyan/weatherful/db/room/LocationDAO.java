@@ -8,7 +8,7 @@ import android.arch.persistence.room.Update;
 
 import com.stoyan.weatherful.db.models.Location;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by stoyan.ivanov2 on 4/19/2018.
@@ -17,8 +17,8 @@ import java.util.ArrayList;
 @Dao
 public interface LocationDAO {
 
-    @Query("SELECT * FROM locations")
-    ArrayList<Location> getAllLocations();
+    @Query("SELECT * FROM location")
+    List<Location> getAllLocations();
 
     @Insert
     void insert(Location location);

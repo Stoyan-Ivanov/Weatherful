@@ -1,7 +1,8 @@
 package com.stoyan.weatherful.network;
 
-import com.stoyan.weatherful.db.models.Location;
 import com.stoyan.weatherful.db.LocationsProvider;
+import com.stoyan.weatherful.db.models.Location;
+import com.stoyan.weatherful.db.models.LocationForecastSummaryWrapper;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.rx.RxUtils;
 
@@ -27,50 +28,51 @@ public class DataManager {
         this.mLocationProvider = locationProvider;
     }
 
-    public Observable<ArrayList<Location>> getLocationDataObservable() {
+    public Observable<ArrayList<LocationForecastSummaryWrapper>> getLocationDataObservable() {
         return Observable.just(mLocationProvider.getLocations())
                 .flatMapIterable(locations -> locations)
+                .map(location -> new LocationForecastSummaryWrapper(location))
                 .flatMap(this::downloadLocationImage)
                 .flatMap(this::downloadForecastSummary)
-                .map(location -> {updateLocation(location);
-                            return location;})
+                .map(wrapper -> {updateLocation(wrapper.getLocation());
+                            return wrapper;})
                 .toList()
                 .map(ArrayList::new)
                 .toObservable();
     }
 
-    private Observable<Location> downloadLocationImage(Location location) {
-        if(location.getThumbnailUrl() == null) {
+    private Observable<LocationForecastSummaryWrapper> downloadLocationImage(LocationForecastSummaryWrapper wrapper) {
+        if(wrapper.getLocation().getLocationImageThumbnail() == null) {
            return mNetworkManager
                     .getQwantAPI()
-                    .getLocationImage(location.toString())
+                    .getLocationImage(wrapper.getLocation().toString())
                     .compose(RxUtils.applySchedulers())
                     .map(imageResponse -> imageResponse.getData().getResult().getPictures())
                     .flatMapIterable(pictures -> pictures)
                     .firstElement()
                     .map(picture -> {
-                        location.setThumbnailUrl(URL_PREFIX + picture.getThumbnailUrl());
-                        location.setFullImageUrl(URL_PREFIX + picture.getFullSizeImageUrl());
-                        return location;
+                        wrapper.getLocation().setLocationImageThumbnail(URL_PREFIX + picture.getThumbnailUrl());
+                        wrapper.getLocation().setLocationImageFull(URL_PREFIX + picture.getFullSizeImageUrl());
+                        return wrapper;
                     }).toObservable();
         }
-        return Observable.just(location);
+        return Observable.just(wrapper);
     }
 
-    public Observable<Location> getCurrentLocationDataObservable(Location location) {
-        return Observable.just(location)
+    public Observable<LocationForecastSummaryWrapper> getCurrentLocationDataObservable(LocationForecastSummaryWrapper wrapper) {
+        return Observable.just(wrapper)
                 .flatMap(this::downloadLocationImage)
                 .flatMap(this::downloadForecastSummary);
     }
 
-    private Observable<Location> downloadForecastSummary(Location location) {
+    private Observable<LocationForecastSummaryWrapper> downloadForecastSummary(LocationForecastSummaryWrapper wrapper) {
         return mNetworkManager
                 .getWeatherfulAPI()
-                .getForecastSummaryResponse(location.getLatitude(), location.getLongitude())
+                .getForecastSummaryResponse(wrapper.getLocation().getLatitude(), wrapper.getLocation().getLongitude())
                 .compose(RxUtils.applySchedulers())
                 .map(forecastSummaryResponse -> {
-                    location.setForecastSummary(forecastSummaryResponse);
-                    return location;
+                    wrapper.setForecastSummaryResponse(forecastSummaryResponse);
+                    return wrapper;
                 });
     }
 

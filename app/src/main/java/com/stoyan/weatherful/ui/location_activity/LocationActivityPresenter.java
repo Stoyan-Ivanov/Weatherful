@@ -1,9 +1,8 @@
 package com.stoyan.weatherful.ui.location_activity;
 
-import android.util.Log;
-
 import com.stoyan.weatherful.LocationTracker;
 import com.stoyan.weatherful.db.models.Location;
+import com.stoyan.weatherful.db.models.LocationForecastSummaryWrapper;
 import com.stoyan.weatherful.network.DataManager;
 import com.stoyan.weatherful.rx.RxBus;
 import com.stoyan.weatherful.rx.RxUtils;
@@ -22,11 +21,12 @@ import io.reactivex.functions.Consumer;
  */
 
 public class LocationActivityPresenter extends BasePresenter<LocationActivityContract> {
-    private ArrayList<Location> mLocations;
-    private Location mCurrentLocation;
+    private ArrayList<LocationForecastSummaryWrapper> mLocationForecastSummaryWrappers;
+    private LocationForecastSummaryWrapper mCurrentLocationWrapper;
 
     @Inject RxBus mRxBus;
     @Inject DataManager mDataManager;
+    @Inject LocationTracker locationTracker;
 
     @Override
     protected void inject() {
@@ -54,10 +54,11 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
         );
     }
 
-    private Consumer<ArrayList<Location>> getLocationConsumer() {
-        return locations -> {
-            LocationActivityPresenter.this.mLocations.clear();
-            LocationActivityPresenter.this.mLocations.addAll(locations);
+    private Consumer<ArrayList<LocationForecastSummaryWrapper>> getLocationConsumer() {
+        return wrappers -> {
+            mLocationForecastSummaryWrappers.clear();
+            mLocationForecastSummaryWrappers.addAll(wrappers);
+
             view.notifyDataSetChanged();
         };
     }
@@ -66,23 +67,24 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
         return (Consumer<Throwable>) throwable -> view.showError(throwable);
     }
 
-    public ArrayList<Location> getLocations() {
-        mLocations = new ArrayList<>();
-        return mLocations;
+    public ArrayList<LocationForecastSummaryWrapper> getLocationForecastWrappers() {
+        mLocationForecastSummaryWrappers = new ArrayList<>();
+        return mLocationForecastSummaryWrappers;
     }
 
     public void getCurrentLocation() {
-        LocationTracker locationTracker = new LocationTracker();
-        mCurrentLocation =  locationTracker.getCurrentLocation();
-        addDisposable(mDataManager.getCurrentLocationDataObservable(mCurrentLocation)
-                .subscribe(getCurrentLocationConsumer(), getErrorConsumer())
-        );
+        mCurrentLocationWrapper  = new LocationForecastSummaryWrapper(locationTracker.getCurrentLocation());
+
+        if(mCurrentLocationWrapper != null) {
+            addDisposable(mDataManager.getCurrentLocationDataObservable(mCurrentLocationWrapper)
+                    .subscribe(getCurrentLocationConsumer(), getErrorConsumer())
+            );
+        }
     }
 
-    private Consumer<Location> getCurrentLocationConsumer() {
-        return location -> {
-            LocationActivityPresenter.this.mCurrentLocation = location;
-            Log.d("SII", "getCurrentLocation: " + mCurrentLocation.getFullImageUrl());
+    private Consumer<LocationForecastSummaryWrapper> getCurrentLocationConsumer() {
+        return wrapper -> {
+            mCurrentLocationWrapper = wrapper;
             view.loadCurrentLocation();
         };
     }
@@ -92,22 +94,22 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
     }
 
     public String getCurrentLocationName() {
-        return mCurrentLocation.getLocationName();
+        return mCurrentLocationWrapper.getLocation().getLocationName();
     }
 
     public int getCurrentLocationTemperature() {
-        return (int) mCurrentLocation.getForecastSummary().getHourly().getData().get(0).getTemperature();
+        return (int) mCurrentLocationWrapper.getForecastSummaryResponse().getHourly().getData().get(0).getTemperature();
     }
 
     public String getMainLocationForecastSummary() {
-        return mCurrentLocation.getForecastSummary().getHourly().getSummary();
+        return mCurrentLocationWrapper.getForecastSummaryResponse().getHourly().getSummary();
     }
 
     public String getMainLocationImageUrl() {
-        return mCurrentLocation.getFullImageUrl();
+        return mCurrentLocationWrapper.getLocation().getLocationImageThumbnail();
     }
 
     public void onCurrentLocationClicked() {
-        view.startNewForecastActivity(mCurrentLocation);
+        view.startNewForecastActivity(mCurrentLocationWrapper.getLocation());
     }
 }
