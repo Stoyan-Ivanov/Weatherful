@@ -1,8 +1,9 @@
-package com.stoyan.weatherful.network;
+package com.stoyan.weatherful;
 
-import com.stoyan.weatherful.db.LocationsProvider;
-import com.stoyan.weatherful.db.models.Location;
-import com.stoyan.weatherful.db.models.LocationForecastSummaryWrapper;
+import com.stoyan.weatherful.persistence.LocationsProvider;
+import com.stoyan.weatherful.persistence.models.Location;
+import com.stoyan.weatherful.persistence.models.LocationForecastSummaryWrapper;
+import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.rx.RxUtils;
 

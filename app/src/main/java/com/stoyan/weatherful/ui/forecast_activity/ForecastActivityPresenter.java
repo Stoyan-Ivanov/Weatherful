@@ -2,10 +2,11 @@ package com.stoyan.weatherful.ui.forecast_activity;
 
 
 import android.content.Intent;
+import android.util.Log;
 
 import com.stoyan.weatherful.Constants;
-import com.stoyan.weatherful.db.models.Location;
-import com.stoyan.weatherful.network.DataManager;
+import com.stoyan.weatherful.persistence.models.Location;
+import com.stoyan.weatherful.DataManager;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.rx.RxBus;
 import com.stoyan.weatherful.rx.RxUtils;
@@ -61,6 +62,7 @@ public class ForecastActivityPresenter extends BasePresenter<ForecastActivityCon
     }
 
     public void downloadWeeklyForecast() {
+        Log.d("SII", "downloadWeeklyForecast: " + mLocation.toString());
         subscribeToEventBus();
         mDataManager.getWeeklyForecastObservable(mLocation)
                 .subscribe(getWeeklyForecastConsumer(), getErrorConsumer());

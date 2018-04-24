@@ -1,4 +1,4 @@
-package com.stoyan.weatherful.db.room;
+package com.stoyan.weatherful.persistence.room;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
@@ -6,8 +6,9 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.stoyan.weatherful.db.models.Location;
+import com.stoyan.weatherful.persistence.models.Location;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,8 +18,14 @@ import java.util.List;
 @Dao
 public interface LocationDAO {
 
-    @Query("SELECT * FROM location")
+    @Query("SELECT * FROM locations")
     List<Location> getAllLocations();
+
+    @Query("SELECT * FROM locations WHERE locationName = :locationName AND locationCountry = :locationCountry")
+    Location getLocationByName(String locationName, String locationCountry);
+
+    @Insert
+    void insertMultipleLocations(ArrayList<Location> locations);
 
     @Insert
     void insert(Location location);

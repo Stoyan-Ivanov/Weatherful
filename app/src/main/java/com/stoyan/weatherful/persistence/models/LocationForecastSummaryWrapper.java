@@ -1,4 +1,4 @@
-package com.stoyan.weatherful.db.models;
+package com.stoyan.weatherful.persistence.models;
 
 import com.stoyan.weatherful.network.models.forecast_summary_models.ForecastSummaryResponse;
 

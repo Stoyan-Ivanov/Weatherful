@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 import com.rd.PageIndicatorView;
 import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
-import com.stoyan.weatherful.db.models.Location;
+import com.stoyan.weatherful.persistence.models.Location;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.ui.base_ui.activity.BaseActivity;
 import com.stoyan.weatherful.view_utils.CustomPagerAdapter;

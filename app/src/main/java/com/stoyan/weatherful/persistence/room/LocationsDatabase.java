@@ -1,9 +1,9 @@
-package com.stoyan.weatherful.db.room;
+package com.stoyan.weatherful.persistence.room;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
-import com.stoyan.weatherful.db.models.Location;
+import com.stoyan.weatherful.persistence.models.Location;
 
 import javax.inject.Singleton;
 

@@ -1,6 +1,6 @@
 package com.stoyan.weatherful.di;
 
-import com.stoyan.weatherful.db.room.LocationsDatabase;
+import com.stoyan.weatherful.persistence.room.LocationsDatabase;
 
 import javax.inject.Singleton;
 

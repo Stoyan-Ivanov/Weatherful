@@ -1,4 +1,4 @@
-package com.stoyan.weatherful.db.models;
+package com.stoyan.weatherful.persistence.models;
 
 import android.arch.persistence.room.TypeConverter;
 

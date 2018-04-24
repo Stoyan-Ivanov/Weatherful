@@ -30,7 +30,7 @@ import javax.inject.Singleton;
 public class LocationTracker implements LocationListener{
     private LocationManager mLocationManager;
     private Context mContext;
-    private com.stoyan.weatherful.db.models.Location currentLocation;
+    private com.stoyan.weatherful.persistence.models.Location currentLocation;
 
     @Inject
     public LocationTracker() {
@@ -38,7 +38,7 @@ public class LocationTracker implements LocationListener{
         mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
     }
 
-    public com.stoyan.weatherful.db.models.Location getCurrentLocation() {
+    public com.stoyan.weatherful.persistence.models.Location getCurrentLocation() {
         boolean isGPSEnabled;
         boolean isNetworkEnabled;
 
@@ -85,7 +85,7 @@ public class LocationTracker implements LocationListener{
                 String cityName = addresses.get(0).getLocality();
                 String countryName = addresses.get(0).getCountryName();
 
-                currentLocation = new com.stoyan.weatherful.db.models.Location(cityName, countryName, latitude, longitude);
+                currentLocation = new com.stoyan.weatherful.persistence.models.Location(cityName, countryName, latitude, longitude);
 
             } catch (IOException mE) {
                 mE.printStackTrace();

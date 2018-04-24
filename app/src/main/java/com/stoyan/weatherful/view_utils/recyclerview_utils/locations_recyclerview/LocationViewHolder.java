@@ -7,8 +7,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.stoyan.weatherful.R;
-import com.stoyan.weatherful.db.models.Location;
-import com.stoyan.weatherful.db.models.LocationForecastSummaryWrapper;
+import com.stoyan.weatherful.persistence.models.Location;
+import com.stoyan.weatherful.persistence.models.LocationForecastSummaryWrapper;
 import com.stoyan.weatherful.network.models.forecast_summary_models.ForecastSummaryResponse;
 import com.stoyan.weatherful.ui.forecast_activity.ForecastActivity;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.BaseViewHolder;

@@ -1,6 +1,6 @@
 package com.stoyan.weatherful.ui.location_activity;
 
-import com.stoyan.weatherful.db.models.Location;
+import com.stoyan.weatherful.persistence.models.Location;
 import com.stoyan.weatherful.ui.base_ui.contract.BaseViewContract;
 
 /**

@@ -1,4 +1,4 @@
-package com.stoyan.weatherful.db.models;
+package com.stoyan.weatherful.persistence.models;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -13,7 +13,7 @@ import com.esotericsoftware.kryo.NotNull;
  * Created by Stoyan on 27.1.2018 г..
  */
 
-@Entity(tableName = "location")
+@Entity(tableName = "locations")
 public class Location implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     @NotNull
@@ -23,7 +23,7 @@ public class Location implements Parcelable {
     @ColumnInfo(name = "locationName")
     private String mLocationName;
 
-    @ColumnInfo(name = "country")
+    @ColumnInfo(name = "locationCountry")
     private String mCountry;
 
     @ColumnInfo(name = "locationLatitude")
@@ -31,9 +31,6 @@ public class Location implements Parcelable {
 
     @ColumnInfo(name = "locationLongitude")
     private double mLongitude;
-
-//    @ColumnInfo(name = "locationImage")
-//    private Image mImage;
 
     @ColumnInfo(name = "locationThumbnail")
     private String mLocationImageThumbnail;
@@ -50,8 +47,6 @@ public class Location implements Parcelable {
         this.mCountry = mCountry;
         this.mLatitude = mLatitude;
         this.mLongitude = mLongitude;
-
-       // this.mCoordinates = new Coordinates(latitude, longitude);
     }
 
     @Ignore
@@ -61,8 +56,6 @@ public class Location implements Parcelable {
         this(mLocationName, mCountry, latitude, longitude);
         this.mLocationImageThumbnail = mLocationImageThumbnail;
         this.mLocationImageFull = mLocationImageFull;
-
-        //this.mImage = new Image(thumbnailUrl, fullImageUrl);
     }
 
     public int getId() {
@@ -127,14 +120,13 @@ public class Location implements Parcelable {
     }
 
     protected Location(Parcel in) {
+        mId = in.readInt();
         mLocationName = in.readString();
         mCountry = in.readString();
         mLatitude = in.readDouble();
         mLongitude = in.readDouble();
         mLocationImageThumbnail = in.readString();
         mLocationImageFull = in.readString();
-//        mCoordinates = (Coordinates) in.readValue(Coordinates.class.getClassLoader());
-//        mImage = (Image) in.readValue(Image.class.getClassLoader());;
     }
 
     @Override
@@ -147,8 +139,6 @@ public class Location implements Parcelable {
         dest.writeInt(mId);
         dest.writeString(mLocationName);
         dest.writeString(mCountry);
-//        dest.writeValue(mCoordinates);
-//        dest.writeValue(mImage);
         dest.writeDouble(mLatitude);
         dest.writeDouble(mLongitude);
         dest.writeString(mLocationImageThumbnail);

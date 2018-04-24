@@ -3,8 +3,8 @@ package com.stoyan.weatherful.di;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 
-import com.stoyan.weatherful.db.room.LocationDAO;
-import com.stoyan.weatherful.db.room.LocationsDatabase;
+import com.stoyan.weatherful.persistence.room.LocationDAO;
+import com.stoyan.weatherful.persistence.room.LocationsDatabase;
 
 import javax.inject.Singleton;
 

@@ -1,9 +1,11 @@
 package com.stoyan.weatherful.ui.location_activity;
 
+import android.util.Log;
+
 import com.stoyan.weatherful.LocationTracker;
-import com.stoyan.weatherful.db.models.Location;
-import com.stoyan.weatherful.db.models.LocationForecastSummaryWrapper;
-import com.stoyan.weatherful.network.DataManager;
+import com.stoyan.weatherful.persistence.models.Location;
+import com.stoyan.weatherful.persistence.models.LocationForecastSummaryWrapper;
+import com.stoyan.weatherful.DataManager;
 import com.stoyan.weatherful.rx.RxBus;
 import com.stoyan.weatherful.rx.RxUtils;
 import com.stoyan.weatherful.rx.events.NoInternetAvailableEvent;
@@ -110,6 +112,7 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
     }
 
     public void onCurrentLocationClicked() {
+        Log.d("SII", "onCurrentLocationClicked: " + mCurrentLocationWrapper.getLocation());
         view.startNewForecastActivity(mCurrentLocationWrapper.getLocation());
     }
 }
