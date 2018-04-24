@@ -11,6 +11,8 @@ import com.stoyan.weatherful.persistence.models.Location;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Maybe;
+
 /**
  * Created by stoyan.ivanov2 on 4/19/2018.
  */
@@ -19,10 +21,10 @@ import java.util.List;
 public interface LocationDAO {
 
     @Query("SELECT * FROM locations")
-    List<Location> getAllLocations();
+    Maybe<List<Location>> getAllLocations();
 
     @Query("SELECT * FROM locations WHERE locationName = :locationName AND locationCountry = :locationCountry")
-    Location getLocationByName(String locationName, String locationCountry);
+    Maybe<Location> getLocationByName(String locationName, String locationCountry);
 
     @Insert
     void insertMultipleLocations(ArrayList<Location> locations);

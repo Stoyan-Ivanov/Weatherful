@@ -19,8 +19,11 @@ import dagger.Provides;
 public class RoomModule {
     private LocationsDatabase mDatabase;
 
-    public RoomModule(Application mApplication) {
-        mDatabase = Room.databaseBuilder(mApplication, LocationsDatabase.class, "locationsDatabase.db").allowMainThreadQueries().build();
+    public RoomModule(Application application) {
+        mDatabase = Room
+                .databaseBuilder(application, LocationsDatabase.class, "locationsDatabase.db")
+                .allowMainThreadQueries()
+                .build();
     }
 
     @Singleton

@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.persistence.models.Location;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
@@ -121,10 +122,12 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
     }
 
     public void loadCurrentLocation() {
-        loadCurrentLocationName(presenter.getCurrentLocationName());
-        loadCurrentLocationTemperature(presenter.getCurrentLocationTemperature());
-        loadCurrentLocationForecastSummary(presenter.getMainLocationForecastSummary());
-        loadCurrentLocationImage(presenter.getMainLocationImageUrl());
+        Bundle currentLocationData = presenter.getCurrentLocationData();
+
+        loadCurrentLocationName(currentLocationData.getString(Constants.CURRENT_LOCATION_NAME));
+        loadCurrentLocationTemperature(currentLocationData.getInt(Constants.CURRENT_LOCATION_TEMPERATURE));
+        loadCurrentLocationForecastSummary(currentLocationData.getString(Constants.CURRENT_LOCATION_FORECAST_SUMMARY));
+        loadCurrentLocationImage(currentLocationData.getString(Constants.CURRENT_LOCATION_IMAGE_URL));
     }
 
     private void loadCurrentLocationImage(String imageUrl) {

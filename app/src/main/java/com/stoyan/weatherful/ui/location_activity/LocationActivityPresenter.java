@@ -1,11 +1,13 @@
 package com.stoyan.weatherful.ui.location_activity;
 
+import android.os.Bundle;
 import android.util.Log;
 
+import com.stoyan.weatherful.Constants;
+import com.stoyan.weatherful.DataManager;
 import com.stoyan.weatherful.LocationTracker;
 import com.stoyan.weatherful.persistence.models.Location;
 import com.stoyan.weatherful.persistence.models.LocationForecastSummaryWrapper;
-import com.stoyan.weatherful.DataManager;
 import com.stoyan.weatherful.rx.RxBus;
 import com.stoyan.weatherful.rx.RxUtils;
 import com.stoyan.weatherful.rx.events.NoInternetAvailableEvent;
@@ -37,7 +39,7 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
 
     private void subscribeToEventBus() {
         addDisposable(mRxBus.toObservable()
-                .compose(RxUtils.applySchedulers())
+                .compose(RxUtils.applySchedulersObservable())
                 .subscribe(event -> {
                     if (event instanceof NoInternetAvailableEvent) {
                         view.showNoInternetView();
@@ -95,20 +97,20 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
         mDataManager.deleteLocation(location);
     }
 
-    public String getCurrentLocationName() {
-        return mCurrentLocationWrapper.getLocation().getLocationName();
-    }
 
-    public int getCurrentLocationTemperature() {
-        return (int) mCurrentLocationWrapper.getForecastSummaryResponse().getHourly().getData().get(0).getTemperature();
-    }
+    public Bundle getCurrentLocationData() {
+        Bundle currentLocationData = new Bundle();
 
-    public String getMainLocationForecastSummary() {
-        return mCurrentLocationWrapper.getForecastSummaryResponse().getHourly().getSummary();
-    }
+        currentLocationData.putString(Constants.CURRENT_LOCATION_NAME,
+                mCurrentLocationWrapper.getLocation().getLocationName());
+        currentLocationData.putInt(Constants.CURRENT_LOCATION_TEMPERATURE,
+                (int) mCurrentLocationWrapper.getForecastSummaryResponse().getHourly().getData().get(0).getTemperature());
+        currentLocationData.putString(Constants.CURRENT_LOCATION_FORECAST_SUMMARY,
+                mCurrentLocationWrapper.getForecastSummaryResponse().getHourly().getSummary());
+        currentLocationData.putString(Constants.CURRENT_LOCATION_IMAGE_URL,
+                mCurrentLocationWrapper.getLocation().getLocationImageThumbnail());
 
-    public String getMainLocationImageUrl() {
-        return mCurrentLocationWrapper.getLocation().getLocationImageThumbnail();
+        return currentLocationData;
     }
 
     public void onCurrentLocationClicked() {

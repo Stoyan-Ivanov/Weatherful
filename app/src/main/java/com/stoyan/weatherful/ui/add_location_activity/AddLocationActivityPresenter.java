@@ -1,5 +1,6 @@
 package com.stoyan.weatherful.ui.add_location_activity;
 
+import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 
@@ -20,6 +21,7 @@ import javax.inject.Inject;
 
 public class AddLocationActivityPresenter extends BasePresenter<AddLocationActivityContract> {
     @Inject DataManager mDataManager;
+    Context mContext = WeatherfulApplication.getStaticContext();
 
     @Override
     protected void inject() {
@@ -53,7 +55,7 @@ public class AddLocationActivityPresenter extends BasePresenter<AddLocationActiv
 
     private void prepareLocationForSaving(Location location) {
         if(mDataManager.saveLocation(location)) {
-            WeatherfulApplication.showToast(WeatherfulApplication.getStringFromId(R.string.successful_adding));
+            WeatherfulApplication.showToast(mContext.getString(R.string.successful_adding));
             view.startNewLocationsActivity();
         }
     }
@@ -62,7 +64,7 @@ public class AddLocationActivityPresenter extends BasePresenter<AddLocationActiv
         final String EMPTY_STRING = "";
 
         if(cityName.equals(EMPTY_STRING) || countryName.equals(EMPTY_STRING)) {
-            WeatherfulApplication.showToast(WeatherfulApplication.getStringFromId(R.string.invalid_input));
+            WeatherfulApplication.showToast(mContext.getString(R.string.invalid_input));
             return false;
         }
         return true;

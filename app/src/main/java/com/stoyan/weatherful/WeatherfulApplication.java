@@ -53,10 +53,6 @@ public class WeatherfulApplication extends Application  {
         return mAppComponent;
     }
 
-    public static String getStringFromId(int id) {
-        return sContext.getResources().getString(id);
-    }
-
     public static Context getStaticContext() {
         return sContext;
     }

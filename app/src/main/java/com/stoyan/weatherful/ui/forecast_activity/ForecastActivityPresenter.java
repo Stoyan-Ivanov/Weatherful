@@ -37,7 +37,7 @@ public class ForecastActivityPresenter extends BasePresenter<ForecastActivityCon
 
     private void subscribeToEventBus() {
         addDisposable(mRxBus.toObservable()
-                .compose(RxUtils.applySchedulers())
+                .compose(RxUtils.applySchedulersObservable())
                 .subscribe(event -> {
                     if(event instanceof NoInternetAvailableEvent) {
                         view.showNoInternetView();
