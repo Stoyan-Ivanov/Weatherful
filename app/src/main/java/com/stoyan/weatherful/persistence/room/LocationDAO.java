@@ -21,7 +21,7 @@ import io.reactivex.Maybe;
 public interface LocationDAO {
 
     @Query("SELECT * FROM locations")
-    Maybe<List<Location>> getAllLocations();
+    List<Location> getAllLocations();
 
     @Query("SELECT * FROM locations WHERE locationName = :locationName AND locationCountry = :locationCountry")
     Maybe<Location> getLocationByName(String locationName, String locationCountry);

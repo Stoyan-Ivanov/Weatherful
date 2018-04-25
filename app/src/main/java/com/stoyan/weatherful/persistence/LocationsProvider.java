@@ -6,6 +6,7 @@ import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.WeatherfulApplication;
 import com.stoyan.weatherful.persistence.models.Location;
 import com.stoyan.weatherful.persistence.room.LocationDAO;
+import com.stoyan.weatherful.rx.RxUtils;
 
 import java.util.ArrayList;
 
@@ -52,11 +53,17 @@ public class LocationsProvider implements LocationsProviderContract {
 
     @Override
     public boolean saveLocation(Location location) {
-        if (checkIfLocationExists(location)) {
-            WeatherfulApplication.showToast(mContext.getString(R.string.duplication_when_adding));
-        } else {
-            mDAO.insert(location);
-        }
+        mDAO.getLocationByName(location.getLocationName(), location.getCountry())
+                .compose(RxUtils.applySchedulersMaybe())
+                .subscribe(locationFromDB -> {
+                    if(locationFromDB == null) {
+                        mDAO.insert(location);
+                        WeatherfulApplication.showToast(mContext.getString(R.string.successful_adding));
+                    } else{
+                        WeatherfulApplication.showToast(mContext.getString(R.string.duplication_when_adding));
+                    }
+                });
+
         return true;
     }
 
@@ -67,16 +74,13 @@ public class LocationsProvider implements LocationsProviderContract {
     }
 
     public void deleteLocation(Location location) {
-        if(checkIfLocationExists(location)) {
-            mDAO.delete(location);
-            WeatherfulApplication.showToast(mContext.getString(R.string.successful_deleting));
-        }
-    }
-
-    private boolean checkIfLocationExists(Location location) {
-        if(mDAO.getLocationByName(location.getLocationName(), location.getCountry()) == null) {
-            return true;
-        }
-        return false;
+        mDAO.getLocationByName(location.getLocationName(), location.getCountry())
+                .compose(RxUtils.applySchedulersMaybe())
+                .subscribe(locationFromDB -> {
+                    if(locationFromDB != null) {
+                        mDAO.delete(location);
+                        WeatherfulApplication.showToast(mContext.getString(R.string.successful_deleting));
+                    }
+                });
     }
 }

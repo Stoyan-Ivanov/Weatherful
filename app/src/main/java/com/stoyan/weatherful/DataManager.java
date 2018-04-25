@@ -47,7 +47,7 @@ public class DataManager {
            return mNetworkManager
                     .getQwantAPI()
                     .getLocationImage(wrapper.getLocation().toString())
-                    .compose(RxUtils.applySchedulers())
+                    .compose(RxUtils.applySchedulersObservable())
                     .map(imageResponse -> imageResponse.getData().getResult().getPictures())
                     .flatMapIterable(pictures -> pictures)
                     .firstElement()
@@ -70,7 +70,7 @@ public class DataManager {
         return mNetworkManager
                 .getWeatherfulAPI()
                 .getForecastSummaryResponse(wrapper.getLocation().getLatitude(), wrapper.getLocation().getLongitude())
-                .compose(RxUtils.applySchedulers())
+                .compose(RxUtils.applySchedulersObservable())
                 .map(forecastSummaryResponse -> {
                     wrapper.setForecastSummaryResponse(forecastSummaryResponse);
                     return wrapper;
@@ -81,7 +81,7 @@ public class DataManager {
         return mNetworkManager
                 .getWeatherfulAPI()
                 .getFullForecastResponse(location.getLatitude(), location.getLongitude())
-                .compose(RxUtils.applySchedulers())
+                .compose(RxUtils.applySchedulersObservable())
                 .map(forecastFullResponse -> forecastFullResponse.getDaily().getData())
                 .map(data -> { data.remove(0);
                     return data;
