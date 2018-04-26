@@ -54,10 +54,8 @@ public class AddLocationActivityPresenter extends BasePresenter<AddLocationActiv
     }
 
     private void prepareLocationForSaving(Location location) {
-        if(mDataManager.saveLocation(location)) {
-            WeatherfulApplication.showToast(mContext.getString(R.string.successful_adding));
-            view.startNewLocationsActivity();
-        }
+        mDataManager.saveLocation(location);
+        view.startNewLocationsActivity();
     }
 
     private boolean checkIfDataIsCorrect(String cityName, String countryName) {

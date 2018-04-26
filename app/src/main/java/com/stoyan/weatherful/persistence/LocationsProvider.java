@@ -9,9 +9,13 @@ import com.stoyan.weatherful.persistence.room.LocationDAO;
 import com.stoyan.weatherful.rx.RxUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 /**
  * Created by Stoyan on 27.1.2018 г..
@@ -29,14 +33,9 @@ public class LocationsProvider implements LocationsProviderContract {
     }
 
     @Override
-    public ArrayList<Location> getLocations() {
-        ArrayList<Location>  locations = (ArrayList<Location>) mDAO.getAllLocations();
-
-        if(locations.isEmpty()) {
-            locations = initDatabase();
-        }
-
-        return locations;
+    public Observable<List<Location>> getLocations() {
+        Single<List<Location>> single= mDAO.getAllLocations().compose(RxUtils.applySchedulerSingle());
+        return single.toObservable();
     }
 
     private ArrayList<Location> initDatabase() {
@@ -52,19 +51,8 @@ public class LocationsProvider implements LocationsProviderContract {
     }
 
     @Override
-    public boolean saveLocation(Location location) {
-        mDAO.getLocationByName(location.getLocationName(), location.getCountry())
-                .compose(RxUtils.applySchedulersMaybe())
-                .subscribe(locationFromDB -> {
-                    if(locationFromDB == null) {
-                        mDAO.insert(location);
-                        WeatherfulApplication.showToast(mContext.getString(R.string.successful_adding));
-                    } else{
-                        WeatherfulApplication.showToast(mContext.getString(R.string.duplication_when_adding));
-                    }
-                });
-
-        return true;
+    public void saveLocation(Location location) {
+        mDAO.insert(location);
     }
 
     public void updateLocation(Location location) {
@@ -74,13 +62,7 @@ public class LocationsProvider implements LocationsProviderContract {
     }
 
     public void deleteLocation(Location location) {
-        mDAO.getLocationByName(location.getLocationName(), location.getCountry())
-                .compose(RxUtils.applySchedulersMaybe())
-                .subscribe(locationFromDB -> {
-                    if(locationFromDB != null) {
-                        mDAO.delete(location);
-                        WeatherfulApplication.showToast(mContext.getString(R.string.successful_deleting));
-                    }
-                });
+        mDAO.delete(location);
+        WeatherfulApplication.showToast(mContext.getString(R.string.successful_deleting));
     }
 }

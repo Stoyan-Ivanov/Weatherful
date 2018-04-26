@@ -3,26 +3,21 @@ package com.stoyan.weatherful.persistence.models;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.esotericsoftware.kryo.NotNull;
+import android.support.annotation.NonNull;
 
 /**
  * Created by Stoyan on 27.1.2018 г..
  */
 
-@Entity(tableName = "locations")
+@Entity(tableName = "locations", primaryKeys = {"locationName", "locationCountry"})
 public class Location implements Parcelable {
-    @PrimaryKey(autoGenerate = true)
-    @NotNull
-    @ColumnInfo(name = "locationId")
-    private int mId;
-
+    @NonNull
     @ColumnInfo(name = "locationName")
     private String mLocationName;
 
+    @NonNull
     @ColumnInfo(name = "locationCountry")
     private String mCountry;
 
@@ -38,10 +33,10 @@ public class Location implements Parcelable {
     @ColumnInfo(name = "locationFullImage")
     private String mLocationImageFull;
 
-    public Location() {
-    }
-
     @Ignore
+    public Location() {}
+
+
     public Location(String mLocationName, String mCountry, double mLatitude, double mLongitude) {
         this.mLocationName = mLocationName;
         this.mCountry = mCountry;
@@ -56,14 +51,6 @@ public class Location implements Parcelable {
         this(mLocationName, mCountry, latitude, longitude);
         this.mLocationImageThumbnail = mLocationImageThumbnail;
         this.mLocationImageFull = mLocationImageFull;
-    }
-
-    public int getId() {
-        return mId;
-    }
-
-    public void setId(int mId) {
-        this.mId = mId;
     }
 
     public String getLocationName() {
@@ -120,7 +107,6 @@ public class Location implements Parcelable {
     }
 
     protected Location(Parcel in) {
-        mId = in.readInt();
         mLocationName = in.readString();
         mCountry = in.readString();
         mLatitude = in.readDouble();
@@ -136,7 +122,6 @@ public class Location implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(mId);
         dest.writeString(mLocationName);
         dest.writeString(mCountry);
         dest.writeDouble(mLatitude);

@@ -3,6 +3,7 @@ package com.stoyan.weatherful.persistence.room;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Maybe;
+import io.reactivex.Single;
 
 /**
  * Created by stoyan.ivanov2 on 4/19/2018.
@@ -21,15 +23,15 @@ import io.reactivex.Maybe;
 public interface LocationDAO {
 
     @Query("SELECT * FROM locations")
-    List<Location> getAllLocations();
+    Single<List<Location>> getAllLocations();
 
-    @Query("SELECT * FROM locations WHERE locationName = :locationName AND locationCountry = :locationCountry")
-    Maybe<Location> getLocationByName(String locationName, String locationCountry);
+    @Query("SELECT * FROM locations WHERE locationName = :name AND locationCountry = :country")
+    Maybe<Location> getLocationByName(String name, String country);
 
     @Insert
     void insertMultipleLocations(ArrayList<Location> locations);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Location location);
 
     @Update

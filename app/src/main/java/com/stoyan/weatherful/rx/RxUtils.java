@@ -3,6 +3,7 @@ package com.stoyan.weatherful.rx;
 
 import io.reactivex.MaybeTransformer;
 import io.reactivex.ObservableTransformer;
+import io.reactivex.SingleTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -21,9 +22,9 @@ public class RxUtils {
         return maybe -> maybe.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
-//
-//    public static <T> FlowableTransformer<T, T> applySchedulersFlowable() {
-//        return flowable -> flowable.subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread());
-//    }
+
+    public static <T> SingleTransformer<T, T> applySchedulerSingle() {
+        return single -> single.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

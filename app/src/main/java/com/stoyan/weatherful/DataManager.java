@@ -1,10 +1,12 @@
 package com.stoyan.weatherful;
 
+import android.util.Log;
+
+import com.stoyan.weatherful.network.NetworkManager;
+import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.persistence.LocationsProvider;
 import com.stoyan.weatherful.persistence.models.Location;
 import com.stoyan.weatherful.persistence.models.LocationForecastSummaryWrapper;
-import com.stoyan.weatherful.network.NetworkManager;
-import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.rx.RxUtils;
 
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
+
 
 /**
  * Created by stoyan.ivanov2 on 3/28/2018.
@@ -30,16 +33,21 @@ public class DataManager {
     }
 
     public Observable<ArrayList<LocationForecastSummaryWrapper>> getLocationDataObservable() {
-        return Observable.just(mLocationProvider.getLocations())
-                .flatMapIterable(locations -> locations)
-                .map(location -> new LocationForecastSummaryWrapper(location))
-                .flatMap(this::downloadLocationImage)
-                .flatMap(this::downloadForecastSummary)
-                .map(wrapper -> {updateLocation(wrapper.getLocation());
-                            return wrapper;})
-                .toList()
-                .map(ArrayList::new)
-                .toObservable();
+
+
+        return  mLocationProvider.getLocations()
+                .flatMap(mLocations -> Observable.just(mLocations)
+                    .flatMapIterable(allLocations -> allLocations)
+                    .map(LocationForecastSummaryWrapper::new)
+                    .flatMap(DataManager.this::downloadLocationImage)
+                    .flatMap(DataManager.this::downloadForecastSummary)
+                    .map(wrapper -> {
+                        Log.d("SII", "getLocationDataObservable: " + wrapper.getLocation().toString());
+                        updateLocation(wrapper.getLocation());
+                        return wrapper;})
+                    .toList()
+                    .map(ArrayList::new)
+                    .toObservable());
     }
 
     private Observable<LocationForecastSummaryWrapper> downloadLocationImage(LocationForecastSummaryWrapper wrapper) {
@@ -88,8 +96,8 @@ public class DataManager {
                 });
     }
 
-    public boolean saveLocation(Location location) {
-        return mLocationProvider.saveLocation(location);
+    public void saveLocation(Location location) {
+        mLocationProvider.saveLocation(location);
     }
 
     public void deleteLocation(Location location) {
