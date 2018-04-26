@@ -48,6 +48,8 @@ public class LocationViewHolder extends BaseViewHolder {
         itemView.setOnClickListener(view -> mContext.startActivity(ForecastActivity.getIntent(mContext, location)));
 
         itemView.setOnLongClickListener(view -> {
+            view.setClickable(false);
+            view.setEnabled(false);
             mAdapter.removeItem(getAdapterPosition(), location);
             return false;
         });

@@ -42,7 +42,7 @@ public class ForecastViewHolder extends BaseViewHolder {
         setTemperature();
         setRainChance();
 
-        itemView.setOnClickListener(v -> mContext.startActivity(
+        itemView.setOnClickListener(view -> mContext.startActivity(
                 ForecastPagerActivity.getIntent(mContext, location, data, position))
         );
     }
