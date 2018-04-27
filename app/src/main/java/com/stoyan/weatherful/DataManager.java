@@ -1,7 +1,5 @@
 package com.stoyan.weatherful;
 
-import android.util.Log;
-
 import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.persistence.LocationsProvider;
@@ -36,13 +34,12 @@ public class DataManager {
 
 
         return  mLocationProvider.getLocations()
-                .flatMap(mLocations -> Observable.just(mLocations)
+                .flatMap(locations -> Observable.just(locations)
                     .flatMapIterable(allLocations -> allLocations)
                     .map(LocationForecastSummaryWrapper::new)
                     .flatMap(DataManager.this::downloadLocationImage)
                     .flatMap(DataManager.this::downloadForecastSummary)
                     .map(wrapper -> {
-                        Log.d("SII", "getLocationDataObservable: " + wrapper.getLocation().toString());
                         updateLocation(wrapper.getLocation());
                         return wrapper;})
                     .toList()

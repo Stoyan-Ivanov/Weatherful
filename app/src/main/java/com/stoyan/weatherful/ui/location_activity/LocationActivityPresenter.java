@@ -79,7 +79,7 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
     public void getCurrentLocation() {
         mCurrentLocationWrapper  = new LocationForecastSummaryWrapper(locationTracker.getCurrentLocation());
 
-        if(mCurrentLocationWrapper != null) {
+        if(mCurrentLocationWrapper.getLocation() != null) {
             addDisposable(mDataManager.getCurrentLocationDataObservable(mCurrentLocationWrapper)
                     .subscribe(getCurrentLocationConsumer(), getErrorConsumer())
             );
@@ -108,13 +108,12 @@ public class LocationActivityPresenter extends BasePresenter<LocationActivityCon
         currentLocationData.putString(Constants.CURRENT_LOCATION_FORECAST_SUMMARY,
                 mCurrentLocationWrapper.getForecastSummaryResponse().getHourly().getSummary());
         currentLocationData.putString(Constants.CURRENT_LOCATION_IMAGE_URL,
-                mCurrentLocationWrapper.getLocation().getLocationImageThumbnail());
+                mCurrentLocationWrapper.getLocation().getLocationImageFull());
 
         return currentLocationData;
     }
 
     public void onCurrentLocationClicked() {
-        Log.d("SII", "onCurrentLocationClicked: " + mCurrentLocationWrapper.getLocation());
         view.startNewForecastActivity(mCurrentLocationWrapper.getLocation());
     }
 }

@@ -22,7 +22,6 @@ public class RoomModule {
     public RoomModule(Application application) {
         mDatabase = Room
                 .databaseBuilder(application, LocationsDatabase.class, "locationsDatabase.db")
-                .allowMainThreadQueries()
                 .build();
     }
 

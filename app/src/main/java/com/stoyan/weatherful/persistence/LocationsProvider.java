@@ -52,17 +52,18 @@ public class LocationsProvider implements LocationsProviderContract {
 
     @Override
     public void saveLocation(Location location) {
-        mDAO.insert(location);
+        new Thread(() -> mDAO.insert(location)).start();
+
     }
 
     public void updateLocation(Location location) {
         if(location != null) {
-            mDAO.update(location);
+            new Thread(() -> mDAO.update(location)).start();
         }
     }
 
     public void deleteLocation(Location location) {
-        mDAO.delete(location);
+        new Thread(() ->  mDAO.delete(location)).start();
         WeatherfulApplication.showToast(mContext.getString(R.string.successful_deleting));
     }
 }
