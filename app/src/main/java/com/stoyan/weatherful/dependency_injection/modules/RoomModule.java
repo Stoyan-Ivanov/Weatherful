@@ -1,4 +1,4 @@
-package com.stoyan.weatherful.di;
+package com.stoyan.weatherful.dependency_injection.modules;
 
 import android.app.Application;
 import android.arch.persistence.room.Room;
@@ -18,10 +18,11 @@ import dagger.Provides;
 @Module
 public class RoomModule {
     private LocationsDatabase mDatabase;
+    private final String DATABASE_NAME  = "locationsDatabase.db";
 
     public RoomModule(Application application) {
         mDatabase = Room
-                .databaseBuilder(application, LocationsDatabase.class, "locationsDatabase.db")
+                .databaseBuilder(application, LocationsDatabase.class, DATABASE_NAME)
                 .build();
     }
 

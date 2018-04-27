@@ -21,6 +21,7 @@ import com.stoyan.weatherful.view_utils.recyclerview_utils.decorations.SpacesIte
 import com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview.ForecastRecyclerviewAdapter;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> implements ForecastActivityContract {
 
@@ -36,6 +37,14 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> im
         intent.putExtra(Constants.EXTRA_LOCATION, location);
         return intent;
     }
+
+    @OnClick(R.id.tv_try_again_missing_network)
+    void tryAgainFieldClicked() {
+        startActivity(ForecastActivity.getIntent(this,
+                getIntent().getParcelableExtra(Constants.EXTRA_LOCATION)));
+        finish();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

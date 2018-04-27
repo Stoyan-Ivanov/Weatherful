@@ -1,4 +1,4 @@
-package com.stoyan.weatherful.di;
+package com.stoyan.weatherful.dependency_injection.modules;
 
 import android.app.Application;
 

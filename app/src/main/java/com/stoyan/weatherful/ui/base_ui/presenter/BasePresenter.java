@@ -1,7 +1,7 @@
 package com.stoyan.weatherful.ui.base_ui.presenter;
 
 import com.stoyan.weatherful.WeatherfulApplication;
-import com.stoyan.weatherful.di.PresenterComponent;
+import com.stoyan.weatherful.dependency_injection.components.AppComponent;
 import com.stoyan.weatherful.ui.base_ui.contract.BaseViewContract;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -37,7 +37,7 @@ public abstract class BasePresenter<V extends BaseViewContract> implements BaseP
         disposables.clear();
     }
 
-    protected PresenterComponent getPresenterComponent() {
+    protected AppComponent.PresenterComponent getPresenterComponent() {
         return WeatherfulApplication.getInstance()
                 .getComponent()
                 .presenterComponent();

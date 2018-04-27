@@ -60,6 +60,12 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
         presenter.fabOnClick();
     }
 
+    @OnClick(R.id.tv_try_again_missing_network)
+    void tryAgainFieldClicked() {
+        startActivity(LocationActivity.getIntent(this));
+        finish();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +111,7 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
 
     @Override
     public void showError(Throwable throwable) {
+
         Log.d("SII", "showError: Location Activity" + throwable.getMessage());
     }
 

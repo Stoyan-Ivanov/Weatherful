@@ -1,4 +1,4 @@
-package com.stoyan.weatherful.di;
+package com.stoyan.weatherful.dependency_injection.modules;
 
 import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
 

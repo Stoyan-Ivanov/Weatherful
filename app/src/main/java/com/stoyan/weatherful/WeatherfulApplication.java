@@ -6,10 +6,10 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
-import com.stoyan.weatherful.di.AppComponent;
-import com.stoyan.weatherful.di.AppModule;
-import com.stoyan.weatherful.di.DaggerAppComponent;
-import com.stoyan.weatherful.di.RoomModule;
+import com.stoyan.weatherful.dependency_injection.components.AppComponent;
+import com.stoyan.weatherful.dependency_injection.components.DaggerAppComponent;
+import com.stoyan.weatherful.dependency_injection.modules.AppModule;
+import com.stoyan.weatherful.dependency_injection.modules.RoomModule;
 
 import io.fabric.sdk.android.Fabric;
 import io.paperdb.Paper;

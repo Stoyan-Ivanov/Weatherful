@@ -1,11 +1,6 @@
 package com.stoyan.weatherful.network;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import com.stoyan.weatherful.WeatherfulApplication;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -42,15 +37,6 @@ public class NetworkManager {
                 .build();
 
         mQwantAPI = qwantRetrofit.create(QwantAPI.class);
-    }
-
-    public boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager =
-                (ConnectivityManager) WeatherfulApplication.getStaticContext()
-                        .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-
-        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
     public WeatherfulAPI getWeatherfulAPI() {
