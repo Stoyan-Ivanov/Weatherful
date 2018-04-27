@@ -1,5 +1,5 @@
 # Weatherful
-Simple Android weather app
+Android weather app developed according to the MVP architectural pattern.
 
 - Free APIs that have been used:
 	- Dark Sky weather API ( https://darksky.net/dev ) - used for getting weather parameters.
@@ -13,6 +13,9 @@ Simple Android weather app
 	- Retrofit (by Square - http://square.github.io/retrofit/ ) - used for handling network requests.
 	- Butter Knife (by Jake Wharton - http://jakewharton.github.io/butterknife/ ) - used for data binding.
 	- Glide (by Bumptech - https://github.com/bumptech/glide ) - used for image loading.
+	- Dagger2 (by Google - https://github.com/google/dagger) - used for dependency injection.
+	- RxJava2 (by ReactiveX - https://github.com/ReactiveX/RxJava) - used for for composing asynchronous and event-based programs using the observable pattern. 
+	- PagerIndicatorView (by romandanylyk - https://github.com/romandanylyk/PageIndicatorView) - used for indication of fragments in view pager.
 
 
 - Analytics service:
@@ -20,14 +23,13 @@ Simple Android weather app
 	
 
 - Database that has been used:
-	- PaperDB ( https://github.com/pilgr/Paper ) - Fast and easy to use No-SQL database that is used to save the user's locations locally.
-
+	- Room (Android Architecture Components - https://developer.android.com/topic/libraries/architecture/room)
 
 - Functionalities:
 	- Add locations (using the floating action button on the bottom right).
 	- Delete locations (just by pressing longer on the location card).
 	- Gain accurate summary of the weather conditions for the day.
-	- Scroll through a weekly forecast for this certain location (just by clicking ones on the location card).
+	- Horizontally scroll through a weekly forecast for this certain location (just by clicking ones on the location card).
 	- Get more detailed forecast information for a certain day (just by clicking on one of the forecast cards).
 	- Horizontally scroll between the diffrent detailed forecasts.
 
