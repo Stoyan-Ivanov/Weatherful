@@ -1,0 +1,70 @@
+package com.stoyan.weatherful.ui.add_location_activity;
+
+import android.arch.lifecycle.ViewModel;
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+
+import com.stoyan.weatherful.DataManager;
+import com.stoyan.weatherful.R;
+import com.stoyan.weatherful.WeatherfulApplication;
+import com.stoyan.weatherful.persistence.models.Location;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.inject.Inject;
+
+/**
+ * Created by stoyan.ivanov2 on 5/2/2018.
+ */
+
+public class AddLocationViewModel extends ViewModel {
+    @Inject
+    DataManager mDataManager;
+    private Context mContext;
+
+    public AddLocationViewModel(Context context) {
+        mContext = context;
+    }
+
+    public void addNewLocation(String cityName, String countryName) {
+        if(checkIfDataIsCorrect(cityName, countryName)) {
+            getCoordinatesOfLocation(cityName, countryName);
+        }
+    }
+
+    private void getCoordinatesOfLocation(final String cityName, final String countryName) {
+        if(Geocoder.isPresent()){
+            try {
+                Geocoder gc = new Geocoder(WeatherfulApplication.getStaticContext());
+                List<Address> addresses= gc.getFromLocationName(cityName + ", "
+                        + countryName, 5);
+
+                for(Address a : addresses){
+                    if(a.hasLatitude() && a.hasLongitude()){
+                        prepareLocationForSaving(new Location(cityName, countryName,
+                                a.getLatitude(), a.getLongitude()));
+
+                        break;
+                    }
+                }
+            } catch (IOException e) {}
+        }
+    }
+
+    private void prepareLocationForSaving(Location location) {
+        mDataManager.saveLocation(location);
+        //view.startNewLocationsActivity(); TODO : DO THIS IN ACTIVITY
+    }
+
+    private boolean checkIfDataIsCorrect(String cityName, String countryName) {
+        final String EMPTY_STRING = "";
+
+        if(cityName.equals(EMPTY_STRING) || countryName.equals(EMPTY_STRING)) {
+            WeatherfulApplication.showToast(mContext.getString(R.string.invalid_input));
+            return false;
+        }
+        return true;
+    }
+}

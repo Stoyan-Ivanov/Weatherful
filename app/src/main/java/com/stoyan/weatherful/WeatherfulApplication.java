@@ -26,7 +26,7 @@ public class WeatherfulApplication extends Application  {
     public void onCreate() {
         super.onCreate();
         sApplication = this;
-        sContext = getBaseContext();
+        sContext = getApplicationContext();
 
         Fabric.with(sContext, new Crashlytics());
     }
