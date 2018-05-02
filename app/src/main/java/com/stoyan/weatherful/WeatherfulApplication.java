@@ -12,15 +12,14 @@ import com.stoyan.weatherful.dependency_injection.modules.AppModule;
 import com.stoyan.weatherful.dependency_injection.modules.RoomModule;
 
 import io.fabric.sdk.android.Fabric;
-import io.paperdb.Paper;
 
 /**
  * Created by Stoyan on 27.1.2018 г..
  */
 
 public class WeatherfulApplication extends Application  {
-    private static WeatherfulApplication sApplication;
-    private static Context sContext;
+    private static WeatherfulApplication sApplication ;
+    private static Context sContext ;
     private AppComponent mAppComponent;
 
     @Override
@@ -29,7 +28,6 @@ public class WeatherfulApplication extends Application  {
         sApplication = this;
         sContext = getBaseContext();
 
-        Paper.init(sContext);
         Fabric.with(sContext, new Crashlytics());
     }
 
