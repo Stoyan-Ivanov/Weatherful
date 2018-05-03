@@ -82,7 +82,7 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> im
 
     private void configureRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        mRecyclerView.setAdapter(new ForecastRecyclerviewAdapter(presenter.getmWeeklyForecast(), presenter.getmLocation()));
+        mRecyclerView.setAdapter(new ForecastRecyclerviewAdapter(presenter.getWeeklyForecast(), presenter.getmLocation()));
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(getResources().getInteger(R.integer.viewholder_forecast_margin), SpacesItemDecoration.HORIZONTAL));
 
         presenter.downloadWeeklyForecast();

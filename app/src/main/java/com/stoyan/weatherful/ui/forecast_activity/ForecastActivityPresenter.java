@@ -84,7 +84,7 @@ public class ForecastActivityPresenter extends BasePresenter<ForecastActivityCon
         return mLocation;
     }
 
-    public ArrayList<Data> getmWeeklyForecast() {
+    public ArrayList<Data> getWeeklyForecast() {
         mWeeklyForecast = new ArrayList<>();
         return mWeeklyForecast;
     }

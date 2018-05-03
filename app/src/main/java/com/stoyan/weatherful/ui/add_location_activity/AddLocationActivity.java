@@ -1,5 +1,6 @@
 package com.stoyan.weatherful.ui.add_location_activity;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -20,7 +21,7 @@ public class AddLocationActivity extends BaseActivity<AddLocationActivityPresent
     @BindView(R.id.et_country) EditText mEtCountryName;
     @BindView(R.id.toolbar_add) Toolbar mTitleBar;
 
-    private AddLocationActivityPresenter presenter;
+    private AddLocationViewModel mViewModel;
 
     public static Intent getIntent(Context context) {
         return new Intent(context, AddLocationActivity.class);
@@ -28,8 +29,10 @@ public class AddLocationActivity extends BaseActivity<AddLocationActivityPresent
 
     @OnClick(R.id.btn_done_adding)
         void addLocation() {
-        presenter.addNewLocation(mEtCityName.getText().toString(),
-                mEtCountryName.getText().toString());
+            mViewModel.addNewLocation(mEtCityName.getText().toString(),
+                    mEtCountryName.getText().toString());
+
+            mViewModel.onDoneButtonClicked();
     }
 
     @Override
@@ -37,9 +40,13 @@ public class AddLocationActivity extends BaseActivity<AddLocationActivityPresent
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_location);
 
-        presenter = new AddLocationActivityPresenter();
-        presenter.setView(this);
+        mViewModel = ViewModelProviders.of(this).get(AddLocationViewModel.class);
+        subscribeToNavigationChange();
 
+        configureToolbar();
+    }
+
+    private void configureToolbar() {
         setSupportActionBar(mTitleBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -54,5 +61,11 @@ public class AddLocationActivity extends BaseActivity<AddLocationActivityPresent
     public void startNewLocationsActivity() {
         startActivity(LocationActivity.getIntent(this));
         finish();
+    }
+
+    private void subscribeToNavigationChange() {
+        mViewModel.saveLocationEvent.observe(this,
+                o -> startNewLocationsActivity()
+        );
     }
 }

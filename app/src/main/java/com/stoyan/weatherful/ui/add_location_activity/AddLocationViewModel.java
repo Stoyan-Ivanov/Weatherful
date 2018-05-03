@@ -1,12 +1,11 @@
 package com.stoyan.weatherful.ui.add_location_activity;
 
 import android.arch.lifecycle.ViewModel;
-import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 
 import com.stoyan.weatherful.DataManager;
-import com.stoyan.weatherful.R;
+import com.stoyan.weatherful.SingleLiveEvent;
 import com.stoyan.weatherful.WeatherfulApplication;
 import com.stoyan.weatherful.persistence.models.Location;
 
@@ -20,13 +19,9 @@ import javax.inject.Inject;
  */
 
 public class AddLocationViewModel extends ViewModel {
-    @Inject
-    DataManager mDataManager;
-    private Context mContext;
-
-    public AddLocationViewModel(Context context) {
-        mContext = context;
-    }
+    @Inject DataManager mDataManager;
+    //@Inject Context mContext;
+    SingleLiveEvent saveLocationEvent = new SingleLiveEvent();
 
     public void addNewLocation(String cityName, String countryName) {
         if(checkIfDataIsCorrect(cityName, countryName)) {
@@ -39,12 +34,13 @@ public class AddLocationViewModel extends ViewModel {
             try {
                 Geocoder gc = new Geocoder(WeatherfulApplication.getStaticContext());
                 List<Address> addresses= gc.getFromLocationName(cityName + ", "
-                        + countryName, 5);
+                        + countryName, 1);
 
                 for(Address a : addresses){
                     if(a.hasLatitude() && a.hasLongitude()){
-                        prepareLocationForSaving(new Location(cityName, countryName,
-                                a.getLatitude(), a.getLongitude()));
+                        Location newLocation = new Location(cityName, countryName,
+                                a.getLatitude(), a.getLongitude());
+                                mDataManager.saveLocation(newLocation);
 
                         break;
                     }
@@ -53,16 +49,15 @@ public class AddLocationViewModel extends ViewModel {
         }
     }
 
-    private void prepareLocationForSaving(Location location) {
-        mDataManager.saveLocation(location);
-        //view.startNewLocationsActivity(); TODO : DO THIS IN ACTIVITY
+    public void onDoneButtonClicked() {
+        saveLocationEvent.call();
     }
 
     private boolean checkIfDataIsCorrect(String cityName, String countryName) {
         final String EMPTY_STRING = "";
 
         if(cityName.equals(EMPTY_STRING) || countryName.equals(EMPTY_STRING)) {
-            WeatherfulApplication.showToast(mContext.getString(R.string.invalid_input));
+           // WeatherfulApplication.showToast(mContext.getString(R.string.invalid_input));
             return false;
         }
         return true;
