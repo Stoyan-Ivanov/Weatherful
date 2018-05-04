@@ -1,6 +1,7 @@
 package com.stoyan.weatherful.ui.day_forecast_fragment;
 
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,6 +31,8 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresent
     @BindView(R.id.tv_fragment_sunrise) TextView mTvSunrise;
     @BindView(R.id.tv_fragment_sunset) TextView mTvSunset;
 
+    DayForecastFragmentViewModel mViewModel;
+
     public static DayForecastFragment newInstance(Data data) {
         Bundle arguments = new Bundle();
         arguments.putParcelable(Constants.EXTRA_DATA, data);
@@ -43,6 +46,8 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresent
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mViewModel = ViewModelProviders.of(this).get(DayForecastFragmentViewModel.class);
+
         return inflateCurrentView(inflater, R.layout.fragment_day_forecast, container);
     }
 
@@ -50,10 +55,8 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresent
     public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        presenter = new DayForecastFragmentPresenter(getArguments(), this);
-        presenter.setView(this);
 
-        mWeatherImage.setImageDrawable(presenter.getImageDrawable());
+        setWeatherImage();
         mTvDate.setText(presenter.getDate());
         mTvTemperature.setText(presenter.getTemperature());
         mTvWindSpeed.setText(presenter.getWindSpeed());
@@ -62,5 +65,20 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresent
         mTvForecastSummary.setText(presenter.getForecastSummary());
         mTvSunrise.setText(presenter.getSunriseTime());
         mTvSunset.setText(presenter.getSunsetTime());
+    }
+
+    private void setWeatherImage() {
+        mViewModel.getImageIconId().observe(this, iconId -> {
+            if(iconId != null) {
+                mWeatherImage.setImageDrawable(getResources().getDrawable(iconId));
+            }
+        });
+    }
+
+//    private void setDate() {
+//        mViewModel.getDate().observe(this, new O)
+//    }
+
+    private void setTemperature() {
     }
 }
