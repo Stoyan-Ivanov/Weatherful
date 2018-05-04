@@ -15,7 +15,7 @@ import com.stoyan.weatherful.ui.location_activity.LocationActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class AddLocationActivity extends BaseActivity<AddLocationActivityPresenter> implements AddLocationActivityContract {
+public class AddLocationActivity extends BaseActivity<AddLocationActivityPresenter>{
 
     @BindView(R.id.et_city) EditText mEtCityName;
     @BindView(R.id.et_country) EditText mEtCountryName;
@@ -57,7 +57,6 @@ public class AddLocationActivity extends BaseActivity<AddLocationActivityPresent
         }
     }
 
-    @Override
     public void startNewLocationsActivity() {
         startActivity(LocationActivity.getIntent(this));
         finish();

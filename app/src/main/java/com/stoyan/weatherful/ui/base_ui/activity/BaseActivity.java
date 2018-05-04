@@ -13,7 +13,7 @@ import butterknife.ButterKnife;
  */
 
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
-    protected P presenter;
+    protected P mViewModel;
 
     @Override
     public void setContentView(int layoutResID) {
@@ -28,8 +28,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     @Override
     protected void onDestroy() {
-        if(presenter != null) {
-            presenter.onViewDestroy();
+        if(mViewModel != null) {
+            mViewModel.onViewDestroy();
         }
         super.onDestroy();
     }

@@ -1,11 +1,15 @@
 package com.stoyan.weatherful.ui.forecast_activity;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Transformations;
+import android.arch.lifecycle.ViewModel;
 import android.content.Intent;
 import android.util.Log;
 
 import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.DataManager;
+import com.stoyan.weatherful.SingleLiveEvent;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.persistence.models.Location;
 import com.stoyan.weatherful.rx.RxBus;
@@ -20,9 +24,10 @@ import io.reactivex.functions.Consumer;
  * Created by stoyan.ivanov2 on 5/2/2018.
  */
 
-public class ForecastActivityViewModel {
-    private MutableLiveData<Location> mLocation;
-    private MutableLiveData<ArrayList<Data>> mWeeklyForecast;
+public class ForecastActivityViewModel  extends ViewModel {
+    private MutableLiveData<Location> mLocation = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Data>> mWeeklyForecast = new MutableLiveData<>();
+    private SingleLiveEvent mDataDownloadedEvent = new SingleLiveEvent();
 
     @Inject
     RxBus mRxBus;
@@ -40,23 +45,22 @@ public class ForecastActivityViewModel {
 //    }
 
     public void setExtras(Intent intent) {
-        getExtras(intent);
+        mLocation.setValue(intent.getParcelableExtra(Constants.EXTRA_LOCATION));
     }
 
-    public String getHeader() {
-        return mLocation.toString();
+    public LiveData<String> getHeader() {
+        return Transformations.map(mLocation, location -> location.toString());
     }
 
-    public void getExtras(Intent intent) {
-        mLocation = intent.getParcelableExtra(Constants.EXTRA_LOCATION);
+    public LiveData<String> getImageUrl() {
+        return Transformations.map(mLocation, location -> location.getLocationImageFull());
     }
 
-    public String getImageUrl() {
-        return mLocation.getValue().getLocationImageFull();
+    public LiveData<Location> getLocation() {
+        return mLocation;
     }
 
     public void downloadWeeklyForecast() {
-        Log.d("SII", "downloadWeeklyForecast: " + mLocation.toString());
         //subscribeToEventBus();
         mDataManager.getWeeklyForecastObservable(mLocation.getValue())
                 .subscribe(getWeeklyForecastConsumer(), getErrorConsumer());
@@ -68,14 +72,22 @@ public class ForecastActivityViewModel {
 
     private Consumer<? super ArrayList<Data>> getWeeklyForecastConsumer() {
         return weeklyForecast -> {
-            this.mWeeklyForecast.getValue().clear();
-            this.mWeeklyForecast.getValue().addAll(weeklyForecast);
-            //view.notifyDataSetChanged();
+            mWeeklyForecast.setValue(new ArrayList<>());
+            mWeeklyForecast.setValue(weeklyForecast);
+            onDataDownloaded();
         };
     }
 
+    private void onDataDownloaded() {
+        mDataDownloadedEvent.call();
+    }
+
+    public SingleLiveEvent getDataDownloadedEvent() {
+        return mDataDownloadedEvent;
+    }
+
     public ArrayList<Data> getWeeklyForecast() {
-        mWeeklyForecast.setValue(new ArrayList<>());
+        //mWeeklyForecast.setValue(new ArrayList<>());
         return mWeeklyForecast.getValue();
     }
 }

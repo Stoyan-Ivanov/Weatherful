@@ -80,7 +80,7 @@ public class ForecastActivityPresenter extends BasePresenter<ForecastActivityCon
         };
     }
 
-    public Location getmLocation() {
+    public Location getLocation() {
         return mLocation;
     }
 

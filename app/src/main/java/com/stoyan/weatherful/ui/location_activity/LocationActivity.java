@@ -52,12 +52,12 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
 
     @OnClick(R.id.iv_main_location)
     void onCurrentLocationClick() {
-        presenter.onCurrentLocationClicked();
+        mViewModel.onCurrentLocationClicked();
     }
 
     @OnClick(R.id.fab_add)
     void fabOnClick() {
-        presenter.fabOnClick();
+        mViewModel.fabOnClick();
     }
 
     @OnClick(R.id.tv_try_again_missing_network)
@@ -71,16 +71,16 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locations);
 
-        presenter = new LocationActivityPresenter();
-        presenter.setView(this);
+        mViewModel = new LocationActivityPresenter();
+        mViewModel.setView(this);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        mRecyclerView.setAdapter(new LocationsRecyclerViewAdapter(presenter));
+        mRecyclerView.setAdapter(new LocationsRecyclerViewAdapter(mViewModel));
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(getResources()
                 .getInteger(R.integer.viewholder_forecast_margin), SpacesItemDecoration.HORIZONTAL));
 
-        presenter.getCurrentLocation();
-        presenter.downloadData();
+        mViewModel.getCurrentLocation();
+        mViewModel.downloadData();
         configureSplashScreen();
         configureToolbar();
         configureSwipeRefreshLayout();
@@ -88,7 +88,7 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
 
     private void configureSwipeRefreshLayout() {
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            presenter.downloadData();
+            mViewModel.downloadData();
             if(mSwipeRefreshLayout.isRefreshing()) {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
@@ -129,7 +129,7 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
     }
 
     public void loadCurrentLocation() {
-        Bundle currentLocationData = presenter.getCurrentLocationData();
+        Bundle currentLocationData = mViewModel.getCurrentLocationData();
 
         loadCurrentLocationName(currentLocationData.getString(Constants.CURRENT_LOCATION_NAME));
         loadCurrentLocationTemperature(currentLocationData.getInt(Constants.CURRENT_LOCATION_TEMPERATURE));

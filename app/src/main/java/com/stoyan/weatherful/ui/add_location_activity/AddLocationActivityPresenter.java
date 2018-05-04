@@ -8,6 +8,7 @@ import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.WeatherfulApplication;
 import com.stoyan.weatherful.persistence.models.Location;
 import com.stoyan.weatherful.DataManager;
+import com.stoyan.weatherful.ui.base_ui.contract.BaseViewContract;
 import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ import javax.inject.Inject;
  * Created by Stoyan on 28.1.2018 г..
  */
 
-public class AddLocationActivityPresenter extends BasePresenter<AddLocationActivityContract> {
+public class AddLocationActivityPresenter extends BasePresenter<BaseViewContract> {
     @Inject DataManager mDataManager;
     Context mContext = WeatherfulApplication.getStaticContext();
 
@@ -55,7 +56,7 @@ public class AddLocationActivityPresenter extends BasePresenter<AddLocationActiv
 
     private void prepareLocationForSaving(Location location) {
         mDataManager.saveLocation(location);
-        view.startNewLocationsActivity();
+       // view.startNewLocationsActivity();
     }
 
     private boolean checkIfDataIsCorrect(String cityName, String countryName) {
