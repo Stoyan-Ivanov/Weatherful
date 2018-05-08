@@ -31,7 +31,7 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresent
     @BindView(R.id.tv_fragment_sunrise) TextView mTvSunrise;
     @BindView(R.id.tv_fragment_sunset) TextView mTvSunset;
 
-    DayForecastFragmentViewModel mViewModel;
+    private DayForecastFragmentViewModel mViewModel;
 
     public static DayForecastFragment newInstance(Data data) {
         Bundle arguments = new Bundle();
@@ -57,14 +57,14 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresent
 
 
         setWeatherImage();
-        mTvDate.setText(presenter.getDate());
+        setDate();
+        setWindSpeed();
+        setRainChance();
+        setHumidity();
+        setSunriseTime();
+        setSunsetTime();
+        setForecastSummary();
         mTvTemperature.setText(presenter.getTemperature());
-        mTvWindSpeed.setText(presenter.getWindSpeed());
-        mTvRainChance.setText(presenter.getRainChance());
-        mTvHumidity.setText(presenter.getHumidity());
-        mTvForecastSummary.setText(presenter.getForecastSummary());
-        mTvSunrise.setText(presenter.getSunriseTime());
-        mTvSunset.setText(presenter.getSunsetTime());
     }
 
     private void setWeatherImage() {
@@ -75,10 +75,35 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresent
         });
     }
 
-//    private void setDate() {
-//        mViewModel.getDate().observe(this, new O)
-//    }
+    private void setDate() {
+        mViewModel.getDate().observe(this, date -> mTvDate.setText(date));
+    }
 
     private void setTemperature() {
+
     }
+
+    private void setWindSpeed() {
+        mViewModel.getWindSpeed().observe(this, windSpeed -> mTvWindSpeed.setText(getString(R.string.wind_speed_field, windSpeed)));
+    }
+
+    private void setRainChance() {
+        mViewModel.getRainChance().observe(this, rainChance -> mTvRainChance.setText(getString(R.string.rain_chance_field, rainChance)));
+    }
+
+    private void setHumidity() {
+        mViewModel.getHumidity().observe(this, humidity -> mTvHumidity.setText(getString(R.string.humidity_field, humidity)));
+    }
+
+    private void setForecastSummary() {
+        mViewModel.getForecastSummary().observe(this, summary -> mTvForecastSummary.setText(summary));
+    }
+
+    private void setSunriseTime() {
+        mViewModel.getSunriseTime().observe(this, sunriseTime -> mTvSunrise.setText(sunriseTime));
+    }
+    private void setSunsetTime() {
+        mViewModel.getSunsetTime().observe(this, sunsetTime -> mTvSunrise.setText(sunsetTime));
+    }
+
 }

@@ -44,8 +44,10 @@ public class DayForecastFragmentViewModel extends ViewModel {
 
 
 
-    public String getDate() {
-        return getDateFromTimestamp();
+    public LiveData<String> getDate() {
+        MutableLiveData<String> liveDate = new MutableLiveData<>();
+        liveDate.setValue(getDateFromTimestamp());
+        return liveDate;
     }
 
 //    public String getTemperature() {
@@ -67,7 +69,7 @@ public class DayForecastFragmentViewModel extends ViewModel {
 //    }
 
     public LiveData<String> getWindSpeed() {
-        return Transformations.map(mData, data -> data.getWindSpeed());
+        return Transformations.map(mData, Data::getWindSpeed);
     }
 
 
