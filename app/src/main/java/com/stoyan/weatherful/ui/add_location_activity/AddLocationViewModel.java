@@ -19,9 +19,14 @@ import javax.inject.Inject;
  */
 
 public class AddLocationViewModel extends ViewModel {
-    @Inject DataManager mDataManager;
-    //@Inject Context mContext;
-    SingleLiveEvent saveLocationEvent = new SingleLiveEvent();
+    DataManager mDataManager;
+    SingleLiveEvent saveLocationEvent;
+
+    @Inject
+    public AddLocationViewModel(DataManager dataManager) {
+        mDataManager = dataManager;
+        saveLocationEvent = new SingleLiveEvent();
+    }
 
     public void addNewLocation(String cityName, String countryName) {
         if(checkIfDataIsCorrect(cityName, countryName)) {
