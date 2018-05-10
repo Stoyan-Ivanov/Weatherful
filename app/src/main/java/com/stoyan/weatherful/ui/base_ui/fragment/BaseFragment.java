@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
 
 import butterknife.ButterKnife;

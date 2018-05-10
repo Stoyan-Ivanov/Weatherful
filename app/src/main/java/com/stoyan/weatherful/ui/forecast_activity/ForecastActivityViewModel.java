@@ -25,16 +25,24 @@ import io.reactivex.functions.Consumer;
  */
 
 public class ForecastActivityViewModel  extends ViewModel {
-    private MutableLiveData<Location> mLocation = new MutableLiveData<>();
-    private MutableLiveData<ArrayList<Data>> mWeeklyForecast = new MutableLiveData<>();
-    private SingleLiveEvent mDataDownloadedEvent = new SingleLiveEvent();
+    private MutableLiveData<Location> mLocation;
+    private MutableLiveData<ArrayList<Data>> mWeeklyForecast;
+    private SingleLiveEvent mDataDownloadedEvent;
+
+    private RxBus mRxBus;
+    private DataManager mDataManager;
 
     @Inject
-    RxBus mRxBus;
-    @Inject
-    DataManager mDataManager;
+    public ForecastActivityViewModel(RxBus rxBus, DataManager dataManager) {
+        this.mRxBus = rxBus;
+        this.mDataManager = dataManager;
 
-//    private void subscribeToEventBus() {
+        mLocation = new MutableLiveData<>();
+        mWeeklyForecast = new MutableLiveData<>();
+        mDataDownloadedEvent = new SingleLiveEvent();
+    }
+
+    //    private void subscribeToEventBus() {
 //        addDisposable(mRxBus.toObservable()
 //                .compose(RxUtils.applySchedulersObservable())
 //                .subscribe(event -> {
@@ -49,21 +57,32 @@ public class ForecastActivityViewModel  extends ViewModel {
     }
 
     public LiveData<String> getHeader() {
-        return Transformations.map(mLocation, location -> location.toString());
+        return Transformations.map(mLocation, Location::toString);
     }
 
     public LiveData<String> getImageUrl() {
-        return Transformations.map(mLocation, location -> location.getLocationImageFull());
+        return Transformations.map(mLocation, Location::getLocationImageFull);
     }
 
     public LiveData<Location> getLocation() {
         return mLocation;
     }
 
-    public void downloadWeeklyForecast() {
+    public void downloadWeeklyForecast(Location location) {
         //subscribeToEventBus();
-        mDataManager.getWeeklyForecastObservable(mLocation.getValue())
-                .subscribe(getWeeklyForecastConsumer(), getErrorConsumer());
+        Log.d("SII", "datamanager: " + mDataManager);
+        if(mDataManager != null) {
+            mDataManager.getWeeklyForecastObservable(location)
+                    .subscribe(getWeeklyForecastConsumer(), getErrorConsumer());
+        }
+
+    }
+
+    public LiveData<ArrayList<Data>> getWeeklyForecast() {
+        if(mWeeklyForecast != null) {
+            return mWeeklyForecast;
+        }
+        return null;
     }
 
     private Consumer<? super Throwable> getErrorConsumer() {
@@ -72,7 +91,6 @@ public class ForecastActivityViewModel  extends ViewModel {
 
     private Consumer<? super ArrayList<Data>> getWeeklyForecastConsumer() {
         return weeklyForecast -> {
-            mWeeklyForecast.setValue(new ArrayList<>());
             mWeeklyForecast.setValue(weeklyForecast);
             onDataDownloaded();
         };
@@ -84,10 +102,5 @@ public class ForecastActivityViewModel  extends ViewModel {
 
     public SingleLiveEvent getDataDownloadedEvent() {
         return mDataDownloadedEvent;
-    }
-
-    public ArrayList<Data> getWeeklyForecast() {
-        //mWeeklyForecast.setValue(new ArrayList<>());
-        return mWeeklyForecast.getValue();
     }
 }

@@ -58,13 +58,13 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresent
 
         setWeatherImage();
         setDate();
+        setTemperature();
         setWindSpeed();
         setRainChance();
         setHumidity();
         setSunriseTime();
         setSunsetTime();
         setForecastSummary();
-        mTvTemperature.setText(presenter.getTemperature());
     }
 
     private void setWeatherImage() {
@@ -80,7 +80,13 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresent
     }
 
     private void setTemperature() {
+        final int LOW_TEMPERATURE = 0;
+        final int HIGH_TEMPERATURE = 1;
 
+        mViewModel.getTemperature().observe(this, temperatures ->
+                mTvTemperature.setText(getString(R.string.temperature_field,
+                        temperatures.get(LOW_TEMPERATURE),
+                        temperatures.get(HIGH_TEMPERATURE))));
     }
 
     private void setWindSpeed() {
