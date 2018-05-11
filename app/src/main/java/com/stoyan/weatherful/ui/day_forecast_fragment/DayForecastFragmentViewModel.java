@@ -3,13 +3,11 @@ package com.stoyan.weatherful.ui.day_forecast_fragment;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
-import android.arch.lifecycle.ViewModel;
-import android.content.Context;
 import android.os.Bundle;
 
 import com.stoyan.weatherful.Constants;
-import com.stoyan.weatherful.WeatherfulApplication;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
+import com.stoyan.weatherful.viewmodel.BaseViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,13 +19,13 @@ import java.util.Locale;
  * Created by stoyan.ivanov2 on 5/2/2018.
  */
 
-public class DayForecastFragmentViewModel extends ViewModel {
+public class DayForecastFragmentViewModel extends BaseViewModel {
     private MutableLiveData<Data> mData;
-    private Context context = WeatherfulApplication.getStaticContext();
     private final int PERCENT_MULTIPLIER = 100;
     private final int TIME_MULTIPLIER = 1000;
 
     public void setExtras(final Bundle arguments) {
+        mData = new MutableLiveData<>();
         mData.setValue(arguments.getParcelable(Constants.EXTRA_DATA));
     }
 
@@ -59,7 +57,7 @@ public class DayForecastFragmentViewModel extends ViewModel {
     }
 
     public LiveData<Integer> getHumidity() {
-        return Transformations.map(mData, data -> (int) data.getHumidity() * PERCENT_MULTIPLIER);
+        return Transformations.map(mData, data -> (int) (data.getHumidity() * PERCENT_MULTIPLIER));
     }
 
     public LiveData<String> getForecastSummary() {
@@ -86,5 +84,10 @@ public class DayForecastFragmentViewModel extends ViewModel {
     private String getTimeFromUnixTime(long unixTime) {
         return new SimpleDateFormat("HH:mm:ss")
                 .format(new Date(unixTime * TIME_MULTIPLIER));
+    }
+
+    @Override
+    protected void inject() {
+        getViewModelComponent().inject(this);
     }
 }

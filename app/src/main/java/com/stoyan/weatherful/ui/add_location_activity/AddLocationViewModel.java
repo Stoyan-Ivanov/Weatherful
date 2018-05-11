@@ -1,13 +1,13 @@
 package com.stoyan.weatherful.ui.add_location_activity;
 
-import android.arch.lifecycle.ViewModel;
 import android.location.Address;
 import android.location.Geocoder;
 
 import com.stoyan.weatherful.DataManager;
-import com.stoyan.weatherful.SingleLiveEvent;
 import com.stoyan.weatherful.WeatherfulApplication;
+import com.stoyan.weatherful.livedata_utils.SingleLiveEvent;
 import com.stoyan.weatherful.persistence.models.Location;
+import com.stoyan.weatherful.viewmodel.BaseViewModel;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,13 +18,13 @@ import javax.inject.Inject;
  * Created by stoyan.ivanov2 on 5/2/2018.
  */
 
-public class AddLocationViewModel extends ViewModel {
+public class AddLocationViewModel extends BaseViewModel {
+    @Inject
     DataManager mDataManager;
+
     SingleLiveEvent saveLocationEvent;
 
-    @Inject
-    public AddLocationViewModel(DataManager dataManager) {
-        mDataManager = dataManager;
+    public AddLocationViewModel() {
         saveLocationEvent = new SingleLiveEvent();
     }
 
@@ -66,5 +66,10 @@ public class AddLocationViewModel extends ViewModel {
             return false;
         }
         return true;
+    }
+
+    @Override
+    protected void inject() {
+        getViewModelComponent().inject(this);
     }
 }

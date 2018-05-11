@@ -19,13 +19,10 @@ import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.persistence.models.Location;
 import com.stoyan.weatherful.ui.base_ui.activity.BaseActivity;
-import com.stoyan.weatherful.viewmodel.ViewModelFactory;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.decorations.SpacesItemDecoration;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview.ForecastRecyclerviewAdapter;
 
 import java.util.ArrayList;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -38,9 +35,6 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> {
     @BindView(R.id.layout_weekly_forecast) ConstraintLayout mLayoutWeeklyForecast;
     @BindView(R.id.toolbar_collapsed) Toolbar mToolbar;
     @BindView(R.id.tv_location_name) TextView mTvLocationName;
-
-    @Inject
-    ViewModelFactory viewModelFactory;
 
     ForecastActivityViewModel mViewModel;
 
@@ -63,8 +57,7 @@ public class ForecastActivity extends BaseActivity<ForecastActivityPresenter> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forecast);
 
-        Log.d("SII", "onCreate: " + viewModelFactory);
-        mViewModel = ViewModelProviders.of(this, viewModelFactory).get(ForecastActivityViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(ForecastActivityViewModel.class);
         mViewModel.setExtras(getIntent());
         subscribeToDataChange();
 

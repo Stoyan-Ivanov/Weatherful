@@ -47,6 +47,7 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresent
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mViewModel = ViewModelProviders.of(this).get(DayForecastFragmentViewModel.class);
+        mViewModel.setExtras(getArguments());
 
         return inflateCurrentView(inflater, R.layout.fragment_day_forecast, container);
     }
@@ -109,7 +110,7 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresent
         mViewModel.getSunriseTime().observe(this, sunriseTime -> mTvSunrise.setText(sunriseTime));
     }
     private void setSunsetTime() {
-        mViewModel.getSunsetTime().observe(this, sunsetTime -> mTvSunrise.setText(sunsetTime));
+        mViewModel.getSunsetTime().observe(this, sunsetTime -> mTvSunset.setText(sunsetTime));
     }
 
 }
