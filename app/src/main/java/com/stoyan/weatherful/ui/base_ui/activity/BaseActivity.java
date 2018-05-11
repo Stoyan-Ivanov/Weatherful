@@ -25,12 +25,4 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
             getWindow().setStatusBarColor(getResources().getColor(R.color.statusBarBlue));
         }
     }
-
-    @Override
-    protected void onDestroy() {
-        if(mViewModel != null) {
-            mViewModel.onViewDestroy();
-        }
-        super.onDestroy();
-    }
 }

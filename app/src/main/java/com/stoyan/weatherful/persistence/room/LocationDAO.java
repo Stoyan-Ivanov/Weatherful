@@ -28,13 +28,13 @@ public interface LocationDAO {
     @Query("SELECT * FROM locations WHERE locationName = :name AND locationCountry = :country")
     Maybe<Location> getLocationByName(String name, String country);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMultipleLocations(ArrayList<Location> locations);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Location location);
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.ROLLBACK)
     void update(Location location);
 
     @Delete

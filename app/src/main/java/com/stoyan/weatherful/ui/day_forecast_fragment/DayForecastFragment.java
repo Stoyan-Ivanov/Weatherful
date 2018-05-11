@@ -14,12 +14,11 @@ import android.widget.TextView;
 import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
-import com.stoyan.weatherful.ui.base_ui.contract.BaseViewContract;
 import com.stoyan.weatherful.ui.base_ui.fragment.BaseFragment;
 
 import butterknife.BindView;
 
-public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresenter> implements BaseViewContract {
+public class DayForecastFragment extends BaseFragment<DayForecastFragmentViewModel> {
 
     @BindView(R.id.iv_fragment_weather_image) ImageView mWeatherImage;
     @BindView(R.id.tv_fragment_date) TextView mTvDate;
@@ -30,8 +29,6 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresent
     @BindView(R.id.tv_fragment_forecast_summary) TextView mTvForecastSummary;
     @BindView(R.id.tv_fragment_sunrise) TextView mTvSunrise;
     @BindView(R.id.tv_fragment_sunset) TextView mTvSunset;
-
-    private DayForecastFragmentViewModel mViewModel;
 
     public static DayForecastFragment newInstance(Data data) {
         Bundle arguments = new Bundle();
@@ -48,7 +45,6 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentPresent
                              Bundle savedInstanceState) {
         mViewModel = ViewModelProviders.of(this).get(DayForecastFragmentViewModel.class);
         mViewModel.setExtras(getArguments());
-
         return inflateCurrentView(inflater, R.layout.fragment_day_forecast, container);
     }
 

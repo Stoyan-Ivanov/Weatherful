@@ -7,7 +7,6 @@ import com.stoyan.weatherful.dependency_injection.modules.ViewModelModule;
 import com.stoyan.weatherful.persistence.room.LocationsDatabase;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivityPresenter;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationViewModel;
-import com.stoyan.weatherful.ui.day_forecast_fragment.DayForecastFragmentPresenter;
 import com.stoyan.weatherful.ui.day_forecast_fragment.DayForecastFragmentViewModel;
 import com.stoyan.weatherful.ui.forecast_activity.ForecastActivityPresenter;
 import com.stoyan.weatherful.ui.forecast_activity.ForecastActivityViewModel;

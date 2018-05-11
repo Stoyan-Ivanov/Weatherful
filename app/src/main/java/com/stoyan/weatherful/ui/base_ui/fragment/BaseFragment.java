@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.stoyan.weatherful.ui.base_ui.presenter.BasePresenter;
+import com.stoyan.weatherful.viewmodel.BaseViewModel;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -14,8 +14,8 @@ import butterknife.Unbinder;
  * Created by stoyan.ivanov on 3/26/2018.
  */
 
-public abstract class BaseFragment<P extends BasePresenter> extends Fragment{
-    protected P presenter;
+public abstract class BaseFragment<VM extends BaseViewModel> extends Fragment{
+    protected VM mViewModel;
     private Unbinder unbinder;
 
     protected View inflateCurrentView(LayoutInflater inflater, int layoutId, ViewGroup container) {
@@ -28,9 +28,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment{
 
     @Override
     public void onDestroyView() {
-        if(presenter != null) {
-            presenter.onViewDestroy();
-        }
         unbinder.unbind();
         super.onDestroyView();
     }
