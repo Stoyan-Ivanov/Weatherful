@@ -5,12 +5,10 @@ import com.stoyan.weatherful.dependency_injection.modules.PresenterModule;
 import com.stoyan.weatherful.dependency_injection.modules.RoomModule;
 import com.stoyan.weatherful.dependency_injection.modules.ViewModelModule;
 import com.stoyan.weatherful.persistence.room.LocationsDatabase;
-import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivityPresenter;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationViewModel;
 import com.stoyan.weatherful.ui.day_forecast_fragment.DayForecastFragmentViewModel;
-import com.stoyan.weatherful.ui.forecast_activity.ForecastActivityPresenter;
 import com.stoyan.weatherful.ui.forecast_activity.ForecastActivityViewModel;
-import com.stoyan.weatherful.ui.forecast_pager_activity.ForecastPagerActivityPresenter;
+import com.stoyan.weatherful.ui.forecast_pager_activity.ForecastPagerActivityViewModel;
 import com.stoyan.weatherful.ui.location_activity.LocationActivityPresenter;
 
 import javax.inject.Singleton;
@@ -35,13 +33,6 @@ public interface AppComponent {
 
         void inject(LocationActivityPresenter locationActivityPresenter);
 
-        void inject(ForecastActivityPresenter forecastActivityPresenter);
-
-        void inject(ForecastPagerActivityPresenter forecastPagerActivityPresenter);
-
-        void inject(AddLocationActivityPresenter addLocationActivityPresenter);
-
-        void inject(DayForecastFragmentPresenter dayForecastFragmentPresenter);
     }
 
     @Subcomponent(modules = {ViewModelModule.class})
@@ -52,5 +43,7 @@ public interface AppComponent {
         void inject(DayForecastFragmentViewModel dayForecastFragmentViewModel);
 
         void inject(ForecastActivityViewModel forecastActivityViewModel);
+
+        void inject(ForecastPagerActivityViewModel forecastPagerActivityViewModel);
     }
 }
