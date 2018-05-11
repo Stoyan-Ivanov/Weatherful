@@ -19,38 +19,38 @@ import javax.inject.Inject;
  */
 
 public class AddLocationViewModel extends ViewModel {
-    DataManager mDataManager;
-    SingleLiveEvent saveLocationEvent;
+
+    @Inject DataManager mDataManager;
+    SingleLiveEvent saveLocationEvent = new SingleLiveEvent();
 
     @Inject
-    public AddLocationViewModel(DataManager dataManager) {
-        mDataManager = dataManager;
-        saveLocationEvent = new SingleLiveEvent();
+    public AddLocationViewModel() {
     }
 
     public void addNewLocation(String cityName, String countryName) {
-        if(checkIfDataIsCorrect(cityName, countryName)) {
+        if (checkIfDataIsCorrect(cityName, countryName)) {
             getCoordinatesOfLocation(cityName, countryName);
         }
     }
 
     private void getCoordinatesOfLocation(final String cityName, final String countryName) {
-        if(Geocoder.isPresent()){
+        if (Geocoder.isPresent()) {
             try {
                 Geocoder gc = new Geocoder(WeatherfulApplication.getStaticContext());
-                List<Address> addresses= gc.getFromLocationName(cityName + ", "
+                List<Address> addresses = gc.getFromLocationName(cityName + ", "
                         + countryName, 1);
 
-                for(Address a : addresses){
-                    if(a.hasLatitude() && a.hasLongitude()){
+                for (Address a : addresses) {
+                    if (a.hasLatitude() && a.hasLongitude()) {
                         Location newLocation = new Location(cityName, countryName,
                                 a.getLatitude(), a.getLongitude());
-                                mDataManager.saveLocation(newLocation);
+                        mDataManager.saveLocation(newLocation);
 
                         break;
                     }
                 }
-            } catch (IOException e) {}
+            } catch (IOException e) {
+            }
         }
     }
 
@@ -61,8 +61,8 @@ public class AddLocationViewModel extends ViewModel {
     private boolean checkIfDataIsCorrect(String cityName, String countryName) {
         final String EMPTY_STRING = "";
 
-        if(cityName.equals(EMPTY_STRING) || countryName.equals(EMPTY_STRING)) {
-           // WeatherfulApplication.showToast(mContext.getString(R.string.invalid_input));
+        if (cityName.equals(EMPTY_STRING) || countryName.equals(EMPTY_STRING)) {
+            // WeatherfulApplication.showToast(mContext.getString(R.string.invalid_input));
             return false;
         }
         return true;

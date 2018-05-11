@@ -11,9 +11,6 @@ import android.widget.EditText;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.ui.base_ui.activity.BaseActivity;
 import com.stoyan.weatherful.ui.location_activity.LocationActivity;
-import com.stoyan.weatherful.viewmodel.ViewModelFactory;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -24,8 +21,8 @@ public class AddLocationActivity extends BaseActivity<AddLocationActivityPresent
     @BindView(R.id.et_country) EditText mEtCountryName;
     @BindView(R.id.toolbar_add) Toolbar mTitleBar;
 
-    @Inject
-    ViewModelFactory mViewModelFactory;
+//    @Inject
+//    ViewModelFactory mViewModelFactory;
     private AddLocationViewModel mViewModel;
 
     public static Intent getIntent(Context context) {
@@ -43,7 +40,7 @@ public class AddLocationActivity extends BaseActivity<AddLocationActivityPresent
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_location);
 
-        mViewModel = ViewModelProviders.of(this, mViewModelFactory).get(AddLocationViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(AddLocationViewModel.class);
         subscribeToNavigationChange();
 
         configureToolbar();
