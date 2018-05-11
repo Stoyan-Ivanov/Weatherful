@@ -21,11 +21,16 @@ import java.util.Locale;
 
 public class DayForecastFragmentViewModel extends BaseViewModel {
     private MutableLiveData<Data> mData;
+    private MutableLiveData<String> mLiveDate;
     private final int PERCENT_MULTIPLIER = 100;
     private final int TIME_MULTIPLIER = 1000;
 
-    public void setExtras(final Bundle arguments) {
+    public DayForecastFragmentViewModel() {
+        mLiveDate = new MutableLiveData<>();
         mData = new MutableLiveData<>();
+    }
+
+    public void setExtras(final Bundle arguments) {
         mData.setValue(arguments.getParcelable(Constants.EXTRA_DATA));
     }
 
@@ -34,9 +39,8 @@ public class DayForecastFragmentViewModel extends BaseViewModel {
     }
 
     public LiveData<String> getDate() {
-        MutableLiveData<String> liveDate = new MutableLiveData<>();
-        liveDate.setValue(getDateFromTimestamp());
-        return liveDate;
+        mLiveDate.setValue(getDateFromTimestamp());
+        return mLiveDate;
     }
 
     public LiveData<ArrayList<Integer>> getTemperature() {
@@ -61,7 +65,7 @@ public class DayForecastFragmentViewModel extends BaseViewModel {
     }
 
     public LiveData<String> getForecastSummary() {
-        return Transformations.map(mData, Data::getPrecipProbability);
+        return Transformations.map(mData, Data::getForecastSummary);
     }
 
     public LiveData<String> getSunriseTime() {
