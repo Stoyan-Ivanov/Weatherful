@@ -15,7 +15,7 @@ import com.stoyan.weatherful.ui.location_activity.LocationActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class AddLocationActivity extends BaseActivity<AddLocationActivityPresenter>{
+public class AddLocationActivity extends BaseActivity<AddLocationViewModel> {
 
     @BindView(R.id.et_city) EditText mEtCityName;
     @BindView(R.id.et_country) EditText mEtCountryName;
@@ -61,8 +61,7 @@ public class AddLocationActivity extends BaseActivity<AddLocationActivityPresent
     }
 
     private void subscribeToNavigationChange() {
-        mViewModel.saveLocationEvent.observe(this,
-                o -> startNewLocationsActivity()
+        mViewModel.saveLocationEvent.observe(this, o -> startNewLocationsActivity()
         );
     }
 }

@@ -9,16 +9,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
-import com.stoyan.weatherful.persistence.models.Location;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
 import com.stoyan.weatherful.ui.base_ui.activity.BaseActivity;
 import com.stoyan.weatherful.ui.forecast_activity.ForecastActivity;
@@ -28,9 +25,7 @@ import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclervie
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class LocationActivity extends BaseActivity<LocationActivityPresenter> implements LocationActivityContract{
-
-
+public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
     @BindView(R.id.recyclerview) RecyclerView mRecyclerView;
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.progressBar_loading) ProgressBar mProgressBar;
@@ -45,6 +40,7 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
     @BindView(R.id.tv_main_location_summary) TextView mTvMainLocationSummary;
 
     private static int LOADING_SCREEN_TIME = 2000;
+    private LocationActivityViewModel mViewModel;
 
     public static Intent getIntent(Context context) {
         return new Intent(context, LocationActivity.class);
@@ -52,12 +48,16 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
 
     @OnClick(R.id.iv_main_location)
     void onCurrentLocationClick() {
-        mViewModel.onCurrentLocationClicked();
+        mViewModel.getCurrentLocationWrapper().observe(this,
+                wrapper -> {
+                    assert wrapper != null;
+                    startActivity(ForecastActivity.getIntent(LocationActivity.this, wrapper.getLocation()));
+                });
     }
 
     @OnClick(R.id.fab_add)
     void fabOnClick() {
-        mViewModel.fabOnClick();
+        startActivity(AddLocationActivity.getIntent(this));
     }
 
     @OnClick(R.id.tv_try_again_missing_network)
@@ -71,24 +71,31 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locations);
 
-        mViewModel = new LocationActivityPresenter();
-        mViewModel.setView(this);
+        mViewModel = new LocationActivityViewModel();
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        mRecyclerView.setAdapter(new LocationsRecyclerViewAdapter(mViewModel));
-        mRecyclerView.addItemDecoration(new SpacesItemDecoration(getResources()
-                .getInteger(R.integer.viewholder_forecast_margin), SpacesItemDecoration.HORIZONTAL));
-
-        mViewModel.getCurrentLocation();
         mViewModel.downloadData();
+        mViewModel.downloadCurrentLocationData();
+
+        mViewModel.getLocationForecastWrappers().observe(this, locationForecastSummaryWrappers -> {
+            if(mRecyclerView.getAdapter() == null) {
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(LocationActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                mRecyclerView.setAdapter(new LocationsRecyclerViewAdapter(mViewModel, locationForecastSummaryWrappers));
+                mRecyclerView.addItemDecoration(new SpacesItemDecoration(getResources()
+                        .getInteger(R.integer.viewholder_forecast_margin), SpacesItemDecoration.HORIZONTAL));
+            } else {
+                mRecyclerView.getAdapter().notifyDataSetChanged();
+            }
+        });
+
         configureSplashScreen();
         configureToolbar();
         configureSwipeRefreshLayout();
+        loadCurrentLocation();
     }
 
     private void configureSwipeRefreshLayout() {
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            mViewModel.downloadData();
+            mViewModel.getLocationForecastWrappers();
             if(mSwipeRefreshLayout.isRefreshing()) {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
@@ -104,23 +111,6 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
         getSupportActionBar().setTitle(R.string.location_activity_header);
     }
 
-    @Override
-    public void notifyDataSetChanged() {
-        mRecyclerView.getAdapter().notifyDataSetChanged();
-    }
-
-    @Override
-    public void showError(Throwable throwable) {
-
-        Log.d("SII", "showError: Location Activity" + throwable.getMessage());
-    }
-
-    @Override
-    public void startNewActivity() {
-        startActivity(AddLocationActivity.getIntent(this));
-    }
-
-    @Override
     public void showNoInternetView() {
         if(mLayoutLocations.getVisibility() == View.VISIBLE) {
             mLayoutLocations.setVisibility(View.GONE);
@@ -129,12 +119,16 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
     }
 
     public void loadCurrentLocation() {
-        Bundle currentLocationData = mViewModel.getCurrentLocationData();
-
-        loadCurrentLocationName(currentLocationData.getString(Constants.CURRENT_LOCATION_NAME));
-        loadCurrentLocationTemperature(currentLocationData.getInt(Constants.CURRENT_LOCATION_TEMPERATURE));
-        loadCurrentLocationForecastSummary(currentLocationData.getString(Constants.CURRENT_LOCATION_FORECAST_SUMMARY));
-        loadCurrentLocationImage(currentLocationData.getString(Constants.CURRENT_LOCATION_IMAGE_URL));
+        mViewModel.getCurrentLocationWrapper().observe(this, locationForecastSummaryWrapper -> {
+            if(locationForecastSummaryWrapper.getForecastSummaryResponse() != null
+                    && locationForecastSummaryWrapper.getLocation() != null) {
+                
+                loadCurrentLocationName(locationForecastSummaryWrapper.getLocation().getLocationName());
+                loadCurrentLocationTemperature((int) locationForecastSummaryWrapper.getForecastSummaryResponse().getHourly().getData().get(0).getTemperature());
+                loadCurrentLocationForecastSummary(locationForecastSummaryWrapper.getForecastSummaryResponse().getHourly().getSummary());
+                loadCurrentLocationImage(locationForecastSummaryWrapper.getLocation().getLocationImageFull());
+            }
+        });
     }
 
     private void loadCurrentLocationImage(String imageUrl) {
@@ -156,8 +150,4 @@ public class LocationActivity extends BaseActivity<LocationActivityPresenter> im
         mTvMainLocationSummary.setText(forecastSummary);
     }
 
-    @Override
-    public void startNewForecastActivity(Location location) {
-        startActivity(ForecastActivity.getIntent(this, location));
-    }
 }

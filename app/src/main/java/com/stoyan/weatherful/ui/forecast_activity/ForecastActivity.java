@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ForecastActivity extends BaseActivity {
+public class ForecastActivity extends BaseActivity<ForecastActivityViewModel> {
 
     @BindView(R.id.rv_forecast) RecyclerView mRecyclerView;
     @BindView(R.id.iv_weekly_forecast_location) ImageView mLocationPicture;

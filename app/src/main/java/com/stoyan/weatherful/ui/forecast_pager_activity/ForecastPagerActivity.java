@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 
-public class ForecastPagerActivity extends BaseActivity  {
+public class ForecastPagerActivity extends BaseActivity<ForecastPagerActivityViewModel>  {
 
     @BindView(R.id.toolbar_fragment_pager) Toolbar mToolbar;
     @BindView(R.id.view_pager) ViewPager mViewPager;
