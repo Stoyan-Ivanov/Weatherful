@@ -18,11 +18,16 @@ import com.stoyan.weatherful.Constants;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.persistence.models.Location;
+import com.stoyan.weatherful.rx.RxBus;
+import com.stoyan.weatherful.rx.RxUtils;
+import com.stoyan.weatherful.rx.events.NoInternetAvailableEvent;
 import com.stoyan.weatherful.ui.base_ui.activity.BaseActivity;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.decorations.SpacesItemDecoration;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.forecast_recyclerview.ForecastRecyclerviewAdapter;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -36,7 +41,8 @@ public class ForecastActivity extends BaseActivity<ForecastActivityViewModel> {
     @BindView(R.id.toolbar_collapsed) Toolbar mToolbar;
     @BindView(R.id.tv_location_name) TextView mTvLocationName;
 
-    ForecastActivityViewModel mViewModel;
+    @Inject
+    RxBus mRxBus;
 
     public static Intent getIntent(Context context, Location location) {
         Intent intent = new Intent(context, ForecastActivity.class);
@@ -51,6 +57,10 @@ public class ForecastActivity extends BaseActivity<ForecastActivityViewModel> {
         finish();
     }
 
+    @Override
+    protected void inject() {
+        getActivityComponent().inject(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +70,7 @@ public class ForecastActivity extends BaseActivity<ForecastActivityViewModel> {
         mViewModel = ViewModelProviders.of(this).get(ForecastActivityViewModel.class);
         mViewModel.setExtras(getIntent());
         subscribeToDataChange();
+        subscribeToEventBus();
 
         configureToolbar();
         configureRecyclerView();
@@ -67,6 +78,16 @@ public class ForecastActivity extends BaseActivity<ForecastActivityViewModel> {
 
         mViewModel.getLocation().observe(this, location -> mViewModel.downloadWeeklyForecast(location));
         mViewModel.getHeader().observe(this, header -> mTvLocationName.setText(header));
+    }
+
+    private void subscribeToEventBus() {
+        addDisposable(mRxBus.toObservable()
+                .compose(RxUtils.applySchedulersObservable())
+                .subscribe(event -> {
+                    if (event instanceof NoInternetAvailableEvent) {
+                        showNoInternetView();
+                    }
+                }));
     }
 
     private void configureToolbar() {
@@ -108,10 +129,6 @@ public class ForecastActivity extends BaseActivity<ForecastActivityViewModel> {
 
     public void subscribeToDataChange(){
         mViewModel.getDataDownloadedEvent().observe(this, o -> mRecyclerView.getAdapter().notifyDataSetChanged());
-    }
-
-    public void showError(Throwable throwable){
-        Log.d("SII", "showError: " + throwable.getMessage());
     }
 
     public void showNoInternetView() {

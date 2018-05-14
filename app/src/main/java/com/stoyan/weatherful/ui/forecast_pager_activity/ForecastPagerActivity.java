@@ -26,8 +26,6 @@ public class ForecastPagerActivity extends BaseActivity<ForecastPagerActivityVie
     @BindView(R.id.view_pager) ViewPager mViewPager;
     @BindView(R.id.pageIndicatorView) PageIndicatorView mPageIndicatorView;
 
-    private ForecastPagerActivityViewModel mViewModel;
-
     public static Intent getIntent(Context context, Location location, ArrayList<Data> data, int position) {
         Intent intent = new Intent(context, ForecastPagerActivity.class);
         intent.putExtra(Constants.EXTRA_LOCATION, location);
@@ -35,6 +33,11 @@ public class ForecastPagerActivity extends BaseActivity<ForecastPagerActivityVie
         intent.putExtra(Constants.EXTRA_POSITION, position);
 
         return intent;
+    }
+
+    @Override
+    protected void inject() {
+        getActivityComponent().inject(this);
     }
 
     @Override

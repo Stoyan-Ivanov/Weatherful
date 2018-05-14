@@ -16,11 +16,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.stoyan.weatherful.R;
+import com.stoyan.weatherful.rx.RxBus;
+import com.stoyan.weatherful.rx.RxUtils;
+import com.stoyan.weatherful.rx.events.NoInternetAvailableEvent;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
 import com.stoyan.weatherful.ui.base_ui.activity.BaseActivity;
 import com.stoyan.weatherful.ui.forecast_activity.ForecastActivity;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.decorations.SpacesItemDecoration;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationsRecyclerViewAdapter;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -39,8 +44,8 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
     @BindView(R.id.tv_main_location_temperature) TextView mTvMainLocationTemperature;
     @BindView(R.id.tv_main_location_summary) TextView mTvMainLocationSummary;
 
-    private static int LOADING_SCREEN_TIME = 2000;
-    private LocationActivityViewModel mViewModel;
+    @Inject
+    RxBus mRxBus;
 
     public static Intent getIntent(Context context) {
         return new Intent(context, LocationActivity.class);
@@ -67,12 +72,18 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
     }
 
     @Override
+    protected void inject() {
+        getActivityComponent().inject(this);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locations);
 
         mViewModel = new LocationActivityViewModel();
 
+        subscribeToEventBus();
         mViewModel.downloadData();
         mViewModel.downloadCurrentLocationData();
 
@@ -93,6 +104,16 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
         loadCurrentLocation();
     }
 
+    private void subscribeToEventBus() {
+        addDisposable(mRxBus.toObservable()
+                .compose(RxUtils.applySchedulersObservable())
+                .subscribe(event -> {
+                    if (event instanceof NoInternetAvailableEvent) {
+                        showNoInternetView();
+                    }
+                }));
+    }
+
     private void configureSwipeRefreshLayout() {
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
             mViewModel.getLocationForecastWrappers();
@@ -103,6 +124,7 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
     }
 
     private void configureSplashScreen() {
+        final int LOADING_SCREEN_TIME = 2000;
         new Handler().postDelayed(() -> mLayoutLoading.setVisibility(View.GONE), LOADING_SCREEN_TIME);
     }
 
@@ -122,7 +144,7 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
         mViewModel.getCurrentLocationWrapper().observe(this, locationForecastSummaryWrapper -> {
             if(locationForecastSummaryWrapper.getForecastSummaryResponse() != null
                     && locationForecastSummaryWrapper.getLocation() != null) {
-                
+
                 loadCurrentLocationName(locationForecastSummaryWrapper.getLocation().getLocationName());
                 loadCurrentLocationTemperature((int) locationForecastSummaryWrapper.getForecastSummaryResponse().getHourly().getData().get(0).getTemperature());
                 loadCurrentLocationForecastSummary(locationForecastSummaryWrapper.getForecastSummaryResponse().getHourly().getSummary());
@@ -149,5 +171,4 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
     private void loadCurrentLocationForecastSummary(String forecastSummary) {
         mTvMainLocationSummary.setText(forecastSummary);
     }
-
 }

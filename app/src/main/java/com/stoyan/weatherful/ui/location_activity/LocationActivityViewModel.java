@@ -42,19 +42,7 @@ public class LocationActivityViewModel extends BaseViewModel {
                 new LocationForecastSummaryWrapper(locationTracker.getCurrentLocation()));
     }
 
-    //    private void subscribeToEventBus() {
-//        addDisposable(mRxBus.toObservable()
-//                .compose(RxUtils.applySchedulersObservable())
-//                .subscribe(event -> {
-//                    if (event instanceof NoInternetAvailableEvent) {
-//                        view.showNoInternetView();
-//                    }
-//                }));
-//    }
-
-
     public void downloadData() {
-        //subscribeToEventBus();
         mDataManager.getLocationDataObservable().subscribe(getLocationConsumer(), getErrorConsumer());
     }
 

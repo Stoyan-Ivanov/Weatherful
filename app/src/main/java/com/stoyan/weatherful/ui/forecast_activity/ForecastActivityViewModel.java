@@ -40,16 +40,6 @@ public class ForecastActivityViewModel  extends BaseViewModel {
         mDataDownloadedEvent = new SingleLiveEvent();
     }
 
-    //    private void subscribeToEventBus() {
-//        addDisposable(mRxBus.toObservable()
-//                .compose(RxUtils.applySchedulersObservable())
-//                .subscribe(event -> {
-//                    if(event instanceof NoInternetAvailableEvent) {
-//                        view.showNoInternetView();
-//                    }
-//                }));
-//    }
-
     public void setExtras(Intent intent) {
         mLocation.setValue(intent.getParcelableExtra(Constants.EXTRA_LOCATION));
     }
@@ -67,8 +57,6 @@ public class ForecastActivityViewModel  extends BaseViewModel {
     }
 
     public void downloadWeeklyForecast(Location location) {
-        //subscribeToEventBus();
-        Log.d("SII", "datamanager: " + mDataManager);
         if(mDataManager != null) {
             mDataManager.getWeeklyForecastObservable(location)
                     .subscribe(getWeeklyForecastConsumer(), getErrorConsumer());

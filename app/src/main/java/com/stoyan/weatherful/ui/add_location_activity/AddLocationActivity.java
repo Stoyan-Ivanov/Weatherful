@@ -21,8 +21,6 @@ public class AddLocationActivity extends BaseActivity<AddLocationViewModel> {
     @BindView(R.id.et_country) EditText mEtCountryName;
     @BindView(R.id.toolbar_add) Toolbar mTitleBar;
 
-    private AddLocationViewModel mViewModel;
-
     public static Intent getIntent(Context context) {
         return new Intent(context, AddLocationActivity.class);
     }
@@ -31,6 +29,11 @@ public class AddLocationActivity extends BaseActivity<AddLocationViewModel> {
         void addLocation() {
             mViewModel.addNewLocation(mEtCityName.getText().toString(), mEtCountryName.getText().toString());
             mViewModel.onDoneButtonClicked();
+    }
+
+    @Override
+    protected void inject() {
+        getActivityComponent().inject(this);
     }
 
     @Override
@@ -61,7 +64,6 @@ public class AddLocationActivity extends BaseActivity<AddLocationViewModel> {
     }
 
     private void subscribeToNavigationChange() {
-        mViewModel.saveLocationEvent.observe(this, o -> startNewLocationsActivity()
-        );
+        mViewModel.saveLocationEvent.observe(this, o -> startNewLocationsActivity());
     }
 }
