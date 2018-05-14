@@ -38,6 +38,7 @@
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="@dimen/medium_text"
+        android:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@+id/tv_fragment_temp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
