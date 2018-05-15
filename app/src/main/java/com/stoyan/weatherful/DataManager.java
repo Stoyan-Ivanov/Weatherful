@@ -8,6 +8,7 @@ import com.stoyan.weatherful.persistence.models.LocationForecastSummaryWrapper;
 import com.stoyan.weatherful.rx.RxUtils;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -23,6 +24,7 @@ public class DataManager {
     private static final String URL_PREFIX = "https:";
     private final NetworkManager mNetworkManager;
     private final LocationsProvider mLocationProvider;
+    private final int MAX_PICTURE_OFFSET = 10;
 
     @Inject
     public DataManager(NetworkManager networkManager, LocationsProvider locationProvider) {
@@ -49,9 +51,10 @@ public class DataManager {
 
     private Observable<LocationForecastSummaryWrapper> downloadLocationImage(LocationForecastSummaryWrapper wrapper) {
         if(wrapper.getLocation().getLocationImageThumbnail() == null) {
-           return mNetworkManager
+            int pictureResultOffset = new Random().nextInt(MAX_PICTURE_OFFSET) + 1;
+            return mNetworkManager
                     .getQwantAPI()
-                    .getLocationImage(wrapper.getLocation().toString())
+                    .getLocationImage(pictureResultOffset, wrapper.getLocation().toString())
                     .compose(RxUtils.applySchedulersObservable())
                     .map(imageResponse -> imageResponse.getData().getResult().getPictures())
                     .flatMapIterable(pictures -> pictures)

@@ -4,6 +4,7 @@ import com.stoyan.weatherful.network.models.image_response_models.ImageResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -11,6 +12,7 @@ import retrofit2.http.Query;
  */
 
 public interface QwantAPI {
-    @GET("images?count=1&&offset=1")
-    Observable<ImageResponse> getLocationImage(@Query("q") String searchedLocation);
+    @GET("images?count=1")
+    Observable<ImageResponse> getLocationImage(@Query("offset") int offsetNum,
+                                               @Query("q") String searchedLocation);
 }
