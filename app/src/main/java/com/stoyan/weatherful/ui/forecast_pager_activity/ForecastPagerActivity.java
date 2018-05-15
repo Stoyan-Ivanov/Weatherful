@@ -1,9 +1,11 @@
 package com.stoyan.weatherful.ui.forecast_pager_activity;
 
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -58,7 +60,8 @@ public class ForecastPagerActivity extends BaseActivity<ForecastPagerActivityVie
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationOnClickListener(v -> finish());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mViewModel.getHeader().observe(this, title -> getSupportActionBar().setTitle(title));
+            mViewModel.getTitle().observe(this, title -> getSupportActionBar().setTitle(title));
+            mViewModel.getSubTitle().observe(this, subtitle -> getSupportActionBar().setSubtitle(subtitle));
         }
     }
 

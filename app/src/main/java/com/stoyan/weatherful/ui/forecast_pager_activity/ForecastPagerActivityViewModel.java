@@ -38,8 +38,12 @@ public class ForecastPagerActivityViewModel extends BaseViewModel {
         mDefaultPosition = intent.getIntExtra(Constants.EXTRA_POSITION, 0);
     }
 
-    public LiveData<String> getHeader() {
-            return Transformations.map(mLocation, location -> location.toString());
+    public LiveData<String> getTitle() {
+            return Transformations.map(mLocation, Location::getCountry);
+    }
+
+    public LiveData<String> getSubTitle() {
+        return Transformations.map(mLocation, Location::getLocationName);
     }
 
     public LiveData<ArrayList<Data>> getData() {

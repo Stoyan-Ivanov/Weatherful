@@ -55,7 +55,7 @@
 
     <TextView
         android:id="@+id/tv_chances_of_rain"
-        android:layout_width="@dimen/zero_dimension"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/tv_chances_of_rain_margin_bottom"
         android:layout_marginEnd="@dimen/tv_chances_of_rain_margin_end"
@@ -64,6 +64,7 @@
         android:drawableStart="@drawable/ic_rain_drop"
         android:drawablePadding="@dimen/tv_chances_of_rain_padding_drawable"
         android:textSize="@dimen/small_text"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
