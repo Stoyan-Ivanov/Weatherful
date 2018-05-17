@@ -43,15 +43,13 @@ public class LocationActivityViewModel extends BaseViewModel {
     }
 
     public void downloadData() {
-        mDataManager.getLocationDataObservable().subscribe(getLocationConsumer(), getErrorConsumer());
+       addDisposable(mDataManager.getLocationDataObservable()
+               .doOnError(throwable -> Log.d(getClass().getName(), "DownloadData: " + throwable))
+               .subscribe(getLocationConsumer()));
     }
 
     private Consumer<ArrayList<LocationForecastSummaryWrapper>> getLocationConsumer() {
         return wrappers -> mLocationForecastSummaryWrappers.setValue(wrappers);
-    }
-
-    private Consumer<? super Throwable> getErrorConsumer() {
-        return (Consumer<Throwable>) throwable -> Log.d(getClass().getName(), "getErrorConsumer: " + throwable);
     }
 
     public LiveData<ArrayList<LocationForecastSummaryWrapper>> getLocationForecastWrappers() {
@@ -59,8 +57,9 @@ public class LocationActivityViewModel extends BaseViewModel {
     }
 
     public void downloadCurrentLocationData() {
-        mDataManager.getCurrentLocationDataObservable(mCurrentLocationWrapper.getValue())
-                .subscribe(getCurrentLocationConsumer(), getErrorConsumer());
+        addDisposable(mDataManager.getCurrentLocationDataObservable(mCurrentLocationWrapper.getValue())
+                .doOnError(throwable -> Log.d(getClass().getName(), "DownloadCurrentLocation: " + throwable))
+                .subscribe(getCurrentLocationConsumer()));
     }
 
     private Consumer<LocationForecastSummaryWrapper> getCurrentLocationConsumer() {

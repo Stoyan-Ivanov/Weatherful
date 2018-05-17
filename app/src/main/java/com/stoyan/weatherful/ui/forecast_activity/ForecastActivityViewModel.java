@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -58,32 +59,19 @@ public class ForecastActivityViewModel  extends BaseViewModel {
 
     public void downloadWeeklyForecast(Location location) {
         if(mDataManager != null) {
-            mDataManager.getWeeklyForecastObservable(location)
-                    .subscribe(getWeeklyForecastConsumer(), getErrorConsumer());
+            addDisposable(mDataManager.getWeeklyForecastObservable(location)
+                    .doOnError(throwable -> Log.d(getClass().getName(), "getErrorConsumer: " + throwable))
+                    .doOnComplete(() -> mDataDownloadedEvent.call())
+                    .subscribe(getWeeklyForecastConsumer()));
         }
-
     }
 
     public LiveData<ArrayList<Data>> getWeeklyForecast() {
-        if(mWeeklyForecast != null) {
             return mWeeklyForecast;
-        }
-        return null;
-    }
-
-    private Consumer<? super Throwable> getErrorConsumer() {
-        return (Consumer<Throwable>) throwable -> Log.d("SII", "getErrorConsumer: " + throwable);
     }
 
     private Consumer<? super ArrayList<Data>> getWeeklyForecastConsumer() {
-        return weeklyForecast -> {
-            mWeeklyForecast.setValue(weeklyForecast);
-            onDataDownloaded();
-        };
-    }
-
-    private void onDataDownloaded() {
-        mDataDownloadedEvent.call();
+        return weeklyForecast -> mWeeklyForecast.setValue(weeklyForecast);
     }
 
     public SingleLiveEvent getDataDownloadedEvent() {
