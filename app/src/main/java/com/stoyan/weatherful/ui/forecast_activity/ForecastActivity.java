@@ -95,13 +95,11 @@ public class ForecastActivity extends BaseActivity<ForecastActivityViewModel> {
     }
 
     private void configureToolbar() {
-        final String EMPTY_STRING = "";
-
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationOnClickListener(v -> finish());
-        getSupportActionBar().setTitle(EMPTY_STRING);
+        getSupportActionBar().setTitle(getString(R.string.forecast_screen_title));
     }
 
     private void loadLocationImage() {

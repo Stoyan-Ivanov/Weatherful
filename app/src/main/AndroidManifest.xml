@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.location_activity.LocationActivity">
+        <activity android:name=".ui.location_activity.LocationActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,9 +31,15 @@
             android:value="b7155b53c9288994ad3b705de5b5acaaa9abd5a7"
             />
 
-        <activity android:name=".ui.forecast_activity.ForecastActivity" />
-        <activity android:name=".ui.forecast_pager_activity.ForecastPagerActivity" />
-        <activity android:name=".ui.add_location_activity.AddLocationActivity"/>
+        <activity android:name=".ui.forecast_activity.ForecastActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.forecast_pager_activity.ForecastPagerActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.add_location_activity.AddLocationActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
     </application>
 
 </manifest>

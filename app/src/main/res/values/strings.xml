@@ -3,6 +3,8 @@
 
     <string name="location_activity_header">Locations</string>
     <string name="add_location_activity_header">Add Location</string>
+    <string name="forecast_screen_title">Forecast</string>
+
     <string name="add_location_message">Help us by entering the data below and we will do the rest for you!</string>
 
     <!-- Toasts -->
@@ -26,5 +28,4 @@
     <string name="hint_et_country">Country</string>
     <string name="hint_et_city">Village / City</string>
     <string name="done">Done</string>
-
 </resources>
