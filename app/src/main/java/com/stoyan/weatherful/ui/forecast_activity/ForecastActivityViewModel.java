@@ -40,8 +40,8 @@ public class ForecastActivityViewModel  extends BaseViewModel {
         mDataDownloadedEvent = new SingleLiveEvent();
     }
 
-    public void setExtras(Intent intent) {
-        mLocation.setValue(intent.getParcelableExtra(Constants.EXTRA_LOCATION));
+    public void setLocation(Location location) {
+        mLocation.setValue(location);
     }
 
     public LiveData<String> getHeader() {

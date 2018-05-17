@@ -3,15 +3,9 @@ package com.stoyan.weatherful.ui.day_forecast_fragment;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
-import android.os.Bundle;
 
-import com.github.mikephil.charting.renderer.DataRenderer;
-import com.stoyan.weatherful.utils.Constants;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
-import com.stoyan.weatherful.utils.DateTransformation;
 import com.stoyan.weatherful.viewmodel.BaseViewModel;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -28,8 +22,8 @@ public class DayForecastFragmentViewModel extends BaseViewModel {
         mData = new MutableLiveData<>();
     }
 
-    public void setExtras(final Bundle arguments) {
-        mData.setValue(arguments.getParcelable(Constants.EXTRA_DATA));
+    public void setData(final Data data) {
+        mData.setValue(data);
     }
 
     public LiveData<Integer> getImageIconId() {

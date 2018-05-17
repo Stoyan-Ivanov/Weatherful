@@ -67,7 +67,8 @@ public class ForecastActivity extends BaseActivity<ForecastActivityViewModel> {
         setContentView(R.layout.activity_forecast);
 
         mViewModel = ViewModelProviders.of(this).get(ForecastActivityViewModel.class);
-        mViewModel.setExtras(getIntent());
+
+        configureIntentExtras();
         subscribeToDataChange();
         subscribeToEventBus();
 
@@ -77,6 +78,10 @@ public class ForecastActivity extends BaseActivity<ForecastActivityViewModel> {
 
         mViewModel.getLocation().observe(this, location -> mViewModel.downloadWeeklyForecast(location));
         mViewModel.getHeader().observe(this, header -> mTvLocationName.setText(header));
+    }
+
+    private void configureIntentExtras() {
+        mViewModel.setLocation(getIntent().getParcelableExtra(Constants.EXTRA_LOCATION));
     }
 
     private void subscribeToEventBus() {

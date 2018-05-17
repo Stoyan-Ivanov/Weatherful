@@ -45,7 +45,8 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentViewMod
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mViewModel = ViewModelProviders.of(this).get(DayForecastFragmentViewModel.class);
-        mViewModel.setExtras(getArguments());
+        mViewModel.setData(getArguments().getParcelable(Constants.EXTRA_DATA));
+
         return inflateCurrentView(inflater, R.layout.fragment_day_forecast, container);
     }
 

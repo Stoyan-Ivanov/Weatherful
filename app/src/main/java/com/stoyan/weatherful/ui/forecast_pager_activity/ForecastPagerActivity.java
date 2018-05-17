@@ -46,10 +46,18 @@ public class ForecastPagerActivity extends BaseActivity<ForecastPagerActivityVie
         setContentView(R.layout.activity_forecast_pager);
 
         mViewModel = new ForecastPagerActivityViewModel();
-        mViewModel.setExtras(getIntent());
 
+        configureIntentExtras();
         configureToolbar();
         configureViewPager();
+    }
+
+    private void configureIntentExtras() {
+        ArrayList<Data> data = getIntent().getParcelableArrayListExtra(Constants.EXTRA_DATA);
+        Location location = getIntent().getParcelableExtra(Constants.EXTRA_LOCATION);
+        int defaultPosition = getIntent().getIntExtra(Constants.EXTRA_POSITION, 0);
+
+        mViewModel.setExtras(data, location, defaultPosition);
     }
 
     private void configureToolbar() {

@@ -32,18 +32,18 @@ public class ForecastPagerActivityViewModel extends BaseViewModel {
         mLocation = new MutableLiveData<>();
     }
 
-    public void setExtras(Intent intent) {
-        mData.setValue(intent.getParcelableArrayListExtra(Constants.EXTRA_DATA));
-        mLocation.setValue(intent.getParcelableExtra(Constants.EXTRA_LOCATION));
-        mDefaultPosition = intent.getIntExtra(Constants.EXTRA_POSITION, 0);
+    public void setExtras(ArrayList<Data> data, Location location, int defaultPosition) {
+        this.mData.setValue(data);
+        this.mLocation.setValue(location);
+        this.mDefaultPosition = defaultPosition;
     }
 
     public LiveData<String> getTitle() {
-            return Transformations.map(mLocation, Location::getCountry);
+            return Transformations.map(mLocation, Location::getLocationName);
     }
 
     public LiveData<String> getSubTitle() {
-        return Transformations.map(mLocation, Location::getLocationName);
+        return Transformations.map(mLocation, Location::getCountry);
     }
 
     public LiveData<ArrayList<Data>> getData() {
@@ -63,7 +63,6 @@ public class ForecastPagerActivityViewModel extends BaseViewModel {
         for(Data singleDataElement: data) {
             mFragments.add(DayForecastFragment.newInstance(singleDataElement));
         }
-
         return mFragments;
     }
 }
