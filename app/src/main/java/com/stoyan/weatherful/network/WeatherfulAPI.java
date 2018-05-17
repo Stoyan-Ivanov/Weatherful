@@ -6,6 +6,7 @@ import com.stoyan.weatherful.network.models.image_response_models.ImageResponse;
 
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -18,10 +19,10 @@ import retrofit2.http.Query;
 public interface WeatherfulAPI {
 
     @GET("{latitude},{longitude}?exclude=currently,minutely,daily,alerts&&units=si")
-    Observable<ForecastSummaryResponse> getForecastSummaryResponse(@Path("latitude") double latitude,
-                                                                   @Path("longitude") double longitude);
+    Single<ForecastSummaryResponse> getForecastSummaryResponse(@Path("latitude") double latitude,
+                                                               @Path("longitude") double longitude);
 
     @GET("{latitude},{longitude}?exclude=currently,minutely,hourly,alerts&&units=si")
-    Observable<ForecastFullResponse> getFullForecastResponse(@Path("latitude") double latitude,
+    Single<ForecastFullResponse> getFullForecastResponse(@Path("latitude") double latitude,
                                                        @Path("longitude") double longitude);
 }
