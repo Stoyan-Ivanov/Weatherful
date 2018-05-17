@@ -5,15 +5,14 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.os.Bundle;
 
-import com.stoyan.weatherful.Constants;
+import com.github.mikephil.charting.renderer.DataRenderer;
+import com.stoyan.weatherful.utils.Constants;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
+import com.stoyan.weatherful.utils.DateTransformation;
 import com.stoyan.weatherful.viewmodel.BaseViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 /**
  * Created by stoyan.ivanov2 on 5/2/2018.
@@ -23,7 +22,6 @@ public class DayForecastFragmentViewModel extends BaseViewModel {
     private MutableLiveData<Data> mData;
     private MutableLiveData<String> mLiveDate;
     private final int PERCENT_MULTIPLIER = 100;
-    private final int TIME_MULTIPLIER = 1000;
 
     public DayForecastFragmentViewModel() {
         mLiveDate = new MutableLiveData<>();
@@ -39,7 +37,7 @@ public class DayForecastFragmentViewModel extends BaseViewModel {
     }
 
     public LiveData<String> getDate() {
-        mLiveDate.setValue(getDateFromTimestamp());
+        mLiveDate.setValue(mData.getValue().getTime());
         return mLiveDate;
     }
 
@@ -68,26 +66,12 @@ public class DayForecastFragmentViewModel extends BaseViewModel {
         return Transformations.map(mData, Data::getForecastSummary);
     }
 
-    public LiveData<String> getSunriseTime() {
-        return Transformations.map(mData, data -> getTimeFromUnixTime(data.getSunriseTime()));
+    public LiveData<Long> getSunriseTime() {
+        return Transformations.map(mData, Data::getSunriseTime);
     }
 
-    public LiveData<String> getSunsetTime() {
-        return Transformations.map(mData, data -> getTimeFromUnixTime(data.getSunsetTime()));
-    }
-
-    private String getDateFromTimestamp() {
-        Calendar date = Calendar.getInstance();
-        date.setTimeInMillis(Long.valueOf(mData.getValue().getTime()) * TIME_MULTIPLIER);
-
-        return date.get(Calendar.DAY_OF_MONTH) + "."
-                + date.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)
-                + "." + date.get(Calendar.YEAR);
-    }
-
-    private String getTimeFromUnixTime(long unixTime) {
-        return new SimpleDateFormat("HH:mm:ss")
-                .format(new Date(unixTime * TIME_MULTIPLIER));
+    public LiveData<Long> getSunsetTime() {
+        return Transformations.map(mData, Data::getSunsetTime);
     }
 
     @Override

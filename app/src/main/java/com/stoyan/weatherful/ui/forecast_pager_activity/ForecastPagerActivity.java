@@ -1,17 +1,15 @@
 package com.stoyan.weatherful.ui.forecast_pager_activity;
 
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 
 import com.rd.PageIndicatorView;
-import com.stoyan.weatherful.Constants;
+import com.stoyan.weatherful.utils.Constants;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.persistence.models.Location;

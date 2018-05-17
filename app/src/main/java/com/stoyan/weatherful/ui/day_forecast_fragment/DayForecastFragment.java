@@ -11,10 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.stoyan.weatherful.Constants;
+import com.stoyan.weatherful.utils.Constants;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.ui.base_ui.fragment.BaseFragment;
+import com.stoyan.weatherful.utils.DateTransformation;
 
 import butterknife.BindView;
 
@@ -73,7 +74,8 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentViewMod
     }
 
     private void setDate() {
-        mViewModel.getDate().observe(this, date -> mTvDate.setText(date));
+        mViewModel.getDate().observe(this, date ->
+                mTvDate.setText(DateTransformation.getDateFromTimestamp(date)));
     }
 
     private void setTemperature() {
@@ -87,26 +89,32 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentViewMod
     }
 
     private void setWindSpeed() {
-        mViewModel.getWindSpeed().observe(this, windSpeed -> mTvWindSpeed.setText(getString(R.string.wind_speed_field, windSpeed)));
+        mViewModel.getWindSpeed().observe(this, windSpeed ->
+                mTvWindSpeed.setText(getString(R.string.wind_speed_field, windSpeed)));
     }
 
     private void setRainChance() {
-        mViewModel.getRainChance().observe(this, rainChance -> mTvRainChance.setText(getString(R.string.rain_chance_field, rainChance)));
+        mViewModel.getRainChance().observe(this, rainChance ->
+                mTvRainChance.setText(getString(R.string.rain_chance_field, rainChance)));
     }
 
     private void setHumidity() {
-        mViewModel.getHumidity().observe(this, humidity -> mTvHumidity.setText(getString(R.string.humidity_field, humidity)));
+        mViewModel.getHumidity().observe(this, humidity ->
+                mTvHumidity.setText(getString(R.string.humidity_field, humidity)));
     }
 
     private void setForecastSummary() {
-        mViewModel.getForecastSummary().observe(this, summary -> mTvForecastSummary.setText(summary));
+        mViewModel.getForecastSummary().observe(this, summary ->
+                mTvForecastSummary.setText(summary));
     }
 
     private void setSunriseTime() {
-        mViewModel.getSunriseTime().observe(this, sunriseTime -> mTvSunrise.setText(sunriseTime));
+        mViewModel.getSunriseTime().observe(this, sunriseTime ->
+                mTvSunrise.setText(DateTransformation.getTimeFromUnixTime(sunriseTime)));
     }
     private void setSunsetTime() {
-        mViewModel.getSunsetTime().observe(this, sunsetTime -> mTvSunset.setText(sunsetTime));
+        mViewModel.getSunsetTime().observe(this, sunsetTime ->
+                mTvSunset.setText(DateTransformation.getTimeFromUnixTime(sunsetTime)));
     }
 
 }

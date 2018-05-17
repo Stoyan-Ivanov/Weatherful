@@ -6,7 +6,7 @@ import android.arch.lifecycle.Transformations;
 import android.content.Intent;
 import android.util.Log;
 
-import com.stoyan.weatherful.Constants;
+import com.stoyan.weatherful.utils.Constants;
 import com.stoyan.weatherful.DataManager;
 import com.stoyan.weatherful.livedata_utils.SingleLiveEvent;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 
 /**

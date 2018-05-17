@@ -1,4 +1,4 @@
-package com.stoyan.weatherful;
+package com.stoyan.weatherful.utils;
 
 /**
  * Created by Stoyan on 27.1.2018 г..

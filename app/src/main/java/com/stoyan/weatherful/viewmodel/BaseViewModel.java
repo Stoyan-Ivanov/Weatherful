@@ -27,4 +27,12 @@ public abstract class BaseViewModel extends ViewModel {
                 .getComponent()
                 .viewModelComponent();
     }
+
+    @Override
+    protected void onCleared() {
+        if(mDisposables != null) {
+            mDisposables.dispose();
+        }
+        super.onCleared();
+    }
 }

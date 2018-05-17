@@ -6,7 +6,7 @@ import android.arch.lifecycle.Transformations;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 
-import com.stoyan.weatherful.Constants;
+import com.stoyan.weatherful.utils.Constants;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.persistence.models.Location;
 import com.stoyan.weatherful.ui.day_forecast_fragment.DayForecastFragment;

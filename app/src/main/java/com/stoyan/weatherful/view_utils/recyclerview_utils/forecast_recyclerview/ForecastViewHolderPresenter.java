@@ -5,9 +5,7 @@ import android.content.Context;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.WeatherfulApplication;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.stoyan.weatherful.utils.DateTransformation;
 
 /**
  * Created by stoyan.ivanov on 3/26/2018.
@@ -35,8 +33,6 @@ public class ForecastViewHolderPresenter {
     }
 
     public String getDateFromTimestamp() {
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
-        Date dateFormat = new java.util.Date(Long.valueOf(mData.getTime()) * 1000);
-        return sdf.format(dateFormat);
+        return DateTransformation.getDayOfTheWeekFromTimestamp(mData.getTime());
     }
 }
