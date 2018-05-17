@@ -33,7 +33,7 @@ public abstract class BaseActivity<VM extends BaseViewModel> extends AppCompatAc
         ButterKnife.bind(this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.statusBarBlue));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.darkGrey));
         }
     }
 

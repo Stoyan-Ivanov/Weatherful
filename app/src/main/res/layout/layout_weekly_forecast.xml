@@ -10,7 +10,7 @@
         android:id="@+id/appbar"
         android:layout_width="@dimen/zero_dimension"
         android:layout_height="wrap_content"
-        android:background="@color/topBarBlue"
+        android:background="@color/black"
         android:theme="@style/Base.ThemeOverlay.AppCompat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

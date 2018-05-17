@@ -38,7 +38,7 @@ public class LocationViewHolder extends BaseViewHolder {
     public void bind(final LocationForecastSummaryWrapper locationForecastSummaryWrapper) {
 
         tvLocationName.setText(locationForecastSummaryWrapper.getLocation().getLocationName());
-        setLocationPicture(locationForecastSummaryWrapper.getLocation().getLocationImageThumbnail());
+        setLocationPicture(locationForecastSummaryWrapper.getLocation().getLocationImageFull());
         setTemperature(locationForecastSummaryWrapper.getForecastSummaryResponse());
 
         setOnViewHolderClickListeners(locationForecastSummaryWrapper.getLocation());

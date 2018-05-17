@@ -3,7 +3,7 @@
     package="com.stoyan.weatherful">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
@@ -15,8 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".ui.location_activity.LocationActivity">
+        <activity android:name=".ui.location_activity.LocationActivity"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,12 +26,15 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="b7155b53c9288994ad3b705de5b5acaaa9abd5a7"
-            />
+            android:value="b7155b53c9288994ad3b705de5b5acaaa9abd5a7" />
 
         <activity android:name=".ui.forecast_activity.ForecastActivity" />
         <activity android:name=".ui.forecast_pager_activity.ForecastPagerActivity" />
-        <activity android:name=".ui.add_location_activity.AddLocationActivity"/>
+        <activity android:name=".ui.add_location_activity.AddLocationActivity" />
+        <activity
+            android:name=".ui.forecast_chart_activity.ForecastChartActivity"
+            android:label="@string/title_activity_forecast_chart"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

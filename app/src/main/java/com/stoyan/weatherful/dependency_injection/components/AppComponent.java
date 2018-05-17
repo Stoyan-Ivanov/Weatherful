@@ -10,6 +10,8 @@ import com.stoyan.weatherful.ui.add_location_activity.AddLocationViewModel;
 import com.stoyan.weatherful.ui.day_forecast_fragment.DayForecastFragmentViewModel;
 import com.stoyan.weatherful.ui.forecast_activity.ForecastActivity;
 import com.stoyan.weatherful.ui.forecast_activity.ForecastActivityViewModel;
+import com.stoyan.weatherful.ui.forecast_chart_activity.ForecastChartActivity;
+import com.stoyan.weatherful.ui.forecast_chart_activity.ForecastChartActivityViewModel;
 import com.stoyan.weatherful.ui.forecast_pager_activity.ForecastPagerActivity;
 import com.stoyan.weatherful.ui.forecast_pager_activity.ForecastPagerActivityViewModel;
 import com.stoyan.weatherful.ui.location_activity.LocationActivity;
@@ -46,6 +48,8 @@ public interface AppComponent {
         void inject(ForecastPagerActivityViewModel forecastPagerActivityViewModel);
 
         void inject(LocationActivityViewModel locationActivityViewModel);
+
+        void inject(ForecastChartActivityViewModel forecastChartActivityViewModel);
     }
     
     @Subcomponent(modules = {ActivityModule.class})
@@ -58,5 +62,7 @@ public interface AppComponent {
         void inject(ForecastActivity forecastActivity);
 
         void inject(AddLocationActivity addLocationActivity);
+
+        void inject(ForecastChartActivity forecastChartActivity);
     }
 }

@@ -26,5 +26,6 @@
     <string name="hint_et_country">Country</string>
     <string name="hint_et_city">Village / City</string>
     <string name="done">Done</string>
+    <string name="title_activity_forecast_chart">ForecastChartActivity</string>
 
 </resources>

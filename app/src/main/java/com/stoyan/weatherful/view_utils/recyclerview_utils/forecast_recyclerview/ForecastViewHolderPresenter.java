@@ -34,7 +34,7 @@ public class ForecastViewHolderPresenter {
         return mContext.getString(R.string.rain_chance_field, (int) probability);
     }
 
-    public String getDateFromTimestamp() {
+    public String getDayOfTheWeekFromTimestamp() {
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
         Date dateFormat = new java.util.Date(Long.valueOf(mData.getTime()) * 1000);
         return sdf.format(dateFormat);

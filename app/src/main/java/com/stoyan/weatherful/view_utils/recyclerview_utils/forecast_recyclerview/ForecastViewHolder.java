@@ -48,7 +48,7 @@ public class ForecastViewHolder extends BaseViewHolder {
     }
 
     private void setDate() {
-        mTvDateHolder.setText(mPresenter.getDateFromTimestamp());
+        mTvDateHolder.setText(mPresenter.getDayOfTheWeekFromTimestamp());
     }
 
     private void setWeatherImage() {
