@@ -28,7 +28,6 @@ public class AddLocationActivity extends BaseActivity<AddLocationViewModel> {
     @OnClick(R.id.btn_done_adding)
         void addLocation() {
             mViewModel.addNewLocation(mEtCityName.getText().toString(), mEtCountryName.getText().toString());
-            mViewModel.onDoneButtonClicked();
     }
 
     @Override
@@ -58,12 +57,9 @@ public class AddLocationActivity extends BaseActivity<AddLocationViewModel> {
         }
     }
 
-    public void startNewLocationsActivity() {
-        startActivity(LocationActivity.getIntent(this));
-        finish();
-    }
-
     private void subscribeToNavigationChange() {
-        mViewModel.saveLocationEvent.observe(this, o -> startNewLocationsActivity());
+        mViewModel.getSaveLocationEvent().observe(this, o -> {
+            startActivity(LocationActivity.getIntent(this));
+            finish();});
     }
 }

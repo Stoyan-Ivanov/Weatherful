@@ -1,6 +1,5 @@
 package com.stoyan.weatherful.ui.location_activity;
 
-import android.annotation.SuppressLint;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
@@ -18,7 +17,6 @@ import javax.inject.Inject;
 
 import io.reactivex.functions.Consumer;
 
-@SuppressLint("CheckResult")
 public class LocationActivityViewModel extends BaseViewModel {
     private MutableLiveData<ArrayList<LocationForecastSummaryWrapper>> mLocationForecastSummaryWrappers;
     private MutableLiveData<LocationForecastSummaryWrapper> mCurrentLocationWrapper;

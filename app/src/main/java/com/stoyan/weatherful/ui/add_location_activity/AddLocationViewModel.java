@@ -21,8 +21,12 @@ import javax.inject.Inject;
 public class AddLocationViewModel extends BaseViewModel {
     @Inject
     DataManager mDataManager;
+    private SingleLiveEvent saveLocationEvent;
 
-    SingleLiveEvent saveLocationEvent;
+    @Override
+    protected void inject() {
+        getViewModelComponent().inject(this);
+    }
 
     public AddLocationViewModel() {
         saveLocationEvent = new SingleLiveEvent();
@@ -46,16 +50,12 @@ public class AddLocationViewModel extends BaseViewModel {
                         Location newLocation = new Location(cityName, countryName,
                                 a.getLatitude(), a.getLongitude());
                                 mDataManager.saveLocation(newLocation);
-
+                                saveLocationEvent.call();
                         break;
                     }
                 }
             } catch (IOException e) {}
         }
-    }
-
-    public void onDoneButtonClicked() {
-        saveLocationEvent.call();
     }
 
     private boolean checkIfDataIsCorrect(String cityName, String countryName) {
@@ -68,8 +68,7 @@ public class AddLocationViewModel extends BaseViewModel {
         return true;
     }
 
-    @Override
-    protected void inject() {
-        getViewModelComponent().inject(this);
+    public SingleLiveEvent getSaveLocationEvent() {
+        return saveLocationEvent;
     }
 }
