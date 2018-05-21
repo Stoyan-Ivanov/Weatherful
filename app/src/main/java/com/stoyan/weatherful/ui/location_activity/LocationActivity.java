@@ -46,6 +46,7 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
 
     @Inject
     RxBus mRxBus;
+    private LocationsRecyclerViewAdapter mAdapter;
 
     public static Intent getIntent(Context context) {
         return new Intent(context, LocationActivity.class);
@@ -90,11 +91,12 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
         mViewModel.getLocationForecastWrappers().observe(this, locationForecastSummaryWrappers -> {
             if(mRecyclerView.getAdapter() == null) {
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(LocationActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                mRecyclerView.setAdapter(new LocationsRecyclerViewAdapter(mViewModel, locationForecastSummaryWrappers));
+                mAdapter = (new LocationsRecyclerViewAdapter(mViewModel, locationForecastSummaryWrappers));
+                mRecyclerView.setAdapter(mAdapter);
                 mRecyclerView.addItemDecoration(new SpacesItemDecoration(getResources()
                         .getInteger(R.integer.viewholder_forecast_margin), SpacesItemDecoration.HORIZONTAL));
             } else {
-                mRecyclerView.getAdapter().notifyDataSetChanged();
+                mAdapter.updateItems(locationForecastSummaryWrappers);
             }
         });
 

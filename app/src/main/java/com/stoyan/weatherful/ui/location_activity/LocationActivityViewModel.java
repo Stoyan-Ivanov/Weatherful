@@ -22,8 +22,6 @@ public class LocationActivityViewModel extends BaseViewModel {
     private MutableLiveData<LocationForecastSummaryWrapper> mCurrentLocationWrapper;
 
     @Inject
-    RxBus mRxBus;
-    @Inject
     DataManager mDataManager;
     @Inject
     LocationTracker locationTracker;
@@ -56,7 +54,7 @@ public class LocationActivityViewModel extends BaseViewModel {
 
     public void downloadCurrentLocationData() {
         addDisposable(mDataManager.getCurrentLocationDataObservable(mCurrentLocationWrapper.getValue())
-                .doOnError(throwable -> Log.d(getClass().getName(), "DownloadCurrentLocation: " + throwable))
+                .doOnError(throwable -> Log.d(getClass().getName(), "DownloadCurrentLocation: " + throwable.getMessage()))
                 .subscribe(getCurrentLocationConsumer()));
     }
 

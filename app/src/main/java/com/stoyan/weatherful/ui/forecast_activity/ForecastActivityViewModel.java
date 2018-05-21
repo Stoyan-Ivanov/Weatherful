@@ -30,8 +30,6 @@ public class ForecastActivityViewModel  extends BaseViewModel {
     private SingleLiveEvent mDataDownloadedEvent;
 
     @Inject
-    protected RxBus mRxBus;
-    @Inject
     protected DataManager mDataManager;
 
     public ForecastActivityViewModel() {
@@ -44,7 +42,7 @@ public class ForecastActivityViewModel  extends BaseViewModel {
         mLocation.setValue(location);
     }
 
-    public LiveData<String> getHeader() {
+    public LiveData<String> getTitle() {
         return Transformations.map(mLocation, Location::toString);
     }
 
@@ -59,7 +57,7 @@ public class ForecastActivityViewModel  extends BaseViewModel {
     public void downloadWeeklyForecast(Location location) {
         if(mDataManager != null) {
             addDisposable(mDataManager.getWeeklyForecastObservable(location)
-                    .doOnError(throwable -> Log.d(getClass().getName(), "getErrorConsumer: " + throwable))
+                    .doOnError(throwable -> Log.d(getClass().getName(), "getErrorConsumer: " + throwable.getMessage()))
                     .doOnComplete(() -> mDataDownloadedEvent.call())
                     .subscribe(getWeeklyForecastConsumer()));
         }

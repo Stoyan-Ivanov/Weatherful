@@ -7,6 +7,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import java.util.Objects;
+
 /**
  * Created by Stoyan on 27.1.2018 г..
  */
@@ -142,4 +144,23 @@ public class Location implements Parcelable {
             return new Location[size];
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Location)) return false;
+        Location location = (Location) o;
+        return Double.compare(location.getLatitude(), getLatitude()) == 0 &&
+                Double.compare(location.getLongitude(), getLongitude()) == 0 &&
+                Objects.equals(getLocationName(), location.getLocationName()) &&
+                Objects.equals(getCountry(), location.getCountry()) &&
+                Objects.equals(getLocationImageThumbnail(), location.getLocationImageThumbnail()) &&
+                Objects.equals(getLocationImageFull(), location.getLocationImageFull());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getLocationName(), getCountry(), getLatitude(), getLongitude(), getLocationImageThumbnail(), getLocationImageFull());
+    }
 }

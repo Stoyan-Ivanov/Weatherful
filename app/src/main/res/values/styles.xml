@@ -9,21 +9,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-
-    <style name="ExpandedAppBar" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textSize">35sp</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:layout_gravity">center_horizontal</item>
-    </style>
-
-    <style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textSize">28sp</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textAlignment">center</item>
-    </style>
-
     <style name="ToolbarStyle" parent="@style/Theme.AppCompat">
         <!-- Customize color of navigation drawer icon and back arrow -->
         <item name="colorPrimaryDark">@color/black</item>

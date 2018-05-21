@@ -77,7 +77,7 @@ public class ForecastActivity extends BaseActivity<ForecastActivityViewModel> {
         loadLocationImage();
 
         mViewModel.getLocation().observe(this, location -> mViewModel.downloadWeeklyForecast(location));
-        mViewModel.getHeader().observe(this, header -> mTvLocationName.setText(header));
+        mViewModel.getTitle().observe(this, header -> mTvLocationName.setText(header));
     }
 
     private void configureIntentExtras() {
