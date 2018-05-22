@@ -46,7 +46,9 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
     @BindView(R.id.tv_main_location_name) TextView mTvCurrentLocationName;
     @BindView(R.id.tv_main_location_temperature) TextView mTvCurrentLocationTemperature;
     @BindView(R.id.tv_current_location_summary) TextView mTvCurrentLocationSummary;
+
     @BindView(R.id.tv_missing_gps) TextView mTvMissingGpsConnection;
+    @BindView(R.id.iv_touch_missing_location) ImageView mImageTouchMissingLocation;
 
     @Inject
     RxBus mRxBus;
@@ -174,6 +176,7 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
                 }
             } else {
                 mTvMissingGpsConnection.setVisibility(View.VISIBLE);
+                mImageTouchMissingLocation.setVisibility(View.VISIBLE);
             }
         });
     }

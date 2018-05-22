@@ -81,11 +81,23 @@
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="1"
-        android:textSize="@dimen/large_text"
+        android:textSize="@dimen/medium_text"
         android:text="@string/cannot_determine_current_location"
-        app:layout_constraintBottom_toTopOf="@id/tv_current_location_summary"
+        app:layout_constraintBottom_toTopOf="@id/tv_main_location_temperature"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/iv_touch_missing_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_tap"
+        app:layout_constraintTop_toTopOf="@+id/tv_main_location_temperature"
         android:visibility="gone"/>
 
 </android.support.constraint.ConstraintLayout>

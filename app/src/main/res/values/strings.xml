@@ -28,5 +28,5 @@
     <string name="hint_et_country">Country</string>
     <string name="hint_et_city">Village / City</string>
     <string name="done">Done</string>
-    <string name="cannot_determine_current_location">Can\'t determine current Location. Tap and enable your GPS connection</string>
+    <string name="cannot_determine_current_location">Can\'t determine current location. Tap and enable your GPS connection</string>
 </resources>
