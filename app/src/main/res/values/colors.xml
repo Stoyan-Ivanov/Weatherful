@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/black</color>
-    <color name="colorPrimaryDark">@color/black</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#004880</color>
+    <color name="colorPrimaryDark">#004880</color>
+    <color name="colorAccent">#fcca02</color>
+    <color name="colorAccentpink">#FF4081</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
     <color name="topBarBlue">#005073</color>

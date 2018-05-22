@@ -33,8 +33,6 @@ public class DataManager {
     }
 
     public Observable<ArrayList<LocationForecastSummaryWrapper>> getLocationDataObservable() {
-
-
         return  mLocationProvider.getLocations()
                 .flatMap(locations -> Observable.just(locations)
                     .flatMapIterable(allLocations -> allLocations)

@@ -34,8 +34,16 @@ public class LocationActivityViewModel extends BaseViewModel {
     public LocationActivityViewModel() {
         mLocationForecastSummaryWrappers = new MutableLiveData<>();
         mCurrentLocationWrapper = new MutableLiveData<>();
-        mCurrentLocationWrapper.setValue(
-                new LocationForecastSummaryWrapper(locationTracker.getCurrentLocation()));
+    }
+
+    private void getCurrentLocationFromLocationService() {
+        Location currentLocation = locationTracker.getCurrentLocation();
+
+        if(currentLocation == null) {
+            mCurrentLocationWrapper.setValue(null);
+        } else {
+            mCurrentLocationWrapper.setValue(new LocationForecastSummaryWrapper(currentLocation));
+        }
     }
 
     public void downloadData() {
@@ -53,9 +61,13 @@ public class LocationActivityViewModel extends BaseViewModel {
     }
 
     public void downloadCurrentLocationData() {
-        addDisposable(mDataManager.getCurrentLocationDataObservable(mCurrentLocationWrapper.getValue())
-                .doOnError(throwable -> Log.d(getClass().getName(), "DownloadCurrentLocation: " + throwable.getMessage()))
-                .subscribe(getCurrentLocationConsumer()));
+        getCurrentLocationFromLocationService();
+
+        if(mCurrentLocationWrapper.getValue() != null) {
+            addDisposable(mDataManager.getCurrentLocationDataObservable(mCurrentLocationWrapper.getValue())
+                    .doOnError(throwable -> Log.d(getClass().getName(), "DownloadCurrentLocation: " + throwable.getMessage()))
+                    .subscribe(getCurrentLocationConsumer()));
+        }
     }
 
     private Consumer<LocationForecastSummaryWrapper> getCurrentLocationConsumer() {

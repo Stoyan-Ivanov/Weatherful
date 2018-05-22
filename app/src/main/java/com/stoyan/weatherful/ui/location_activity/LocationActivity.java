@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -31,6 +33,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
+
     @BindView(R.id.recyclerview) RecyclerView mRecyclerView;
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.progressBar_loading) ProgressBar mProgressBar;
@@ -39,10 +42,11 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
     @BindView(R.id.layout_missing_network) ConstraintLayout mLayoutMissingNetwork;
     @BindView(R.id.toolbar_locations) Toolbar mToolbar;
 
-    @BindView(R.id.iv_main_location) ImageView mMainLocationImage;
-    @BindView(R.id.tv_main_location_name) TextView mTvMainLocationName;
-    @BindView(R.id.tv_main_location_temperature) TextView mTvMainLocationTemperature;
-    @BindView(R.id.tv_main_location_summary) TextView mTvMainLocationSummary;
+    @BindView(R.id.iv_main_location) ImageView mCurrentLocationImage;
+    @BindView(R.id.tv_main_location_name) TextView mTvCurrentLocationName;
+    @BindView(R.id.tv_main_location_temperature) TextView mTvCurrentLocationTemperature;
+    @BindView(R.id.tv_current_location_summary) TextView mTvCurrentLocationSummary;
+    @BindView(R.id.tv_missing_gps) TextView mTvMissingGpsConnection;
 
     @Inject
     RxBus mRxBus;
@@ -56,8 +60,12 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
     void onCurrentLocationClick() {
         mViewModel.getCurrentLocationWrapper().observe(this,
                 wrapper -> {
-                    assert wrapper != null;
-                    startActivity(ForecastActivity.getIntent(LocationActivity.this, wrapper.getLocation()));
+                    if (wrapper != null) {
+                        startActivity(ForecastActivity.getIntent(LocationActivity.this, wrapper.getLocation()));
+                    } else {
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(intent);
+                    }
                 });
     }
 
@@ -106,6 +114,17 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
         loadCurrentLocation();
     }
 
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//        new Handler().postDelayed(() -> {
+//            mViewModel.downloadCurrentLocationData();
+//            loadCurrentLocation();
+//        }, 1000);
+//
+//    }
+
     private void subscribeToEventBus() {
         addDisposable(mRxBus.toObservable()
                 .compose(RxUtils.applySchedulersObservable())
@@ -144,13 +163,17 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
 
     public void loadCurrentLocation() {
         mViewModel.getCurrentLocationWrapper().observe(this, locationForecastSummaryWrapper -> {
-            if(locationForecastSummaryWrapper.getForecastSummaryResponse() != null
-                    && locationForecastSummaryWrapper.getLocation() != null) {
+            if (locationForecastSummaryWrapper != null) {
+                if(locationForecastSummaryWrapper.getForecastSummaryResponse() != null
+                        && locationForecastSummaryWrapper.getLocation() != null) {
 
-                loadCurrentLocationName(locationForecastSummaryWrapper.getLocation().getLocationName());
-                loadCurrentLocationTemperature((int) locationForecastSummaryWrapper.getForecastSummaryResponse().getHourly().getData().get(0).getTemperature());
-                loadCurrentLocationForecastSummary(locationForecastSummaryWrapper.getForecastSummaryResponse().getHourly().getSummary());
-                loadCurrentLocationImage(locationForecastSummaryWrapper.getLocation().getLocationImageFull());
+                    loadCurrentLocationName(locationForecastSummaryWrapper.getLocation().getLocationName());
+                    loadCurrentLocationTemperature((int) locationForecastSummaryWrapper.getForecastSummaryResponse().getHourly().getData().get(0).getTemperature());
+                    loadCurrentLocationForecastSummary(locationForecastSummaryWrapper.getForecastSummaryResponse().getHourly().getSummary());
+                    loadCurrentLocationImage(locationForecastSummaryWrapper.getLocation().getLocationImageFull());
+                }
+            } else {
+                mTvMissingGpsConnection.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -159,18 +182,18 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
         Glide.with(this)
                 .load(imageUrl)
                 .centerCrop()
-                .into(mMainLocationImage);
+                .into(mCurrentLocationImage);
     }
 
     private void loadCurrentLocationTemperature(int temperature) {
-        mTvMainLocationTemperature.setText(getString(R.string.single_temperature_field, temperature));
+        mTvCurrentLocationTemperature.setText(getString(R.string.single_temperature_field, temperature));
     }
 
     private void loadCurrentLocationName(String locationName) {
-        mTvMainLocationName.setText(locationName);
+        mTvCurrentLocationName.setText(locationName);
     }
 
     private void loadCurrentLocationForecastSummary(String forecastSummary) {
-        mTvMainLocationSummary.setText(forecastSummary);
+        mTvCurrentLocationSummary.setText(forecastSummary);
     }
 }

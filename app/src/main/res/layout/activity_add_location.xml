@@ -98,7 +98,7 @@
         android:background="@color/colorAccent"
         android:text="@string/done"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
-        android:textColor="@color/white"
+        android:textColor="@color/colorPrimary"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

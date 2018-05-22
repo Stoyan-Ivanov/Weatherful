@@ -46,6 +46,7 @@ public class LocationTracker implements LocationListener{
         isNetworkEnabled = mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
         if(!isGPSEnabled || !isNetworkEnabled) {
+            return null;
 
         } else {
             if(isNetworkEnabled) {
@@ -72,7 +73,6 @@ public class LocationTracker implements LocationListener{
         }
         mLocationManager.requestSingleUpdate(provider, this, null);
         Location location = mLocationManager.getLastKnownLocation(provider);
-        Log.d("SII", location.getLatitude() + ", " + location.getLongitude());
 
         getLocationNameAndCountry(location.getLatitude(), location.getLongitude());
     }

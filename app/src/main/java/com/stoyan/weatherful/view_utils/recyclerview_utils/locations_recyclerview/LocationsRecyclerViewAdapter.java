@@ -58,6 +58,6 @@ public class LocationsRecyclerViewAdapter extends RecyclerView.Adapter<LocationV
     public void removeItem(int position, Location location) {
         mViewModel.deleteLocation(location);
         mLocationForecastSummaryWrappers.remove(position);
-        updateItems(mLocationForecastSummaryWrappers);
+        notifyItemRemoved(position);
     }
 }
