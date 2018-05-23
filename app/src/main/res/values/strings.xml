@@ -29,4 +29,13 @@
     <string name="hint_et_city">Village / City</string>
     <string name="done">Done</string>
     <string name="cannot_determine_current_location">Can\'t determine current location. Tap and enable your GPS connection</string>
+
+    <!-- Permission dialog -->
+    <string name="permission_dialog_title">Permission needed</string>
+    <string name="permission_dialog_message">This permission is needed in order to show weather for your current location.</string>
+    <string name="permission_dialog_accept_button">OK</string>
+    <string name="permission_dialog_deny_button">Cancel</string>
+
+    <string name="toast_permission_denied">Location permission denied!</string>
+    <string name="toast_permission_never_ask">Never asking again for location permission!</string>
 </resources>

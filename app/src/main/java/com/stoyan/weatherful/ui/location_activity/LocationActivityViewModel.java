@@ -61,6 +61,7 @@ public class LocationActivityViewModel extends BaseViewModel {
     }
 
     public void downloadCurrentLocationData() {
+        Log.d("SII", "downloadCurrentLocationData: ");
         getCurrentLocationFromLocationService();
 
         if(mCurrentLocationWrapper.getValue() != null) {

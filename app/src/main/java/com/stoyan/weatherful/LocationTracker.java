@@ -95,25 +95,6 @@ public class LocationTracker implements LocationListener{
         }
     }
 
-    public void showSettingsAlert() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-
-        alertDialog.setTitle("GPS settings");
-        alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
-
-        alertDialog.setPositiveButton("Settings",
-                (dialog, which) -> {
-                    Intent intent = new Intent(
-                            Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    mContext.startActivity(intent);
-                });
-
-        alertDialog.setNegativeButton("Cancel",
-                (dialog, which) -> dialog.cancel());
-
-        alertDialog.show();
-    }
-
     @Override
     public void onLocationChanged(Location location) {}
 

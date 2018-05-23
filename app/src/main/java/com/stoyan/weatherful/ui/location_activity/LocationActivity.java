@@ -1,12 +1,18 @@
 package com.stoyan.weatherful.ui.location_activity;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresPermission;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -15,9 +21,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.stoyan.weatherful.R;
+import com.stoyan.weatherful.WeatherfulApplication;
 import com.stoyan.weatherful.rx.RxBus;
 import com.stoyan.weatherful.rx.RxUtils;
 import com.stoyan.weatherful.rx.events.NoInternetAvailableEvent;
@@ -31,7 +39,14 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnNeverAskAgain;
+import permissions.dispatcher.OnPermissionDenied;
+import permissions.dispatcher.OnShowRationale;
+import permissions.dispatcher.PermissionRequest;
+import permissions.dispatcher.RuntimePermissions;
 
+@RuntimePermissions
 public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
 
     @BindView(R.id.recyclerview) RecyclerView mRecyclerView;
@@ -65,8 +80,11 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
                     if (wrapper != null) {
                         startActivity(ForecastActivity.getIntent(LocationActivity.this, wrapper.getLocation()));
                     } else {
-                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        startActivity(intent);
+                        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                            LocationActivityPermissionsDispatcher.getCurrentLocationWithPermissionCheck(this);
+                        } else {
+                            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        }
                     }
                 });
     }
@@ -116,16 +134,37 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
         loadCurrentLocation();
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//
-//        new Handler().postDelayed(() -> {
-//            mViewModel.downloadCurrentLocationData();
-//            loadCurrentLocation();
-//        }, 1000);
-//
-//    }
+    @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+    void getCurrentLocation() {
+        mViewModel.downloadCurrentLocationData();
+        loadCurrentLocation();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        LocationActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+    }
+
+    @OnShowRationale({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+    void showRationaleForLocation(final PermissionRequest request) {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.permission_dialog_title))
+                .setMessage(getString(R.string.permission_dialog_message))
+                .setPositiveButton(getString(R.string.permission_dialog_accept_button), (dialog, which) -> request.proceed())
+                .setNegativeButton(getString(R.string.permission_dialog_deny_button), (dialog, which) -> request.cancel())
+                .show();
+    }
+
+    @OnPermissionDenied({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+    void onLocationPermissionDenied() {
+        WeatherfulApplication.showToast(getString(R.string.toast_permission_denied));
+    }
+
+    @OnNeverAskAgain({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+    void showNeverAskForLocation() {
+        Toast.makeText(this, getString(R.string.toast_permission_never_ask), Toast.LENGTH_SHORT).show();
+    }
 
     private void subscribeToEventBus() {
         addDisposable(mRxBus.toObservable()
@@ -173,6 +212,9 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
                     loadCurrentLocationTemperature((int) locationForecastSummaryWrapper.getForecastSummaryResponse().getHourly().getData().get(0).getTemperature());
                     loadCurrentLocationForecastSummary(locationForecastSummaryWrapper.getForecastSummaryResponse().getHourly().getSummary());
                     loadCurrentLocationImage(locationForecastSummaryWrapper.getLocation().getLocationImageFull());
+
+                    mTvMissingGpsConnection.setVisibility(View.GONE);
+                    mImageTouchMissingLocation.setVisibility(View.GONE);
                 }
             } else {
                 mTvMissingGpsConnection.setVisibility(View.VISIBLE);
