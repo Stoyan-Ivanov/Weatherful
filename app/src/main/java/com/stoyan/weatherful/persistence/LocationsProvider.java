@@ -34,7 +34,7 @@ public class LocationsProvider implements LocationsProviderContract {
 
     @Override
     public Observable<List<Location>> getLocations() {
-        Single<List<Location>> single= mDAO.getAllLocations().compose(RxUtils.applySchedulerSingle());
+        Single<List<Location>> single = mDAO.getAllLocations().compose(RxUtils.applySchedulerSingle());
         return single.toObservable();
     }
 

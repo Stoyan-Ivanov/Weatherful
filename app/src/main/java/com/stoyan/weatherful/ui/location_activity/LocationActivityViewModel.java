@@ -1,5 +1,6 @@
 package com.stoyan.weatherful.ui.location_activity;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
@@ -9,6 +10,7 @@ import com.stoyan.weatherful.LocationTracker;
 import com.stoyan.weatherful.persistence.models.Location;
 import com.stoyan.weatherful.persistence.models.LocationForecastSummaryWrapper;
 import com.stoyan.weatherful.rx.RxBus;
+import com.stoyan.weatherful.rx.RxUtils;
 import com.stoyan.weatherful.viewmodel.BaseViewModel;
 
 import java.util.ArrayList;
@@ -36,16 +38,6 @@ public class LocationActivityViewModel extends BaseViewModel {
         mCurrentLocationWrapper = new MutableLiveData<>();
     }
 
-    private void getCurrentLocationFromLocationService() {
-        Location currentLocation = locationTracker.getCurrentLocation();
-
-        if(currentLocation == null) {
-            mCurrentLocationWrapper.setValue(null);
-        } else {
-            mCurrentLocationWrapper.setValue(new LocationForecastSummaryWrapper(currentLocation));
-        }
-    }
-
     public void downloadData() {
        addDisposable(mDataManager.getLocationDataObservable()
                .doOnError(throwable -> Log.d(getClass().getName(), "DownloadData: " + throwable))
@@ -60,15 +52,20 @@ public class LocationActivityViewModel extends BaseViewModel {
         return mLocationForecastSummaryWrappers;
     }
 
+    @SuppressLint("CheckResult")
     public void downloadCurrentLocationData() {
-        Log.d("SII", "downloadCurrentLocationData: ");
-        getCurrentLocationFromLocationService();
-
-        if(mCurrentLocationWrapper.getValue() != null) {
-            addDisposable(mDataManager.getCurrentLocationDataObservable(mCurrentLocationWrapper.getValue())
-                    .doOnError(throwable -> Log.d(getClass().getName(), "DownloadCurrentLocation: " + throwable.getMessage()))
-                    .subscribe(getCurrentLocationConsumer()));
-        }
+        addDisposable(locationTracker.getCurrentLocation()
+                .doOnError(throwable -> Log.d("SII", "downloadCurrentLocationData: " + throwable.getMessage()))
+                .subscribe(currentLocation -> {
+                    if(currentLocation == null) {
+                        mCurrentLocationWrapper.setValue(null);
+                    } else {
+                        mCurrentLocationWrapper.setValue(new LocationForecastSummaryWrapper(currentLocation));
+                        addDisposable(mDataManager.getCurrentLocationDataObservable(mCurrentLocationWrapper.getValue())
+                                .doOnError(throwable -> Log.d(getClass().getName(), "DownloadCurrentLocation: " + throwable.getMessage()))
+                                .subscribe(getCurrentLocationConsumer()));
+                    }
+                }));
     }
 
     private Consumer<LocationForecastSummaryWrapper> getCurrentLocationConsumer() {

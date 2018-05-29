@@ -4,36 +4,23 @@ import android.support.v7.util.DiffUtil;
 
 import java.util.ArrayList;
 
-public class LWWrapperDiffCallback extends DiffUtil.Callback{
-    private ArrayList<LocationForecastSummaryWrapper> mOldList;
-    private ArrayList<LocationForecastSummaryWrapper> mNewList;
+public class LWWrapperDiffCallback extends DiffUtil.ItemCallback<LocationForecastSummaryWrapper>{
+    private static LWWrapperDiffCallback mDiffCallback;
 
-    public LWWrapperDiffCallback(ArrayList<LocationForecastSummaryWrapper> oldList, ArrayList<LocationForecastSummaryWrapper> newList) {
-        mOldList = oldList;
-        mNewList = newList;
+    public static LWWrapperDiffCallback getInstance() {
+        if(mDiffCallback == null) {
+            mDiffCallback = new LWWrapperDiffCallback();
+        }
+        return mDiffCallback;
     }
 
     @Override
-    public int getOldListSize() {
-        return mOldList.size();
+    public boolean areItemsTheSame(LocationForecastSummaryWrapper oldItem, LocationForecastSummaryWrapper newItem) {
+        return oldItem.getLocation().toString().equals(newItem.getLocation().toString());
     }
 
     @Override
-    public int getNewListSize() {
-        return mNewList.size();
-    }
-
-    @Override
-    public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return mOldList.get(oldItemPosition).equals(mNewList.get(newItemPosition));
-    }
-
-    @Override
-    public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-
-        LocationForecastSummaryWrapper oldItem = mOldList.get(oldItemPosition);
-        LocationForecastSummaryWrapper newItem = mNewList.get(newItemPosition);
-
+    public boolean areContentsTheSame(LocationForecastSummaryWrapper oldItem, LocationForecastSummaryWrapper newItem) {
         if(oldItem.getLocation().equals(newItem.getLocation())) {
             if(oldItem.getForecastSummaryResponse().equals(newItem.getForecastSummaryResponse())) {
                 return true;

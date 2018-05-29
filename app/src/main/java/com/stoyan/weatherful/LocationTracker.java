@@ -1,109 +1,65 @@
 package com.stoyan.weatherful;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
+import com.google.android.gms.location.LocationRequest;
+import com.patloew.rxlocation.RxLocation;
+import com.stoyan.weatherful.rx.RxUtils;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import io.reactivex.Maybe;
+import io.reactivex.Observable;
 
 /**
  * Created by stoyan.ivanov2 on 4/17/2018.
  */
 
 @Singleton
-public class LocationTracker implements LocationListener{
-    private LocationManager mLocationManager;
+public class LocationTracker {
     private Context mContext;
-    private com.stoyan.weatherful.persistence.models.Location currentLocation;
+    private RxLocation mRxLocation;
 
     @Inject
     public LocationTracker() {
         mContext = WeatherfulApplication.getStaticContext();
-        mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+        mRxLocation = new RxLocation(mContext);
+
     }
 
-    public com.stoyan.weatherful.persistence.models.Location getCurrentLocation() {
-        boolean isGPSEnabled;
-        boolean isNetworkEnabled;
+    public Observable<com.stoyan.weatherful.persistence.models.Location> getCurrentLocation() {
 
-        isGPSEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        isNetworkEnabled = mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-        if(!isGPSEnabled || !isNetworkEnabled) {
-            return null;
 
-        } else {
-            if(isNetworkEnabled) {
-                checkIfPermissionsAreGranted(LocationManager.NETWORK_PROVIDER);
-                return  currentLocation;
-            }
+        LocationRequest locationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(15000);
 
-            if (isGPSEnabled) {
-                checkIfPermissionsAreGranted(LocationManager.GPS_PROVIDER);
-            }
+        if (ActivityCompat.checkSelfPermission(mContext,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            Log.d("SII", "getCurrentLocation: granted");
+
+            return mRxLocation.location().updates(locationRequest)
+                    .flatMap(location -> mRxLocation.geocoding().fromLocation(location).toObservable())
+                    .map(address -> {
+                        Log.d("SII", "getCurrentLocation: " + address.getLocality());
+                        String cityName = address.getLocality();
+                        String countryName = address.getCountryName();
+                        double latitude = address.getLatitude();
+                        double longitude = address.getLongitude();
+
+                        return new com.stoyan.weatherful.persistence.models.Location(cityName, countryName, latitude, longitude);
+                    })
+                    .compose(RxUtils.applySchedulersObservable());
+
         }
-        return currentLocation;
+        return null;
     }
-
-    private void checkIfPermissionsAreGranted(String provider) {
-        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
-
-            WeatherfulApplication.showToast("Location service is disabled!");
-            // showSettingsAlert();
-            return;
-        }
-        mLocationManager.requestSingleUpdate(provider, this, null);
-        Location location = mLocationManager.getLastKnownLocation(provider);
-
-        getLocationNameAndCountry(location.getLatitude(), location.getLongitude());
-    }
-
-    private void getLocationNameAndCountry(double latitude, double longitude) {
-        if (Geocoder.isPresent()) {
-            Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
-            try {
-                List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
-                String cityName = addresses.get(0).getLocality();
-                String countryName = addresses.get(0).getCountryName();
-
-                currentLocation = new com.stoyan.weatherful.persistence.models.Location(cityName, countryName, latitude, longitude);
-
-            } catch (IOException mE) {
-                mE.printStackTrace();
-            }
-        } else {
-            Log.d("SII", "getLocationNameAndCountry: no geocoder available");
-        }
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {}
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {}
-
-    @Override
-    public void onProviderEnabled(String provider) {}
-
-    @Override
-    public void onProviderDisabled(String provider) {}
 }

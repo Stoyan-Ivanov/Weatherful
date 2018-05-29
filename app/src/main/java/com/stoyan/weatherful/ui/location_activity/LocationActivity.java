@@ -11,6 +11,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresPermission;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.WeatherfulApplication;
 import com.stoyan.weatherful.rx.RxBus;
@@ -124,7 +127,7 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
                 mRecyclerView.addItemDecoration(new SpacesItemDecoration(getResources()
                         .getInteger(R.integer.viewholder_forecast_margin), SpacesItemDecoration.HORIZONTAL));
             } else {
-                mAdapter.updateItems(locationForecastSummaryWrappers);
+                mAdapter.submitList(locationForecastSummaryWrappers);
             }
         });
 
@@ -132,6 +135,23 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
         configureToolbar();
         configureSwipeRefreshLayout();
         loadCurrentLocation();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkPlayServicesAvailable();
+    }
+
+    private void checkPlayServicesAvailable() {
+        final GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        final int status = apiAvailability.isGooglePlayServicesAvailable(this);
+
+        if(status != ConnectionResult.SUCCESS) {
+            if(apiAvailability.isUserResolvableError(status)) {
+                apiAvailability.getErrorDialog(this, status, 1).show();
+            }
+        }
     }
 
     @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})

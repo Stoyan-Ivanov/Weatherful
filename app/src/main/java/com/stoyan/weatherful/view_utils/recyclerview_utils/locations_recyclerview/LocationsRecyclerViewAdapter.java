@@ -1,5 +1,6 @@
 package com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview;
 
+import android.support.v7.recyclerview.extensions.ListAdapter;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,18 +14,20 @@ import com.stoyan.weatherful.persistence.models.LWWrapperDiffCallback;
 import com.stoyan.weatherful.ui.location_activity.LocationActivityViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * Created by Stoyan on 27.1.2018 г..
  */
 
-public class LocationsRecyclerViewAdapter extends RecyclerView.Adapter<LocationViewHolder> {
+public class LocationsRecyclerViewAdapter extends ListAdapter<LocationForecastSummaryWrapper, LocationViewHolder> {
     private ArrayList<LocationForecastSummaryWrapper> mLocationForecastSummaryWrappers;
     private LocationActivityViewModel mViewModel;
 
     public LocationsRecyclerViewAdapter(LocationActivityViewModel viewModel,
                                         ArrayList<LocationForecastSummaryWrapper> locationForecastSummaryWrappers) {
+        super(LWWrapperDiffCallback.getInstance());
         this.mViewModel = viewModel;
         this.mLocationForecastSummaryWrappers = locationForecastSummaryWrappers;
     }
@@ -42,14 +45,11 @@ public class LocationsRecyclerViewAdapter extends RecyclerView.Adapter<LocationV
     }
 
     public void updateItems(ArrayList<LocationForecastSummaryWrapper> newItems) {
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(
-                new LWWrapperDiffCallback(mLocationForecastSummaryWrappers, newItems));
-        diffResult.dispatchUpdatesTo(this);
 
         mLocationForecastSummaryWrappers.clear();
         mLocationForecastSummaryWrappers.addAll(newItems);
     }
-
+    
     @Override
     public int getItemCount() {
         return mLocationForecastSummaryWrappers.size();
