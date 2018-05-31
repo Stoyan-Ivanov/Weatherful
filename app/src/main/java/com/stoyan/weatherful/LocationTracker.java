@@ -30,26 +30,20 @@ public class LocationTracker {
     public LocationTracker() {
         mContext = WeatherfulApplication.getStaticContext();
         mRxLocation = new RxLocation(mContext);
-
     }
 
     public Observable<com.stoyan.weatherful.persistence.models.Location> getCurrentLocation() {
 
-
-
         LocationRequest locationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(15000);
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         if (ActivityCompat.checkSelfPermission(mContext,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            Log.d("SII", "getCurrentLocation: granted");
 
             return mRxLocation.location().updates(locationRequest)
                     .flatMap(location -> mRxLocation.geocoding().fromLocation(location).toObservable())
                     .map(address -> {
-                        Log.d("SII", "getCurrentLocation: " + address.getLocality());
                         String cityName = address.getLocality();
                         String countryName = address.getCountryName();
                         double latitude = address.getLatitude();

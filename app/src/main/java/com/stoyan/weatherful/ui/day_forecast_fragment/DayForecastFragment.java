@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,19 +18,32 @@ import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.ui.base_ui.fragment.BaseFragment;
 import com.stoyan.weatherful.utils.DateTransformation;
 
+import org.joda.time.DateTime;
+
 import butterknife.BindView;
+
+import static io.fabric.sdk.android.Fabric.TAG;
 
 public class DayForecastFragment extends BaseFragment<DayForecastFragmentViewModel> {
 
-    @BindView(R.id.iv_fragment_weather_image) ImageView mWeatherImage;
-    @BindView(R.id.tv_fragment_date) TextView mTvDate;
-    @BindView(R.id.tv_fragment_temp) TextView mTvTemperature;
-    @BindView(R.id.tv_fragment_wind_speed) TextView mTvWindSpeed;
-    @BindView(R.id.tv_fragment_rain_chance) TextView mTvRainChance;
-    @BindView(R.id.tv_fragment_humidity) TextView mTvHumidity;
-    @BindView(R.id.tv_fragment_forecast_summary) TextView mTvForecastSummary;
-    @BindView(R.id.tv_fragment_sunrise) TextView mTvSunrise;
-    @BindView(R.id.tv_fragment_sunset) TextView mTvSunset;
+    @BindView(R.id.iv_fragment_weather_image)
+    ImageView mWeatherImage;
+    @BindView(R.id.tv_fragment_date)
+    TextView mTvDate;
+    @BindView(R.id.tv_fragment_temp)
+    TextView mTvTemperature;
+    @BindView(R.id.tv_fragment_wind_speed)
+    TextView mTvWindSpeed;
+    @BindView(R.id.tv_fragment_rain_chance)
+    TextView mTvRainChance;
+    @BindView(R.id.tv_fragment_humidity)
+    TextView mTvHumidity;
+    @BindView(R.id.tv_fragment_forecast_summary)
+    TextView mTvForecastSummary;
+    @BindView(R.id.tv_fragment_sunrise)
+    TextView mTvSunrise;
+    @BindView(R.id.tv_fragment_sunset)
+    TextView mTvSunset;
 
     public static DayForecastFragment newInstance(Data data) {
         Bundle arguments = new Bundle();
@@ -68,7 +82,7 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentViewMod
 
     private void setWeatherImage() {
         mViewModel.getImageIconId().observe(this, iconId -> {
-            if(iconId != null) {
+            if (iconId != null) {
                 mWeatherImage.setImageDrawable(getResources().getDrawable(iconId));
             }
         });
@@ -110,9 +124,11 @@ public class DayForecastFragment extends BaseFragment<DayForecastFragmentViewMod
     }
 
     private void setSunriseTime() {
-        mViewModel.getSunriseTime().observe(this, sunriseTime ->
-                mTvSunrise.setText(DateTransformation.getTimeFromUnixTime(sunriseTime)));
+        mViewModel.getSunriseTime().observe(this, sunriseTime -> {
+            mTvSunrise.setText(DateTransformation.getTimeFromUnixTime(sunriseTime));
+        });
     }
+
     private void setSunsetTime() {
         mViewModel.getSunsetTime().observe(this, sunsetTime ->
                 mTvSunset.setText(DateTransformation.getTimeFromUnixTime(sunsetTime)));

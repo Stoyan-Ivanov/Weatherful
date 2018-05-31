@@ -33,6 +33,16 @@ public class Data implements Parcelable {
     @SerializedName("precipProbability")
     private String precipProbability;
 
+    private String timezone;
+
+    public String getTimezone() {
+        return timezone;
+    }
+
+    public void setTimezone(String timezone) {
+        this.timezone = timezone;
+    }
+
     public String getPrecipProbability() {
         return precipProbability;
     }
@@ -93,6 +103,7 @@ public class Data implements Parcelable {
         sunriseTime = in.readLong();
         sunsetTime = in.readLong();
         precipProbability = in.readString();
+        timezone = in.readString();
     }
 
     @Override
@@ -113,6 +124,7 @@ public class Data implements Parcelable {
         dest.writeLong(sunriseTime);
         dest.writeLong(sunsetTime);
         dest.writeString(precipProbability);
+        dest.writeString(timezone);
     }
 
     @SuppressWarnings("unused")

@@ -5,6 +5,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
 import com.stoyan.weatherful.utils.Constants;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;

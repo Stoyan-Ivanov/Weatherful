@@ -25,6 +25,6 @@ public class DateTransformation {
 
     public static String getTimeFromUnixTime(long unixTime) {
         return new SimpleDateFormat("HH:mm:ss")
-                .format(new Date(unixTime * TIME_MULTIPLIER));
+                .format(new Date(unixTime * 1000));
     }
 }

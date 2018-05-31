@@ -1,5 +1,7 @@
 package com.stoyan.weatherful;
 
+import android.util.Log;
+
 import com.stoyan.weatherful.network.NetworkManager;
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.persistence.LocationsProvider;
@@ -91,7 +93,12 @@ public class DataManager {
                 .getFullForecastResponse(location.getLatitude(), location.getLongitude())
                 .toObservable()
                 .compose(RxUtils.applySchedulersObservable())
-                .map(forecastFullResponse -> forecastFullResponse.getDaily().getData())
+                .map(forecastFullResponse -> {
+                        ArrayList<Data> data = forecastFullResponse.getDaily().getData();
+                        for(Data singleData: data) {
+                            singleData.setTimezone(forecastFullResponse.getTimezone());
+                        }
+                        return data;})
                 .map(data -> { data.remove(0);
                     return data;
                 });

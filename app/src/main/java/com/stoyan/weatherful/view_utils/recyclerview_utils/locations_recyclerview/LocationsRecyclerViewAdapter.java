@@ -49,7 +49,7 @@ public class LocationsRecyclerViewAdapter extends ListAdapter<LocationForecastSu
         mLocationForecastSummaryWrappers.clear();
         mLocationForecastSummaryWrappers.addAll(newItems);
     }
-    
+
     @Override
     public int getItemCount() {
         return mLocationForecastSummaryWrappers.size();

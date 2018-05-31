@@ -3,10 +3,17 @@ package com.stoyan.weatherful.ui.day_forecast_fragment;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
+import android.util.Log;
 
 import com.stoyan.weatherful.network.models.forecast_full_models.Data;
 import com.stoyan.weatherful.viewmodel.BaseViewModel;
+
+import org.joda.time.DateTimeZone;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by stoyan.ivanov2 on 5/2/2018.
@@ -61,11 +68,26 @@ public class DayForecastFragmentViewModel extends BaseViewModel {
     }
 
     public LiveData<Long> getSunriseTime() {
-        return Transformations.map(mData, Data::getSunriseTime);
+        return Transformations.map(mData, input -> getProperTime(input.getSunriseTime(), input.getTimezone()));
     }
 
     public LiveData<Long> getSunsetTime() {
-        return Transformations.map(mData, Data::getSunsetTime);
+        return Transformations.map(mData, data -> getProperTime(data.getSunsetTime(), data.getTimezone()));
+    }
+
+    private long getProperTime(long time, String timezone) {
+        DateTimeZone zone = DateTimeZone.forID(timezone);
+
+        long offset = zone.getOffset(time) / 1000;
+
+        Calendar calendar = Calendar.getInstance();
+        TimeZone timeZone = TimeZone.getTimeZone(timezone);
+        calendar.setTimeZone(timeZone);
+
+        if(timeZone.inDaylightTime(new Date(time * 1000))) {
+            time += 3600;
+        }
+        return time + offset;
     }
 
     @Override
