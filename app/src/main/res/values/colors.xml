@@ -11,4 +11,5 @@
     <color name="lightRVBlue">#b8e3f5</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="lightBlue">#C087CEEB</color>
+    <color name="darkGrey">#646464</color>
 </resources>
