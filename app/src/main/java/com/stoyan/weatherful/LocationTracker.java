@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.google.android.gms.location.LocationRequest;
 import com.patloew.rxlocation.RxLocation;
+import com.stoyan.weatherful.persistence.models.Location;
 import com.stoyan.weatherful.rx.RxUtils;
 
 import javax.inject.Inject;
@@ -16,6 +17,7 @@ import javax.inject.Singleton;
 
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
+import io.reactivex.Observer;
 
 /**
  * Created by stoyan.ivanov2 on 4/17/2018.
@@ -53,7 +55,8 @@ public class LocationTracker {
                     })
                     .compose(RxUtils.applySchedulersObservable());
 
+        } else {
+            return Observable.just(new Location());
         }
-        return null;
     }
 }

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 public class LocationActivityViewModel extends BaseViewModel {
     private MutableLiveData<ArrayList<LocationForecastSummaryWrapper>> mLocationForecastSummaryWrappers;
@@ -57,7 +58,7 @@ public class LocationActivityViewModel extends BaseViewModel {
         addDisposable(locationTracker.getCurrentLocation()
                 .doOnError(throwable -> Log.d("SII", "downloadCurrentLocationData: " + throwable.getMessage()))
                 .subscribe(currentLocation -> {
-                    if(currentLocation == null) {
+                    if(currentLocation.getLocationName() == null) {
                         mCurrentLocationWrapper.setValue(null);
                     } else {
                         mCurrentLocationWrapper.setValue(new LocationForecastSummaryWrapper(currentLocation));
