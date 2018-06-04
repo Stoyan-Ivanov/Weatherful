@@ -35,6 +35,7 @@ import com.stoyan.weatherful.rx.events.NoInternetAvailableEvent;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
 import com.stoyan.weatherful.ui.base_ui.activity.BaseActivity;
 import com.stoyan.weatherful.ui.forecast_activity.ForecastActivity;
+import com.stoyan.weatherful.utils.StartActivityEnum;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.decorations.SpacesItemDecoration;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationsRecyclerViewAdapter;
 
@@ -71,14 +72,18 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
     @Inject
     RxBus mRxBus;
     private LocationsRecyclerViewAdapter mAdapter;
+    private StartActivityEnum mEnum;
 
-    public static Intent getIntent(Context context) {
-        return new Intent(context, LocationActivity.class);
+    public static Intent getIntent(Context context, StartActivityEnum startActivityEnum) {
+        Intent intent = new Intent(context, LocationActivity.class);
+        intent.putExtra("EXTRA_START_ENUM", startActivityEnum);
+        return intent;
     }
 
     @OnClick(R.id.iv_main_location)
     void onCurrentLocationClick() {
         mViewModel.getCurrentLocationWrapper().observe(this,
+
                 wrapper -> {
                     if (wrapper != null) {
                         startActivity(ForecastActivity.getIntent(LocationActivity.this, wrapper.getLocation()));
@@ -99,7 +104,7 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
 
     @OnClick(R.id.tv_try_again_missing_network)
     void tryAgainFieldClicked() {
-        startActivity(LocationActivity.getIntent(this));
+        startActivity(LocationActivity.getIntent(this, StartActivityEnum.SPLASH_SCREEN));
         finish();
     }
 
@@ -114,6 +119,7 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
         setContentView(R.layout.activity_locations);
 
         mViewModel = new LocationActivityViewModel();
+        mEnum = (StartActivityEnum) getIntent().getSerializableExtra("EXTRA_START_ENUM");
 
         subscribeToEventBus();
         mViewModel.downloadData();
@@ -207,7 +213,12 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
 
     private void configureSplashScreen() {
         final int LOADING_SCREEN_TIME = 2000;
-        new Handler().postDelayed(() -> mLayoutLoading.setVisibility(View.GONE), LOADING_SCREEN_TIME);
+
+        if(mEnum == null || mEnum.equals(StartActivityEnum.SPLASH_SCREEN)) {
+            new Handler().postDelayed(() -> mLayoutLoading.setVisibility(View.GONE), LOADING_SCREEN_TIME);
+        } else {
+            mLayoutLoading.setVisibility(View.GONE);
+        }
     }
 
     private void configureToolbar() {

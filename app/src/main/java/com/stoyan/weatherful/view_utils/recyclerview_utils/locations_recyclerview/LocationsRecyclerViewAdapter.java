@@ -44,12 +44,6 @@ public class LocationsRecyclerViewAdapter extends ListAdapter<LocationForecastSu
         holder.bind(mLocationForecastSummaryWrappers.get(position));
     }
 
-    public void updateItems(ArrayList<LocationForecastSummaryWrapper> newItems) {
-
-        mLocationForecastSummaryWrappers.clear();
-        mLocationForecastSummaryWrappers.addAll(newItems);
-    }
-
     @Override
     public int getItemCount() {
         return mLocationForecastSummaryWrappers.size();
@@ -59,5 +53,11 @@ public class LocationsRecyclerViewAdapter extends ListAdapter<LocationForecastSu
         mViewModel.deleteLocation(location);
         mLocationForecastSummaryWrappers.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public void setNewData(ArrayList<LocationForecastSummaryWrapper> newWrappers) {
+        mLocationForecastSummaryWrappers.clear();
+        mLocationForecastSummaryWrappers.addAll(newWrappers);
+        notifyDataSetChanged();
     }
 }

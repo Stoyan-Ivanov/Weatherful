@@ -40,7 +40,7 @@
         android:layout_marginStart="16dp"
         android:gravity="center_vertical|start"
         android:textColor="@color/white"
-        android:shadowColor="@color/colorAccent"
+        android:shadowColor="@color/black"
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="1"

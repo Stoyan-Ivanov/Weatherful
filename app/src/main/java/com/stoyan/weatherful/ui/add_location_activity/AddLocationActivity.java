@@ -11,6 +11,7 @@ import android.widget.EditText;
 import com.stoyan.weatherful.R;
 import com.stoyan.weatherful.ui.base_ui.activity.BaseActivity;
 import com.stoyan.weatherful.ui.location_activity.LocationActivity;
+import com.stoyan.weatherful.utils.StartActivityEnum;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -59,7 +60,7 @@ public class AddLocationActivity extends BaseActivity<AddLocationViewModel> {
 
     private void subscribeToNavigationChange() {
         mViewModel.getSaveLocationEvent().observe(this, o -> {
-            startActivity(LocationActivity.getIntent(this));
+            startActivity(LocationActivity.getIntent(this, StartActivityEnum.NORMAL));
             finish();});
     }
 }
