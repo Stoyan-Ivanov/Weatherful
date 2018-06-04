@@ -18,14 +18,14 @@
     <dimen name="progressBar_margin">8dp</dimen>
 
     <dimen name="app_name_loading_margin">8dp</dimen>
-    <dimen name="app_name_loading_text_size">36sp</dimen>
+    <dimen name="app_name_loading_text_size">32sp</dimen>
 
-    <dimen name="iv_sun_loading_width">248dp</dimen>
-    <dimen name="iv_sun_loading_height">328dp</dimen>
+    <dimen name="iv_sun_loading_width">220dp</dimen>
+    <dimen name="iv_sun_loading_height">318dp</dimen>
     <dimen name="iv_sun_loading_margin">8dp</dimen>
 
-    <dimen name="iv_clouds_loading_width">228dp</dimen>
-    <dimen name="iv_clouds_loading_height">196dp</dimen>
+    <dimen name="iv_clouds_loading_width">204dp</dimen>
+    <dimen name="iv_clouds_loading_height">168dp</dimen>
     <dimen name="iv_clouds_loading_margin">8dp</dimen>
 
     <!-- missing network screen -->

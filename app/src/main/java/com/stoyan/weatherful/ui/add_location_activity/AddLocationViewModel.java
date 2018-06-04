@@ -21,7 +21,7 @@ import javax.inject.Inject;
 public class AddLocationViewModel extends BaseViewModel {
     @Inject
     DataManager mDataManager;
-    private SingleLiveEvent saveLocationEvent;
+    private SingleLiveEvent mSaveLocationEvent;
 
     @Override
     protected void inject() {
@@ -29,7 +29,7 @@ public class AddLocationViewModel extends BaseViewModel {
     }
 
     public AddLocationViewModel() {
-        saveLocationEvent = new SingleLiveEvent();
+        mSaveLocationEvent = new SingleLiveEvent();
     }
 
     public void addNewLocation(String cityName, String countryName) {
@@ -50,7 +50,7 @@ public class AddLocationViewModel extends BaseViewModel {
                         Location newLocation = new Location(cityName, countryName,
                                 a.getLatitude(), a.getLongitude());
                                 mDataManager.saveLocation(newLocation);
-                                saveLocationEvent.call();
+                                mSaveLocationEvent.call();
                         break;
                     }
                 }
@@ -69,6 +69,6 @@ public class AddLocationViewModel extends BaseViewModel {
     }
 
     public SingleLiveEvent getSaveLocationEvent() {
-        return saveLocationEvent;
+        return mSaveLocationEvent;
     }
 }
