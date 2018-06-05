@@ -19,8 +19,6 @@
             android:id="@+id/toolbar_collapsed"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:gravity="center_horizontal"
-            android:textAlignment="center"
             android:theme="@style/ToolbarStyle" />
 
     </android.support.design.widget.AppBarLayout>

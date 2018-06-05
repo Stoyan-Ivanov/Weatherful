@@ -18,6 +18,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -32,9 +35,11 @@ import com.stoyan.weatherful.WeatherfulApplication;
 import com.stoyan.weatherful.rx.RxBus;
 import com.stoyan.weatherful.rx.RxUtils;
 import com.stoyan.weatherful.rx.events.NoInternetAvailableEvent;
+import com.stoyan.weatherful.ui.AboutActivity;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
 import com.stoyan.weatherful.ui.base_ui.activity.BaseActivity;
 import com.stoyan.weatherful.ui.forecast_activity.ForecastActivity;
+import com.stoyan.weatherful.utils.Constants;
 import com.stoyan.weatherful.utils.StartActivityEnum;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.decorations.SpacesItemDecoration;
 import com.stoyan.weatherful.view_utils.recyclerview_utils.locations_recyclerview.LocationsRecyclerViewAdapter;
@@ -76,7 +81,7 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
 
     public static Intent getIntent(Context context, StartActivityEnum startActivityEnum) {
         Intent intent = new Intent(context, LocationActivity.class);
-        intent.putExtra("EXTRA_START_ENUM", startActivityEnum);
+        intent.putExtra(Constants.EXTRA_START_ENUM, startActivityEnum);
         return intent;
     }
 
@@ -119,7 +124,7 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
         setContentView(R.layout.activity_locations);
 
         mViewModel = new LocationActivityViewModel();
-        mEnum = (StartActivityEnum) getIntent().getSerializableExtra("EXTRA_START_ENUM");
+        mEnum = (StartActivityEnum) getIntent().getSerializableExtra(Constants.EXTRA_START_ENUM);
 
         subscribeToEventBus();
         mViewModel.downloadData();
@@ -147,6 +152,21 @@ public class LocationActivity extends BaseActivity<LocationActivityViewModel> {
     protected void onResume() {
         super.onResume();
         checkPlayServicesAvailable();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.about_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_about: startActivity(AboutActivity.getIntent(this));
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void checkPlayServicesAvailable() {

@@ -40,4 +40,9 @@
     <string name="toast_permission_never_ask">Never asking again for location permission!</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="developer_name">Developed by: Stoyan Ivanov</string>
+    <string name="email_contact">For any questions or problems please contact me at: stoyaniviv@gmail.com</string>
+    <string name="powered_by_text">Weatherful is powered by: Dark Sky</string>
+    <string name="app_version">Version: %s</string>
+    <string name="about_screen_title">About</string>
 </resources>

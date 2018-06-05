@@ -5,6 +5,7 @@ import com.stoyan.weatherful.dependency_injection.modules.AppModule;
 import com.stoyan.weatherful.dependency_injection.modules.RoomModule;
 import com.stoyan.weatherful.dependency_injection.modules.ViewModelModule;
 import com.stoyan.weatherful.persistence.room.LocationsDatabase;
+import com.stoyan.weatherful.ui.AboutActivity;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationViewModel;
 import com.stoyan.weatherful.ui.day_forecast_fragment.DayForecastFragmentViewModel;
@@ -58,5 +59,7 @@ public interface AppComponent {
         void inject(ForecastActivity forecastActivity);
 
         void inject(AddLocationActivity addLocationActivity);
+
+        void inject(AboutActivity aboutActivity);
     }
 }
