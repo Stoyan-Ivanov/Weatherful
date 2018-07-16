@@ -2,9 +2,11 @@ package com.stoyan.weatherful.dependency_injection.components;
 
 import com.stoyan.weatherful.dependency_injection.modules.ActivityModule;
 import com.stoyan.weatherful.dependency_injection.modules.AppModule;
+import com.stoyan.weatherful.dependency_injection.modules.ServiceModule;
 import com.stoyan.weatherful.dependency_injection.modules.RoomModule;
 import com.stoyan.weatherful.dependency_injection.modules.ViewModelModule;
 import com.stoyan.weatherful.persistence.room.LocationsDatabase;
+import com.stoyan.weatherful.services.LocationService;
 import com.stoyan.weatherful.ui.AboutActivity;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationActivity;
 import com.stoyan.weatherful.ui.add_location_activity.AddLocationViewModel;
@@ -15,6 +17,7 @@ import com.stoyan.weatherful.ui.forecast_pager_activity.ForecastPagerActivity;
 import com.stoyan.weatherful.ui.forecast_pager_activity.ForecastPagerActivityViewModel;
 import com.stoyan.weatherful.ui.location_activity.LocationActivity;
 import com.stoyan.weatherful.ui.location_activity.LocationActivityViewModel;
+import com.stoyan.weatherful.ui.widget.WeatherfulWidgetProvider;
 
 import javax.inject.Singleton;
 
@@ -34,8 +37,10 @@ public interface AppComponent {
     
     ActivityComponent activityComponent();
 
+    ServiceComponent serviceComponent();
 
-    @Subcomponent(modules = {ViewModelModule.class})
+
+    @Subcomponent(modules = ViewModelModule.class)
     interface ViewModelComponent {
 
         void inject(AddLocationViewModel addLocationViewModel);
@@ -49,7 +54,7 @@ public interface AppComponent {
         void inject(LocationActivityViewModel locationActivityViewModel);
     }
     
-    @Subcomponent(modules = {ActivityModule.class})
+    @Subcomponent(modules = ActivityModule.class)
     interface ActivityComponent {
 
         void inject(LocationActivity locationActivity);
@@ -61,5 +66,11 @@ public interface AppComponent {
         void inject(AddLocationActivity addLocationActivity);
 
         void inject(AboutActivity aboutActivity);
+    }
+
+    @Subcomponent(modules = ServiceModule.class)
+    interface ServiceComponent {
+
+        void inject(LocationService locationService);
     }
 }

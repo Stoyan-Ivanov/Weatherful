@@ -51,11 +51,12 @@ public class LocationTracker {
                         double latitude = address.getLatitude();
                         double longitude = address.getLongitude();
 
-                        return new com.stoyan.weatherful.persistence.models.Location(cityName, countryName, latitude, longitude);
+                        return new Location(cityName, countryName, latitude, longitude);
                     })
                     .compose(RxUtils.applySchedulersObservable());
 
         } else {
+
             return Observable.just(new Location());
         }
     }
